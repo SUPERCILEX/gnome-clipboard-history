@@ -4,9 +4,9 @@
       path="/org/gnome/shell/extensions/clipboard-indicator/">
 
     <key type="i" name="history-size">
-      <default>15</default>
+      <default>1000</default>
       <summary>The maximum number of items to remember</summary>
-      <range min="1" max="200" />
+      <range min="1" max="100000" />
     </key>
 
     <key type="i" name="display-mode">
@@ -21,13 +21,13 @@
     </key>
 
     <key type="i" name="preview-size">
-      <default>30</default>
+      <default>80</default>
       <summary>Number of visible characters for clipboard items</summary>
       <description>
         The number of characters to display for every clipboard item in
         the history menu.
       </description>
-      <range min="10" max="100" />
+      <range min="10" max="200" />
     </key>
 
     <key type="i" name="topbar-preview-size">
@@ -40,14 +40,14 @@
     </key>
 
     <key type="i" name="cache-size">
-      <default>1024</default>
+      <default>10</default>
       <summary>The maximum clipboard history size (MiB)</summary>
       <description>
         Note that this is the maximum number of clipboard item bytes to store, not the maximum file
         size on disk. The clipboard history on disk may be larger than this limit due to storage
         inefficiencies.
       </description>
-      <range min="512" max="16384" />
+      <range min="1" max="1024" />
     </key>
 
     <key name="cache-only-favorites" type="b">

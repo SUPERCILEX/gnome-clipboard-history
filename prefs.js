@@ -47,29 +47,29 @@ const App = new Lang.Class({
     this.field_size = new Gtk.SpinButton({
       adjustment: new Gtk.Adjustment({
         lower: 1,
-        upper: 200,
-        step_increment: 1,
+        upper: 100_000,
+        step_increment: 100,
       }),
     });
     this.field_preview_size = new Gtk.SpinButton({
       adjustment: new Gtk.Adjustment({
         lower: 10,
-        upper: 100,
-        step_increment: 1,
+        upper: 200,
+        step_increment: 10,
       }),
     });
     this.field_cache_size = new Gtk.SpinButton({
       adjustment: new Gtk.Adjustment({
-        lower: 512,
-        upper: Math.pow(2, 14),
-        step_increment: 1,
+        lower: 1,
+        upper: 1024,
+        step_increment: 5,
       }),
     });
     this.field_topbar_preview_size = new Gtk.SpinButton({
       adjustment: new Gtk.Adjustment({
         lower: 1,
         upper: 100,
-        step_increment: 1,
+        step_increment: 10,
       }),
     });
     this.field_display_mode = new Gtk.ComboBox({
