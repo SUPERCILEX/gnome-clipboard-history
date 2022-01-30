@@ -420,13 +420,18 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._updateButtonText(menuItem);
     if (updateClipboard !== false) {
       if (menuItem.entry.type === 'text') {
-        Clipboard.set_text(CLIPBOARD_TYPE, menuItem.entry.text);
+        this._setClipboardText(menuItem.entry.text);
       }
 
       if (PASTE_ON_SELECTION && triggerPaste) {
         this._triggerPasteHack();
       }
     }
+  }
+
+  _setClipboardText(text) {
+    if (this._debouncing !== undefined) this._debouncing++;
+    Clipboard.set_text(CLIPBOARD_TYPE, text);
   }
 
   _triggerPasteHack() {
@@ -462,13 +467,14 @@ class ClipboardIndicator extends PanelMenu.Button {
 
   _onMenuItemSelectedAndMenuClose(menuItem) {
     this._selectMenuItem(menuItem, true, true);
+    this._moveEntryFirst(menuItem.entry);
     this.menu.close();
   }
 
   _resetSelectedMenuItem() {
     this.currentlySelectedMenuItem = undefined;
     this._updateButtonText();
-    Clipboard.set_text(CLIPBOARD_TYPE, '');
+    this._setClipboardText('');
   }
 
   /* When text change, this function will check, for each item of the
@@ -501,6 +507,11 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _processClipboardContent(text) {
+    if (this._debouncing > 0) {
+      this._debouncing--;
+      return;
+    }
+
     if (STRIP_TEXT) {
       text = text.trim();
     }
@@ -511,19 +522,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     let entry = this._fastTextEntryLookup(text);
     if (entry) {
       this._selectMenuItem(entry.menuItem, false);
-      if (MOVE_ITEM_FIRST) {
-        let menu;
-        if (entry.favorite) {
-          menu = this.favoritesSection;
-        } else {
-          menu = this.historySection;
-        }
-        menu.moveMenuItem(entry.menuItem, 0);
-
-        if (entry.id) {
-          Utils.moveEntryToEnd(entry.id);
-        }
-      }
+      this._moveEntryFirst(entry);
     } else {
       entry = {
         id: CACHE_ONLY_FAVORITES ? undefined : this.nextId++,
@@ -538,14 +537,32 @@ class ClipboardIndicator extends PanelMenu.Button {
         Utils.storeTextEntry(text);
       }
       this._pruneOldestEntries();
+    }
 
-      if (NOTIFY_ON_COPY) {
-        this._showNotification(_('Copied to clipboard'), (notif) => {
-          notif.addAction(_('Cancel'), () =>
-            this._deleteItemAndRestoreLatest(this.currentlySelectedMenuItem),
-          );
-        });
-      }
+    if (NOTIFY_ON_COPY) {
+      this._showNotification(_('Copied to clipboard'), (notif) => {
+        notif.addAction(_('Cancel'), () =>
+          this._deleteItemAndRestoreLatest(this.currentlySelectedMenuItem),
+        );
+      });
+    }
+  }
+
+  _moveEntryFirst(entry) {
+    if (!MOVE_ITEM_FIRST) {
+      return;
+    }
+
+    let menu;
+    if (entry.favorite) {
+      menu = this.favoritesSection;
+    } else {
+      menu = this.historySection;
+    }
+    menu.moveMenuItem(entry.menuItem, 0);
+
+    if (entry.id) {
+      Utils.moveEntryToEnd(entry.id);
     }
   }
 
@@ -572,6 +589,8 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _setupSelectionChangeListener() {
+    this._debouncing = 0;
+
     this.selection = Shell.Global.get().get_display().get_selection();
     this._selectionOwnerChangedId = this.selection.connect(
       'owner-changed',
