@@ -22,6 +22,7 @@ var Fields = {
   DISABLE_DOWN_ARROW: 'disable-down-arrow',
   STRIP_TEXT: 'strip-text',
   PRIVATE_MODE: 'private-mode',
+  PASTE_ON_SELECTION: 'paste-on-selection',
 };
 
 const SCHEMA_NAME = 'org.gnome.shell.extensions.clipboard-indicator';
@@ -84,6 +85,7 @@ const App = new Lang.Class({
     this.field_notification_toggle = new Gtk.Switch();
     this.field_confirm_clear_toggle = new Gtk.Switch();
     this.field_strip_text = new Gtk.Switch();
+    this.field_paste_on_selection = new Gtk.Switch();
     this.field_move_item_first = new Gtk.Switch();
     this.field_keybinding = createKeybindingWidget(Settings);
     addKeybinding(
@@ -182,6 +184,11 @@ const App = new Lang.Class({
       hexpand: true,
       halign: Gtk.Align.START,
     });
+    let pasteOnSelectionLabel = new Gtk.Label({
+      label: _('Paste on selection'),
+      hexpand: true,
+      halign: Gtk.Align.START,
+    });
 
     const addRow = ((main) => {
       let row = 0;
@@ -210,13 +217,14 @@ const App = new Lang.Class({
     addRow(previewLabel, this.field_preview_size);
     addRow(cacheSizeLabel, this.field_cache_size);
     addRow(cacheDisableLabel, this.field_cache_disable);
-    addRow(notificationLabel, this.field_notification_toggle);
-    addRow(confirmClearLabel, this.field_confirm_clear_toggle);
+    addRow(moveFirstLabel, this.field_move_item_first);
+    addRow(stripTextLabel, this.field_strip_text);
+    addRow(pasteOnSelectionLabel, this.field_paste_on_selection);
     addRow(displayModeLabel, this.field_display_mode);
     addRow(disableDownArrowLabel, this.field_disable_down_arrow);
     addRow(topbarPreviewLabel, this.field_topbar_preview_size);
-    addRow(stripTextLabel, this.field_strip_text);
-    addRow(moveFirstLabel, this.field_move_item_first);
+    addRow(notificationLabel, this.field_notification_toggle);
+    addRow(confirmClearLabel, this.field_confirm_clear_toggle);
     addRow(keybindingLabel, this.field_keybinding_activation);
     addRow(null, this.field_keybinding);
 
@@ -283,6 +291,12 @@ const App = new Lang.Class({
     Settings.bind(
       Fields.STRIP_TEXT,
       this.field_strip_text,
+      'active',
+      Gio.SettingsBindFlags.DEFAULT,
+    );
+    Settings.bind(
+      Fields.PASTE_ON_SELECTION,
+      this.field_paste_on_selection,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );

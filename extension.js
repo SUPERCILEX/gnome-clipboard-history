@@ -13,6 +13,17 @@ const _ = Gettext.domain('clipboard-indicator').gettext;
 
 const Clipboard = St.Clipboard.get_default();
 const CLIPBOARD_TYPE = St.ClipboardType.CLIPBOARD;
+const VirtualKeyboard = (() => {
+  let VirtualKeyboard;
+  return () => {
+    if (!VirtualKeyboard) {
+      VirtualKeyboard = Clutter.get_default_backend()
+        .get_default_seat()
+        .create_virtual_device(Clutter.InputDeviceType.KEYBOARD_DEVICE);
+    }
+    return VirtualKeyboard;
+  };
+})();
 
 const SETTING_KEY_CLEAR_HISTORY = 'clear-history';
 const SETTING_KEY_PREV_ENTRY = 'prev-entry';
@@ -40,6 +51,7 @@ let MAX_TOPBAR_LENGTH;
 let TOPBAR_DISPLAY_MODE; //0 - only icon, 1 - only clipbord content, 2 - both
 let DISABLE_DOWN_ARROW;
 let STRIP_TEXT;
+let PASTE_ON_SELECTION;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init() {
@@ -398,7 +410,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     Utils.maybePerformLogCompaction(this._currentStateBuilder.bind(this));
   }
 
-  _selectMenuItem(menuItem, updateClipboard) {
+  _selectMenuItem(menuItem, updateClipboard, triggerPaste) {
     if (this.currentlySelectedMenuItem) {
       this.currentlySelectedMenuItem.setOrnament(PopupMenu.Ornament.NONE);
     }
@@ -406,13 +418,50 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     menuItem.setOrnament(PopupMenu.Ornament.DOT);
     this._updateButtonText(menuItem);
-    if (updateClipboard !== false && menuItem.entry.type === 'text') {
-      Clipboard.set_text(CLIPBOARD_TYPE, menuItem.entry.text);
+    if (updateClipboard !== false) {
+      if (menuItem.entry.type === 'text') {
+        Clipboard.set_text(CLIPBOARD_TYPE, menuItem.entry.text);
+      }
+
+      if (PASTE_ON_SELECTION && triggerPaste) {
+        this._triggerPasteHack();
+      }
     }
   }
 
+  _triggerPasteHack() {
+    Mainloop.timeout_add(
+      1, // Just post to the end of the event loop
+      () => {
+        const eventTime = Clutter.get_current_event_time() * 1000;
+        VirtualKeyboard().notify_keyval(
+          eventTime,
+          Clutter.KEY_Shift_L,
+          Clutter.KeyState.PRESSED,
+        );
+        VirtualKeyboard().notify_keyval(
+          eventTime,
+          Clutter.KEY_Insert,
+          Clutter.KeyState.PRESSED,
+        );
+        VirtualKeyboard().notify_keyval(
+          eventTime,
+          Clutter.KEY_Insert,
+          Clutter.KeyState.RELEASED,
+        );
+        VirtualKeyboard().notify_keyval(
+          eventTime,
+          Clutter.KEY_Shift_L,
+          Clutter.KeyState.RELEASED,
+        );
+
+        return false;
+      },
+    );
+  }
+
   _onMenuItemSelectedAndMenuClose(menuItem) {
-    this._selectMenuItem(menuItem);
+    this._selectMenuItem(menuItem, true, true);
     this.menu.close();
   }
 
@@ -647,6 +696,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     );
     STRIP_TEXT = Prefs.Settings.get_boolean(Prefs.Fields.STRIP_TEXT);
     PRIVATE_MODE = Prefs.Settings.get_boolean(Prefs.Fields.PRIVATE_MODE);
+    PASTE_ON_SELECTION = Prefs.Settings.get_boolean(
+      Prefs.Fields.PASTE_ON_SELECTION,
+    );
   }
 
   _onSettingsChange() {
@@ -837,6 +889,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     return shortened;
   }
 }
+
 const ClipboardIndicatorObj = GObject.registerClass(ClipboardIndicator);
 
 function init() {

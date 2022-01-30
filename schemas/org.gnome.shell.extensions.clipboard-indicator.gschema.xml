@@ -80,6 +80,11 @@
       <summary>Remove whitespace around copied plaintext items</summary>
     </key>
 
+    <key name="paste-on-selection" type="b">
+      <default>true</default>
+      <summary>Paste selected items into the previously active window</summary>
+    </key>
+
     <key name="move-item-first" type="b">
       <default>false</default>
       <summary>Move previously copied items to the top of the list</summary>
