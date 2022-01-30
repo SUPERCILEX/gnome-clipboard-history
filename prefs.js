@@ -22,6 +22,7 @@ var Fields = {
   TOPBAR_DISPLAY_MODE_ID: 'display-mode',
   DISABLE_DOWN_ARROW: 'disable-down-arrow',
   STRIP_TEXT: 'strip-text',
+  PRIVATE_MODE: 'private-mode',
 };
 
 const SCHEMA_NAME = 'org.gnome.shell.extensions.clipboard-indicator';
@@ -109,6 +110,12 @@ const App = new Lang.Class({
       Settings,
       'next-entry',
       _('Next entry'),
+    );
+    addKeybinding(
+      this.field_keybinding.model,
+      Settings,
+      'toggle-private-mode',
+      _('Toggle private mode'),
     );
 
     var that = this;

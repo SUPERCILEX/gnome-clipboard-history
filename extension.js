@@ -18,6 +18,7 @@ const SETTING_KEY_CLEAR_HISTORY = 'clear-history';
 const SETTING_KEY_PREV_ENTRY = 'prev-entry';
 const SETTING_KEY_NEXT_ENTRY = 'next-entry';
 const SETTING_KEY_TOGGLE_MENU = 'toggle-menu';
+const SETTING_KEY_PRIVATE_MODE = 'toggle-private-mode';
 const INDICATOR_ICON = 'edit-paste-symbolic';
 
 const IndicatorName = 'ClipboardIndicator';
@@ -32,7 +33,7 @@ let MAX_ENTRY_LENGTH;
 let CACHE_ONLY_FAVORITES;
 let MOVE_ITEM_FIRST;
 let ENABLE_KEYBINDING;
-let PRIVATEMODE;
+let PRIVATE_MODE;
 let NOTIFY_ON_COPY;
 let CONFIRM_ON_CLEAR;
 let MAX_TOPBAR_LENGTH;
@@ -150,15 +151,17 @@ class ClipboardIndicator extends PanelMenu.Button {
       // Private mode switch
       this.privateModeMenuItem = new PopupMenu.PopupSwitchMenuItem(
         _('Private mode'),
-        PRIVATEMODE,
+        PRIVATE_MODE,
         { reactive: true },
       );
-      this.privateModeMenuItem.connect(
-        'toggled',
-        this._onPrivateModeSwitch.bind(this),
-      );
+      this.privateModeMenuItem.connect('toggled', () => {
+        Prefs.Settings.set_boolean(
+          Prefs.Fields.PRIVATE_MODE,
+          this.privateModeMenuItem.state,
+        );
+      });
       this.menu.addMenuItem(this.privateModeMenuItem);
-      this._onPrivateModeSwitch();
+      this._updatePrivateModeState();
 
       // Add 'Clear' button which removes all items from cache
       const clearMenuItem = new PopupMenu.PopupMenuItem(_('Clear history'));
@@ -281,7 +284,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    if (PRIVATEMODE) {
+    if (PRIVATE_MODE) {
       this._buttonText.set_text('...');
     } else if (menuItem) {
       this._buttonText.set_text(
@@ -441,7 +444,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _queryClipboard() {
-    if (PRIVATEMODE) return; // Private mode, do not.
+    if (PRIVATE_MODE) return;
 
     Clipboard.get_text(CLIPBOARD_TYPE, (clipBoard, text) => {
       this._processClipboardContent(text);
@@ -587,15 +590,13 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._notifSource.showNotification(notification);
   }
 
-  _onPrivateModeSwitch() {
-    PRIVATEMODE = this.privateModeMenuItem.state;
-
-    // We hide the history in private ModeTypee because it will be out of sync
+  _updatePrivateModeState() {
+    // We hide the history in private mode because it will be out of sync
     // (selected item will not reflect clipboard)
-    this.scrollViewMenuSection.actor.visible = !PRIVATEMODE;
-    this.scrollViewFavoritesMenuSection.actor.visible = !PRIVATEMODE;
+    this.scrollViewMenuSection.actor.visible = !PRIVATE_MODE;
+    this.scrollViewFavoritesMenuSection.actor.visible = !PRIVATE_MODE;
 
-    if (PRIVATEMODE) {
+    if (PRIVATE_MODE) {
       this.icon.add_style_class_name('private-mode');
       this._updateButtonText();
     } else {
@@ -645,15 +646,19 @@ class ClipboardIndicator extends PanelMenu.Button {
       Prefs.Fields.DISABLE_DOWN_ARROW,
     );
     STRIP_TEXT = Prefs.Settings.get_boolean(Prefs.Fields.STRIP_TEXT);
-    PRIVATEMODE = false; // TODO remove
+    PRIVATE_MODE = Prefs.Settings.get_boolean(Prefs.Fields.PRIVATE_MODE);
   }
 
   _onSettingsChange() {
     const prevCacheOnlyFavorites = CACHE_ONLY_FAVORITES;
+    const prevPrivateMode = PRIVATE_MODE;
 
     this._fetchSettings();
 
-    if (CACHE_ONLY_FAVORITES !== prevCacheOnlyFavorites) {
+    if (
+      prevCacheOnlyFavorites !== undefined &&
+      CACHE_ONLY_FAVORITES !== prevCacheOnlyFavorites
+    ) {
       if (CACHE_ONLY_FAVORITES) {
         this._getAllMenuItems().forEach((item) => {
           if (!item.entry.favorite) {
@@ -671,6 +676,10 @@ class ClipboardIndicator extends PanelMenu.Button {
           }
         }
       }
+    }
+
+    if (prevPrivateMode !== undefined && PRIVATE_MODE !== prevPrivateMode) {
+      this._updatePrivateModeState();
     }
 
     // Remove old entries in case the registry size changed
@@ -699,6 +708,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._bindShortcut(SETTING_KEY_PREV_ENTRY, this._previousEntry);
     this._bindShortcut(SETTING_KEY_NEXT_ENTRY, this._nextEntry);
     this._bindShortcut(SETTING_KEY_TOGGLE_MENU, () => this.menu.toggle());
+    this._bindShortcut(SETTING_KEY_PRIVATE_MODE, () =>
+      this.privateModeMenuItem.toggle(),
+    );
   }
 
   _unbindShortcuts() {

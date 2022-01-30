@@ -74,7 +74,7 @@
             If true, a confirmation dialog is shown when attempting to Clear History.
         </description>
     </key>
-    
+
     <key name="strip-text" type="b">
       <default>false</default>
       <summary>Remove whitespace around text</summary>
@@ -88,6 +88,14 @@
         <description>
             If true, move items to the top of the list when it is selected.
         </description>
+    </key>
+
+    <key name="private-mode" type="b">
+      <default>false</default>
+      <summary>Enable private mode</summary>
+      <description>
+        If true, copied items are not saved in the clipboard history (be that in memory or on disk).
+      </description>
     </key>
 
     <key name="enable-keybindings" type="b">
@@ -121,6 +129,13 @@
       <summary>Toggle the menu</summary>
       <description>
         Key to toggle the clipboard menu
+      </description>
+    </key>
+    <key name="toggle-private-mode" type="as">
+      <default><![CDATA[['<Ctrl>F8']]]></default>
+      <summary>Toggle private mode</summary>
+      <description>
+        Key to toggle private mode
       </description>
     </key>
   </schema>
