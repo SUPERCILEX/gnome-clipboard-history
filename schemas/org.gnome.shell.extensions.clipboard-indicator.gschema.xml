@@ -98,25 +98,25 @@
       <summary>Enable keyboard shortcuts</summary>
     </key>
     <key name="clear-history" type="as">
-      <default><![CDATA[['<Ctrl>F10']]]></default>
+      <default><![CDATA[[]]]></default>
       <summary>Shortcut to clear history</summary>
     </key>
     <key name="prev-entry" type="as">
-      <default><![CDATA[['<Ctrl>F11']]]></default>
+      <default><![CDATA[[]]]></default>
       <summary>Shortcut to cycle to the previous clipboard entry</summary>
       <description>
       </description>
     </key>
     <key name="next-entry" type="as">
-      <default><![CDATA[['<Ctrl>F12']]]></default>
+      <default><![CDATA[[]]]></default>
       <summary>Shortcut to cycle to the next clipboard entry</summary>
     </key>
     <key name="toggle-menu" type="as">
-      <default><![CDATA[['<Ctrl>F9']]]></default>
+      <default><![CDATA[['<Super><Shift>V']]]></default>
       <summary>Shortcut to open the clipboard history</summary>
     </key>
     <key name="toggle-private-mode" type="as">
-      <default><![CDATA[['<Ctrl>F8']]]></default>
+      <default><![CDATA[['<Super><Shift>P']]]></default>
       <summary>Toggle private mode</summary>
     </key>
   </schema>
