@@ -9,7 +9,6 @@ const Gettext = imports.gettext;
 const _ = Gettext.domain('clipboard-indicator').gettext;
 
 var Fields = {
-  INTERVAL: 'refresh-interval',
   HISTORY_SIZE: 'history-size',
   PREVIEW_SIZE: 'preview-size',
   CACHE_FILE_SIZE: 'cache-size',
@@ -118,37 +117,28 @@ const App = new Lang.Class({
       _('Toggle private mode'),
     );
 
-    var that = this;
     this.field_keybinding_activation = new Gtk.Switch();
-    this.field_keybinding_activation.connect(
-      'notify::active',
-      function (widget) {
-        that.field_keybinding.set_sensitive(widget.active);
-      },
-    );
+    this.field_keybinding_activation.connect('notify::active', (widget) => {
+      this.field_keybinding.set_sensitive(widget.active);
+    });
 
     let sizeLabel = new Gtk.Label({
-      label: _('History Size'),
-      hexpand: true,
-      halign: Gtk.Align.START,
-    });
-    let intervalLabel = new Gtk.Label({
-      label: _('Refresh Interval (ms)'),
+      label: _('Max number of items'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
     let previewLabel = new Gtk.Label({
-      label: _('Preview Size (characters)'),
+      label: _('Item preview size (characters)'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
     let cacheSizeLabel = new Gtk.Label({
-      label: _('Max cache file size (kb)'),
+      label: _('Max clipboard history size (MiB)'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
     let cacheDisableLabel = new Gtk.Label({
-      label: _('Cache only favorites'),
+      label: _('Only save favorites to disk'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
@@ -163,7 +153,7 @@ const App = new Lang.Class({
       halign: Gtk.Align.START,
     });
     let moveFirstLabel = new Gtk.Label({
-      label: _('Move item to the top after selection'),
+      label: _('Move previously copied items to the top'),
       hexpand: true,
       halign: Gtk.Align.START,
     });

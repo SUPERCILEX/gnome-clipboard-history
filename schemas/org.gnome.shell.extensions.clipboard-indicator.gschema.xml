@@ -1,93 +1,88 @@
 <schemalist gettext-domain="gnome-shell-extensions">
-  <schema id="org.gnome.shell.extensions.clipboard-indicator"
+  <schema
+      id="org.gnome.shell.extensions.clipboard-indicator"
       path="/org/gnome/shell/extensions/clipboard-indicator/">
 
     <key type="i" name="history-size">
-        <default>15</default>
-        <summary>The number of items to save in history</summary>
-        <description></description>
-        <range min="1" max="200"/>
+      <default>15</default>
+      <summary>The maximum number of items to remember</summary>
+      <range min="1" max="200" />
     </key>
 
     <key type="i" name="display-mode">
-        <default>0</default>
-        <summary>What to display in top bar</summary>
-        <range min="0" max="2"/>
+      <default>0</default>
+      <summary>What to display in top bar</summary>
+      <range min="0" max="2" />
     </key>
 
     <key name="disable-down-arrow" type="b">
       <default>true</default>
-        <summary>Remove down arrow in top bar</summary>
+      <summary>Remove down arrow in top bar</summary>
     </key>
 
     <key type="i" name="preview-size">
-        <default>30</default>
-        <summary>Amount of visible characters for clipboard items </summary>
-        <description>
-            The number of characters to display for every clipboard item in
-            the history menu
-        </description>
-        <range min="10" max="100"/>
+      <default>30</default>
+      <summary>Number of visible characters for clipboard items</summary>
+      <description>
+        The number of characters to display for every clipboard item in
+        the history menu.
+      </description>
+      <range min="10" max="100" />
     </key>
 
     <key type="i" name="topbar-preview-size">
-        <default>10</default>
-        <summary>Amount of visible characters in topbar </summary>
-        <description>
-            The number of characters to display for current clipboard item in the topbar
-        </description>
-        <range min="1" max="100"/>
+      <default>10</default>
+      <summary>Number of visible characters in top bar</summary>
+      <description>
+        The number of characters to display for the current clipboard item in the top bar.
+      </description>
+      <range min="1" max="100" />
     </key>
 
     <key type="i" name="cache-size">
-        <default>1024</default>
-        <summary>The allowed size for the registry cache file</summary>
-        <description>
-            If the cache overflows this limit, the file will be overriden.
-            High limit might cause slowness of shell startup.
-        </description>
-        <range min="512" max="16384"/>
+      <default>1024</default>
+      <summary>The maximum clipboard history size (MiB)</summary>
+      <description>
+        Note that this is the maximum number of clipboard item bytes to store, not the maximum file
+        size on disk. The clipboard history on disk may be larger than this limit due to storage
+        inefficiencies.
+      </description>
+      <range min="512" max="16384" />
     </key>
 
     <key name="cache-only-favorites" type="b">
       <default>false</default>
-        <summary>Disable the registry cache file for favorites and use memory only</summary>
-        <description>
-            Contents which are not favorites are not stored and retrieved from a cache (registry.txt) file.
-            This can avoid writing passwords to a plaintext file, but at the cost of persistant history.
-            Your clipboard history, except favorite items, is lost after a gnome-shell session ends or the extension is reloaded.
-        </description>
+      <summary>Only save favorites to disk</summary>
+      <description>
+        Non-favorite items will still be saved, but only in-memory. Restarting the Gnome Shell will
+        result in the loss of those items.
+      </description>
     </key>
 
     <key name="notify-on-copy" type="b">
       <default>false</default>
-        <summary>Show notification on copy to clipboard</summary>
-        <description>
-            If true, a notification is shown when content is copied to clipboard.
-        </description>
+      <summary>Show a notification on copy</summary>
+      <description>
+        If true, a notification is shown when content is copied to clipboard with an undo button.
+      </description>
     </key>
 
     <key name="confirm-clear" type="b">
       <default>true</default>
-        <summary>Show confirmation dialog on Clear History</summary>
-        <description>
-            If true, a confirmation dialog is shown when attempting to Clear History.
-        </description>
+      <summary>Show confirmation dialog on Clear History</summary>
+      <description>
+        If true, a confirmation dialog is shown when attempting to Clear History.
+      </description>
     </key>
 
     <key name="strip-text" type="b">
       <default>false</default>
-      <summary>Remove whitespace around text</summary>
-      <description>
-        If true, white spaces around text will be removed.
-      </description>
+      <summary>Remove whitespace around copied plaintext items</summary>
     </key>
+
     <key name="move-item-first" type="b">
       <default>false</default>
-        <summary>Move items to the top of the list when selected.</summary>
-        <description>
-            If true, move items to the top of the list when it is selected.
-        </description>
+      <summary>Move previously copied items to the top of the list</summary>
     </key>
 
     <key name="private-mode" type="b">
@@ -100,43 +95,29 @@
 
     <key name="enable-keybindings" type="b">
       <default>true</default>
-        <summary>Enable the keyboard shortcuts</summary>
-        <description>
-            If true, user can delete and cycle through the history with keyboard shortcuts
-        </description>
+      <summary>Enable keyboard shortcuts</summary>
     </key>
     <key name="clear-history" type="as">
       <default><![CDATA[['<Ctrl>F10']]]></default>
-      <summary>Key to clear the history</summary>
-      <description>
-      </description>
+      <summary>Shortcut to clear history</summary>
     </key>
     <key name="prev-entry" type="as">
       <default><![CDATA[['<Ctrl>F11']]]></default>
-      <summary>Key to cycle to the previous entry in the clipboard</summary>
+      <summary>Shortcut to cycle to the previous clipboard entry</summary>
       <description>
       </description>
     </key>
     <key name="next-entry" type="as">
       <default><![CDATA[['<Ctrl>F12']]]></default>
-      <summary>Next entry</summary>
-      <description>
-        Key to cycle to the next entry in the clipboard
-      </description>
+      <summary>Shortcut to cycle to the next clipboard entry</summary>
     </key>
     <key name="toggle-menu" type="as">
       <default><![CDATA[['<Ctrl>F9']]]></default>
-      <summary>Toggle the menu</summary>
-      <description>
-        Key to toggle the clipboard menu
-      </description>
+      <summary>Shortcut to open the clipboard history</summary>
     </key>
     <key name="toggle-private-mode" type="as">
       <default><![CDATA[['<Ctrl>F8']]]></default>
       <summary>Toggle private mode</summary>
-      <description>
-        Key to toggle private mode
-      </description>
     </key>
   </schema>
 </schemalist>
