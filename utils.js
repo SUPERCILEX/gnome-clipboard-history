@@ -18,6 +18,7 @@ const OLD_REGISTRY_FILE = GLib.build_filenamev([REGISTRY_DIR, '/registry.txt']);
  *   on the order in which these add ops are discovered.
  */
 const DATABASE_FILE = GLib.build_filenamev([REGISTRY_DIR, '/database.log']);
+const BYTE_ORDER = Gio.DataStreamByteOrder.LITTLE_ENDIAN;
 
 // Don't use zero b/c DataInputStream uses 0 as its error value
 const OP_TYPE_SAVE_TEXT = 1;
@@ -74,7 +75,7 @@ function buildClipboardStateFromLog(callback) {
 
 function _parseLog(stream, callback) {
   stream = Gio.DataInputStream.new(stream);
-  stream.set_byte_order(Gio.DataStreamByteOrder.BIG_ENDIAN);
+  stream.set_byte_order(BYTE_ORDER);
   _consumeStream(
     stream,
     { entries: new DataStructures.LinkedList(), nextId: 1 },
@@ -344,7 +345,7 @@ function _writeToStream(stream, priority, callback) {
   const bufStream = Gio.BufferedOutputStream.new(stream);
   bufStream.set_auto_grow(true); // Blocks flushing, needed for hack
   const ioStream = Gio.DataOutputStream.new(bufStream);
-  ioStream.set_byte_order(Gio.DataStreamByteOrder.BIG_ENDIAN);
+  ioStream.set_byte_order(BYTE_ORDER);
 
   _writeCallbackBytesAsyncHack(callback, ioStream, priority, () => {
     ioStream.close_async(priority, null, (src, res) => {
