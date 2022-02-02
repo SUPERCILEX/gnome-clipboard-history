@@ -197,11 +197,11 @@ function _readAndConsumeOldFormat(callback) {
       }
 
       resetDatabase(() => state);
-      Gio.File.new_for_path(OLD_REGISTRY_FILE).delete_async(
+      Gio.File.new_for_path(OLD_REGISTRY_FILE).trash_async(
         0,
         null,
         (src, res) => {
-          src.delete_finish(res);
+          src.trash_finish(res);
         },
       );
 
