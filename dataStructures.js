@@ -1,6 +1,8 @@
 // Derived from
 // https://github.com/wooorm/linked-list/blob/d2390fe1cab9f780cfd34fa31c8fa8ede4ad674d/index.js
 
+var TYPE_TEXT = 'text';
+
 // Creates a new `Iterator` for looping over the `List`.
 class Iterator {
   constructor(item) {
@@ -19,7 +21,7 @@ class Iterator {
 // Creates a new `Item`:
 // An item is a bit like DOM node: It knows only about its “parent” (`list`),
 // the item before it (`prev`), and the item after it (`next`).
-var LinkedListItem = class Item {
+var LLNode = class Item {
   // Prepends the given item *before* the item operated on.
   prepend(item) {
     const list = this.list;
@@ -34,9 +36,13 @@ var LinkedListItem = class Item {
     if (!list) {
       return false;
     }
+    if (this === item) {
+      return false;
+    }
 
     // Detach the prependee.
-    item.detach();
+    const transient = this.list === item.list;
+    item.detach(transient);
 
     // If self has a previous item...
     if (this.prev) {
@@ -62,8 +68,10 @@ var LinkedListItem = class Item {
       list.tail = this;
     }
 
-    list.size++;
-    list.idsToItems[item.getId()] = item;
+    list.length++;
+    if (!transient) {
+      item._addToIndex();
+    }
 
     return item;
   }
@@ -81,9 +89,13 @@ var LinkedListItem = class Item {
     if (!list) {
       return false;
     }
+    if (this === item) {
+      return false;
+    }
 
     // Detach the appendee.
-    item.detach();
+    const transient = this.list === item.list;
+    item.detach(transient);
 
     // If self has a next item…
     if (this.next) {
@@ -104,18 +116,23 @@ var LinkedListItem = class Item {
       list.tail = item;
     }
 
-    list.size++;
-    list.idsToItems[item.getId()] = item;
+    list.length++;
+    if (!transient) {
+      item._addToIndex();
+    }
 
     return item;
   }
 
   // Detaches the item operated on from its parent list.
-  detach() {
+  detach(transient) {
     const list = this.list;
 
     if (!list) {
       return this;
+    }
+    if (!transient) {
+      this._removeFromIndex();
     }
 
     // If self is the last item in the parent list, link the lists last item to
@@ -150,17 +167,51 @@ var LinkedListItem = class Item {
     // parent list.
     this.prev = this.next = this.list = null;
 
-    list.size--;
-    delete list.idsToItems[this.getId()];
+    list.length--;
 
     return this;
   }
+
+  nextCyclic() {
+    return this.next || this.list.head;
+  }
+
+  prevCyclic() {
+    return this.prev || this.list.last();
+  }
+
+  _addToIndex() {
+    const hash = this._hash();
+    let entries = this.list.invertedIndex[hash];
+    if (!entries) {
+      entries = [];
+      this.list.invertedIndex[hash] = entries;
+    }
+    entries.push(this.id);
+    this.list.idsToItems[this.id] = this;
+  }
+
+  _removeFromIndex() {
+    const hash = this._hash();
+    const entries = this.list.invertedIndex[hash];
+    if (entries.length === 1) {
+      delete this.list.invertedIndex[hash];
+    } else {
+      entries.splice(entries.indexOf(this.id), 1);
+    }
+    delete this.list.idsToItems[this.id];
+  }
+
+  _hash() {
+    if (this.type === TYPE_TEXT) {
+      return _hashText(this.text);
+    } else {
+      throw new TypeError('Unknown type: ' + this.type);
+    }
+  }
 };
 
-LinkedListItem.prototype.next =
-  LinkedListItem.prototype.prev =
-  LinkedListItem.prototype.list =
-    null;
+LLNode.prototype.next = LLNode.prototype.prev = LLNode.prototype.list = null;
 
 // Creates a new List: A linked list is a bit like an Array, but knows nothing
 // about how many items are in it, and knows only about its first (`head`) and
@@ -182,6 +233,7 @@ var LinkedList = class List {
   constructor(...items) {
     appendAll(this, items);
     this.idsToItems = {};
+    this.invertedIndex = {};
   }
 
   // Returns the list’s items as an array.
@@ -218,8 +270,9 @@ var LinkedList = class List {
     item.detach();
     item.list = this;
     this.head = item;
-    this.size++;
-    this.idsToItems[item.getId()] = item;
+    this.length++;
+
+    item._addToIndex();
 
     return item;
   }
@@ -254,14 +307,34 @@ var LinkedList = class List {
     item.detach();
     item.list = this;
     this.head = item;
-    this.size++;
-    this.idsToItems[item.getId()] = item;
+    this.length++;
+
+    item._addToIndex();
 
     return item;
   }
 
+  last() {
+    return this.tail || this.head;
+  }
+
   findById(id) {
     return this.idsToItems[id];
+  }
+
+  findTextItem(text) {
+    const entries = this.invertedIndex[_hashText(text)];
+    if (!entries) {
+      return null;
+    }
+
+    for (let i = entries.length - 1; i >= 0; i--) {
+      const item = this.idsToItems[entries[i]];
+      if (item.type === TYPE_TEXT && item.text === text) {
+        return item;
+      }
+    }
+    return null;
   }
 
   // Creates an iterator from the list.
@@ -270,7 +343,7 @@ var LinkedList = class List {
   }
 };
 
-LinkedList.prototype.size = 0;
+LinkedList.prototype.length = 0;
 LinkedList.prototype.tail = LinkedList.prototype.head = null;
 
 // Creates a new list from the items passed in.
@@ -300,4 +373,27 @@ function appendAll(list, items) {
   }
 
   return list;
+}
+
+function _hashText(text) {
+  // The goal of this hash function is to be extremely fast while minimizing collisions. To do
+  // this, we make an assumption about our data. If users copy text, the guess is that there is
+  // a very low likelihood of collisions when the text is very long. For example, why would
+  // someone copy two different pieces of text that are exactly 29047 characters long? However, for
+  // smaller pieces of text, it's very easy to get length collisions. For example, I can copy "the"
+  // and "123" to cause a collision. Thus, our hash function returns the string length for longer
+  // strings while using an ok-ish hash for short strings.
+
+  if (text.length > 500) {
+    return text.length;
+  }
+
+  // Copied from https://stackoverflow.com/a/7616484/4548500
+  let hash = 0;
+  for (let i = 0; i < text.length; i++) {
+    let chr = text.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0; // Convert to integer
+  }
+  return hash;
 }

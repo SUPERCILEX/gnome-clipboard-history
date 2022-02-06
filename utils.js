@@ -4,7 +4,7 @@ const { GLib, Gio } = imports.gi;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
-const DataStructures = Me.imports.dataStructures;
+const DS = Me.imports.dataStructures;
 
 const REGISTRY_DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), Me.uuid]);
 const OLD_REGISTRY_FILE = GLib.build_filenamev([REGISTRY_DIR, '/registry.txt']);
@@ -40,20 +40,6 @@ function init() {
   }
 }
 
-class TextEntry extends DataStructures.LinkedListItem {
-  constructor(id, text) {
-    super();
-    this.id = id;
-    this.type = 'text';
-    this.text = text;
-    this.favorite = false;
-  }
-
-  getId() {
-    return this.id;
-  }
-}
-
 function buildClipboardStateFromLog(callback) {
   if (typeof callback !== 'function') {
     throw TypeError('`callback` must be a function');
@@ -76,18 +62,26 @@ function buildClipboardStateFromLog(callback) {
 function _parseLog(stream, callback) {
   stream = Gio.DataInputStream.new(stream);
   stream.set_byte_order(BYTE_ORDER);
-  _consumeStream(
-    stream,
-    { entries: new DataStructures.LinkedList(), nextId: 1 },
-    callback,
-  );
+
+  const state = {
+    entries: new DS.LinkedList(),
+    favorites: new DS.LinkedList(),
+    nextId: 1,
+  };
+  _consumeStream(stream, state, callback);
 }
 
 function _consumeStream(stream, state, callback) {
+  const finish = () => {
+    for (const favorite of state.favorites) {
+      state.entries.append(favorite);
+    }
+    callback(state.entries, state.nextId);
+  };
   const forceFill = (minBytes, fillCallback) => {
     stream.fill_async(/*count=*/ -1, 0, null, (src, res) => {
       if (src.fill_finish(res) < minBytes) {
-        callback(state.entries.toArray(), state.nextId);
+        finish();
       } else {
         fillCallback();
       }
@@ -118,7 +112,13 @@ function _consumeStream(stream, state, callback) {
         const [text] = src.read_upto_finish(res);
         src.read_byte(null);
 
-        state.entries.append(new TextEntry(state.nextId++, text));
+        const node = new DS.LLNode();
+        node.diskId = node.id = state.nextId++;
+        node.type = DS.TYPE_TEXT;
+        node.text = text;
+        node.favorite = false;
+        state.entries.append(node);
+
         _consumeStream(stream, state, callback);
       },
     );
@@ -126,29 +126,41 @@ function _consumeStream(stream, state, callback) {
   } else if (opType === OP_TYPE_DELETE_TEXT) {
     parseAvailableAware(4, () => {
       const id = stream.read_uint32(null);
-      state.entries.findById(id).detach();
+      (state.entries.findById(id) || state.favorites.findById(id)).detach();
     });
     uselessOpCount += 2;
   } else if (opType === OP_TYPE_FAVORITE_ITEM) {
     parseAvailableAware(4, () => {
       const id = stream.read_uint32(null);
-      state.entries.findById(id).favorite = true;
+      const entry = state.entries.findById(id);
+
+      entry.favorite = true;
+      state.favorites.append(entry);
     });
   } else if (opType === OP_TYPE_UNFAVORITE_ITEM) {
     parseAvailableAware(4, () => {
       const id = stream.read_uint32(null);
-      state.entries.findById(id).favorite = false;
+      const entry = state.favorites.findById(id);
+
+      entry.favorite = false;
+      state.entries.append(entry);
     });
     uselessOpCount += 2;
   } else if (opType === OP_TYPE_MOVE_ITEM_TO_END) {
     parseAvailableAware(4, () => {
       const id = stream.read_uint32(null);
-      state.entries.append(state.entries.findById(id).detach());
+      const entry = state.entries.findById(id) || state.favorites.findById(id);
+
+      if (entry.favorite) {
+        state.favorites.append(entry);
+      } else {
+        state.entries.append(entry);
+      }
     });
     uselessOpCount++;
   } else {
     log(Me.uuid, 'Unknown op type, aborting load.', opType);
-    callback(state.entries.toArray(), state.nextId);
+    finish();
     return;
   }
 
@@ -159,7 +171,8 @@ function _readAndConsumeOldFormat(callback) {
   Gio.File.new_for_path(OLD_REGISTRY_FILE).load_contents_async(
     null,
     (src, res) => {
-      const state = [];
+      const entries = new DS.LinkedList();
+      const favorites = new DS.LinkedList();
       let id = 1;
 
       let contents;
@@ -167,7 +180,7 @@ function _readAndConsumeOldFormat(callback) {
         [, contents] = src.load_contents_finish(res);
       } catch (e) {
         if (e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
-          callback(state, id);
+          callback(entries, id);
           return;
         } else {
           throw e;
@@ -182,21 +195,30 @@ function _readAndConsumeOldFormat(callback) {
       }
 
       for (const entry of registry) {
+        const node = new DS.LLNode();
+
+        node.diskId = node.id = id;
+        node.type = DS.TYPE_TEXT;
         if (typeof entry === 'string') {
-          state.push({ id, type: 'text', text: entry, favorite: false });
+          node.text = entry;
+          node.favorite = false;
+
+          entries.append(node);
         } else {
-          state.push({
-            id,
-            type: 'text',
-            text: entry.contents,
-            favorite: entry.favorite,
-          });
+          node.text = entry.contents;
+          node.favorite = entry.favorite;
+
+          favorites.append(node);
         }
 
         id++;
       }
 
-      resetDatabase(() => state);
+      for (const favorite of favorites) {
+        entries.append(favorite);
+      }
+
+      resetDatabase(() => entries.toArray());
       Gio.File.new_for_path(OLD_REGISTRY_FILE).trash_async(
         0,
         null,
@@ -205,7 +227,7 @@ function _readAndConsumeOldFormat(callback) {
         },
       );
 
-      callback(state, id);
+      callback(entries, id);
     },
   );
 }
@@ -238,7 +260,7 @@ function resetDatabase(currentStateBuilder) {
         do {
           const entry = state[i];
 
-          if (entry.type === 'text') {
+          if (entry.type === DS.TYPE_TEXT) {
             _storeTextOp(entry.text)(dataStream);
           } else {
             throw new TypeError('Unknown type: ' + entry.type);

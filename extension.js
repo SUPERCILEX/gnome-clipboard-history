@@ -32,10 +32,13 @@ const SETTING_KEY_TOGGLE_MENU = 'toggle-menu';
 const SETTING_KEY_PRIVATE_MODE = 'toggle-private-mode';
 const INDICATOR_ICON = 'edit-paste-symbolic';
 
+const PAGE_SIZE = 50;
+
 const IndicatorName = 'ClipboardIndicator';
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Utils = Me.imports.utils;
+const DS = Me.imports.dataStructures;
 const ConfirmDialog = Me.imports.confirmDialog;
 const Prefs = Me.imports.prefs;
 
@@ -85,7 +88,6 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._disconnectSettings();
     this._unbindShortcuts();
     this._disconnectSelectionListener();
-    this._clearDelayedSelectionTimeout();
 
     super.destroy();
   }
@@ -150,14 +152,60 @@ class ClipboardIndicator extends PanelMenu.Button {
       this.menu.addMenuItem(this.scrollViewMenuSection);
 
       // Add cached items
-      this.nextId = nextId;
-      this.fastLookupMap = {};
-      for (let i = history.length - 1; i >= 0; i--) {
-        this._addEntry(history[i], i === history.length - 1, true);
-        this._insertEntryIntoFastLookupMap(history[i]);
+      /**
+       * This field stores the number of items in the historySection to avoid calling _getMenuItems
+       * since that method is slow.
+       */
+      this.activeHistoryMenuItems = 0;
+      /**
+       * These two IDs are extremely important: making a mistake with either one breaks the
+       * extension. Both IDs are globally unique within compaction intervals. The normal ID is
+       * *always* present and valid -- it allows us to build an inverted index so we can find
+       * previously copied items in O(1) time. The Disk ID is only present when we cache all
+       * entries. This additional complexity is needed to know what the ID of an item is on disk as
+       * compared to in memory when we're only caching favorites.
+       */
+      this.nextDiskId = this.nextId = nextId;
+      /**
+       * DS.LinkedList is the actual clipboard history and source of truth. Never use historySection
+       * or favoritesSection as the source of truth as these may get outdated during pagination.
+       *
+       * Entries *may* have a menuItem attached, meaning they are currently visible. On the other
+       * hand, menu items must always have an entry attached.
+       */
+      this.entries = history;
+      for (
+        let i = 0, entry = history.last();
+        i < PAGE_SIZE && entry;
+        entry = entry.prev
+      ) {
+        this._addEntry(entry, i === 0 && !entry.favorite, true);
+        if (!entry.favorite) {
+          i++;
+        }
       }
 
-      // Add separator
+      this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
+      // Prev/next page buttons
+      const pageNavigationContainer = new PopupMenu.PopupMenuItem('', {
+        hover: false,
+        can_focus: false,
+      });
+
+      const prevPage = new St.Button({
+        label: _('Previous page'),
+        x_expand: true,
+      });
+      prevPage.connect('clicked', this._navigatePrevPage.bind(this));
+      pageNavigationContainer.add_child(prevPage);
+
+      const nextPage = new St.Button({ label: _('Next page'), x_expand: true });
+      nextPage.connect('clicked', this._navigateNextPage.bind(this));
+      pageNavigationContainer.add_child(nextPage);
+
+      this.menu.addMenuItem(pageNavigationContainer);
+
       this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
       // Private mode switch
@@ -183,7 +231,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       // Add 'Settings' menu item to open settings
       const settingsMenuItem = new PopupMenu.PopupMenuItem(_('Settings'));
       this.menu.addMenuItem(settingsMenuItem);
-      settingsMenuItem.connect('activate', this._openSettings.bind(this));
+      settingsMenuItem.connect('activate', () => ExtensionUtils.openPrefs());
 
       this._setupSelectionChangeListener();
     });
@@ -227,7 +275,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     // Delete button
     const icon = new St.Icon({
-      icon_name: 'edit-delete-symbolic', //'mail-attachment-symbolic',
+      icon_name: 'edit-delete-symbolic',
       style_class: 'system-status-icon',
     });
 
@@ -242,66 +290,43 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     menuItem.actor.add_child(icoBtn);
     icoBtn.connect('button-press-event', () => {
-      this._deleteItemAndRestoreLatest(menuItem);
+      this._deleteEntryAndRestoreLatest(menuItem.entry);
+    });
+
+    menuItem.connect('destroy', () => {
+      delete menuItem.entry.menuItem;
+      if (!menuItem.entry.favorite) {
+        this.activeHistoryMenuItems--;
+        this._maybeRestoreMenuPages();
+      }
     });
 
     if (entry.favorite) {
       this.favoritesSection.addMenuItem(menuItem, insertIndex);
     } else {
       this.historySection.addMenuItem(menuItem, insertIndex);
+
+      this.activeHistoryMenuItems++;
+      this._maybeReclaimMenuPages();
     }
 
-    if (selectEntry === true) {
-      this._selectMenuItem(menuItem, updateClipboard);
-    }
-  }
-
-  _insertEntryIntoFastLookupMap(entry) {
-    if (entry.type === 'text') {
-      let entries = this.fastLookupMap[entry.text.length];
-      if (!entries) {
-        entries = [];
-        this.fastLookupMap[entry.text.length] = entries;
-      }
-      entries.push(entry);
+    if (selectEntry) {
+      this._selectEntry(entry, updateClipboard);
     }
   }
 
-  _fastTextEntryLookup(text) {
-    const entries = this.fastLookupMap[text.length];
-    if (!entries) {
-      return null;
-    }
-
-    for (const entry of entries) {
-      if (entry.type === 'text' && entry.text === text) {
-        return entry;
-      }
-    }
-    return null;
-  }
-
-  _removeEntryFromFastLookupMap(entry) {
-    if (entry.type === 'text') {
-      const entries = this.fastLookupMap[entry.text.length];
-      entries.splice(entries.indexOf(entry.text), 1);
-    }
-  }
-
-  _updateButtonText(menuItem) {
+  _updateButtonText(entry) {
     if (
       !(TOPBAR_DISPLAY_MODE === 1 || TOPBAR_DISPLAY_MODE === 2) ||
-      (menuItem && menuItem.entry.type !== 'text')
+      (entry && entry.type !== DS.TYPE_TEXT)
     ) {
       return;
     }
 
     if (PRIVATE_MODE) {
       this._buttonText.set_text('...');
-    } else if (menuItem) {
-      this._buttonText.set_text(
-        this._truncated(menuItem.entry.text, MAX_TOPBAR_LENGTH),
-      );
+    } else if (entry) {
+      this._buttonText.set_text(this._truncated(entry.text, MAX_TOPBAR_LENGTH));
     } else {
       this._buttonText.set_text('');
     }
@@ -309,32 +334,34 @@ class ClipboardIndicator extends PanelMenu.Button {
 
   _setEntryLabel(menuItem) {
     const entry = menuItem.entry;
-    if (entry.type === 'text') {
+    if (entry.type === DS.TYPE_TEXT) {
       menuItem.label.set_text(this._truncated(entry.text, MAX_ENTRY_LENGTH));
+    } else {
+      throw new TypeError('Unknown type: ' + entry.type);
     }
   }
 
   _favoriteToggle(menuItem) {
     const entry = menuItem.entry;
-    const wasSelected = this.currentlySelectedMenuItem === menuItem;
+    const wasSelected = this.currentlySelectedEntry.id === entry.id;
 
-    this._removeEntry(menuItem);
+    this.entries.append(entry); // Move to front (end of list)
+    this._removeEntry(entry);
     entry.favorite = !entry.favorite;
     this._addEntry(entry, wasSelected, true, 0);
 
     if (CACHE_ONLY_FAVORITES) {
       if (entry.favorite) {
-        entry.id = this.nextId++;
+        entry.diskId = this.nextDiskId++;
 
         Utils.storeTextEntry(entry.text);
-        Utils.updateFavoriteStatus(entry.id, true);
+        Utils.updateFavoriteStatus(entry.diskId, true);
       } else {
-        Utils.deleteTextEntry(entry.id);
-        delete entry.id;
+        Utils.deleteTextEntry(entry.diskId);
+        delete entry.diskId;
       }
     } else {
-      Utils.updateFavoriteStatus(entry.id, entry.favorite);
-      Utils.moveEntryToEnd(entry.id);
+      Utils.updateFavoriteStatus(entry.diskId, entry.favorite);
     }
   }
 
@@ -364,45 +391,48 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _clearHistory() {
-    if (
-      this.currentlySelectedMenuItem &&
-      !this.currentlySelectedMenuItem.entry.favorite
-    ) {
+    if (this.currentlySelectedEntry && !this.currentlySelectedEntry.favorite) {
       this._resetSelectedMenuItem();
     }
     this.historySection.removeAll();
 
-    // Rebuild the lookup map from scratch since presumably people have fewer favorites than actual
+    // Rebuild the entries from scratch since presumably people have fewer favorites than actual
     // items.
-    this.fastLookupMap = {};
+    this.entries = new DS.LinkedList();
+    // This _getMenuItems access is safe because we don't paginate favorites for now
     this.favoritesSection._getMenuItems().forEach((item) => {
-      this._insertEntryIntoFastLookupMap(item.entry);
+      this.entries.prepend(item.entry);
     });
 
     Utils.resetDatabase(this._currentStateBuilder.bind(this));
   }
 
-  _removeEntry(menuItem, fullyDelete) {
+  _removeEntry(entry, fullyDelete) {
     if (fullyDelete) {
-      this._removeEntryFromFastLookupMap(menuItem.entry);
+      entry.detach();
 
-      if (menuItem.entry.id) {
-        Utils.deleteTextEntry(menuItem.entry.id);
+      if (entry.diskId) {
+        Utils.deleteTextEntry(entry.diskId);
       }
     }
 
-    if (menuItem === this.currentlySelectedMenuItem) {
+    if (entry.id === this.currentlySelectedEntry.id) {
       this._resetSelectedMenuItem();
     }
-    menuItem.destroy();
+    entry.menuItem?.destroy();
   }
 
   _pruneOldestEntries() {
-    // Favorites don't count, so only look at historySection
-    const items = this.historySection._getMenuItems();
-    let i = items.length - 1;
-    while (i >= MAX_REGISTRY_LENGTH) {
-      this._removeEntry(items[i--], true);
+    let entry = this.entries.head;
+    while (entry && this.entries.length > MAX_REGISTRY_LENGTH) {
+      if (entry.favorite) {
+        // Favorites don't count, so ignore
+        continue;
+      }
+
+      const next = entry.next;
+      this._removeEntry(entry, true);
+      entry = next;
     }
 
     // TODO prune by num bytes
@@ -410,17 +440,17 @@ class ClipboardIndicator extends PanelMenu.Button {
     Utils.maybePerformLogCompaction(this._currentStateBuilder.bind(this));
   }
 
-  _selectMenuItem(menuItem, updateClipboard, triggerPaste) {
-    if (this.currentlySelectedMenuItem) {
-      this.currentlySelectedMenuItem.setOrnament(PopupMenu.Ornament.NONE);
-    }
-    this.currentlySelectedMenuItem = menuItem;
+  _selectEntry(entry, updateClipboard, triggerPaste) {
+    this.currentlySelectedEntry?.menuItem?.setOrnament(PopupMenu.Ornament.NONE);
+    this.currentlySelectedEntry = entry;
 
-    menuItem.setOrnament(PopupMenu.Ornament.DOT);
-    this._updateButtonText(menuItem);
+    entry.menuItem?.setOrnament(PopupMenu.Ornament.DOT);
+    this._updateButtonText(entry);
     if (updateClipboard !== false) {
-      if (menuItem.entry.type === 'text') {
-        this._setClipboardText(menuItem.entry.text);
+      if (entry.type === DS.TYPE_TEXT) {
+        this._setClipboardText(entry.text);
+      } else {
+        throw new TypeError('Unknown type: ' + entry.type);
       }
 
       if (PASTE_ON_SELECTION && triggerPaste) {
@@ -430,7 +460,9 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _setClipboardText(text) {
-    if (this._debouncing !== undefined) this._debouncing++;
+    if (this._debouncing !== undefined) {
+      this._debouncing++;
+    }
     Clipboard.set_text(CLIPBOARD_TYPE, text);
   }
 
@@ -466,15 +498,109 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _onMenuItemSelectedAndMenuClose(menuItem) {
-    this._selectMenuItem(menuItem, true, true);
     this._moveEntryFirst(menuItem.entry);
+    this._selectEntry(menuItem.entry, true, true);
     this.menu.close();
   }
 
   _resetSelectedMenuItem() {
-    this.currentlySelectedMenuItem = undefined;
+    this.currentlySelectedEntry = undefined;
     this._updateButtonText();
     this._setClipboardText('');
+  }
+
+  _maybeReclaimMenuPages() {
+    if (this.activeHistoryMenuItems < 2 * PAGE_SIZE) {
+      return;
+    }
+
+    const items = this.historySection._getMenuItems();
+    for (let i = items.length - 1; i >= PAGE_SIZE; i--) {
+      items[i].destroy();
+    }
+  }
+
+  _maybeRestoreMenuPages() {
+    if (this.activeHistoryMenuItems > 0) {
+      return;
+    }
+
+    let entry = this.entries.last();
+    while (entry && this.activeHistoryMenuItems < PAGE_SIZE) {
+      if (!entry.favorite) {
+        this._addEntry(entry);
+      }
+
+      entry = entry.prev;
+    }
+  }
+
+  /**
+   * Our pagination implementation is purposefully "broken." The idea is simply to do no unnecessary
+   * work. As a consequence, if a user navigates to some page and then starts copying/moving items,
+   * those items will appear on the currently visible page even though they don't belong there. This
+   * could kind of be considered a feature since it means you can go back to some cluster of copied
+   * items and start copying stuff from the same cluster and have it all show up together.
+   *
+   * Note that over time (as the user copies items), the page reclamation process will morph the
+   * current page into the first page. This is the only way to make the user-visible state match our
+   * backing store after changing pages.
+   *
+   * Also note that the use of `last` and `next` is correct. Menu items are ordered from latest to
+   * oldest whereas `entries` is ordered from oldest to latest.
+   */
+  _navigatePrevPage() {
+    const items = this.historySection._getMenuItems();
+    if (items.length === 0) {
+      return;
+    }
+
+    const start = items[0].entry;
+    for (
+      let entry = start.nextCyclic(), i = items.length - 1;
+      entry !== start && i >= 0;
+      entry = entry.nextCyclic()
+    ) {
+      if (entry.favorite) {
+        continue;
+      }
+
+      this._rewriteMenuItem(items[i--], entry);
+    }
+  }
+
+  _navigateNextPage() {
+    const items = this.historySection._getMenuItems();
+    if (items.length === 0) {
+      return;
+    }
+
+    const start = items[items.length - 1].entry;
+    for (
+      let entry = start.prevCyclic(), i = 0;
+      entry !== start && i < items.length;
+      entry = entry.prevCyclic()
+    ) {
+      if (entry.favorite) {
+        continue;
+      }
+
+      this._rewriteMenuItem(items[i++], entry);
+    }
+  }
+
+  _rewriteMenuItem(item, entry) {
+    if (item.entry.id === this.currentlySelectedEntry.id) {
+      item.setOrnament(PopupMenu.Ornament.NONE);
+    }
+
+    item.entry = entry;
+    entry.menuItem = item;
+
+    this._setEntryLabel(item);
+    if (entry.id === this.currentlySelectedEntry.id) {
+      item.setOrnament(PopupMenu.Ornament.DOT);
+    }
   }
 
   /* When text change, this function will check, for each item of the
@@ -499,7 +625,9 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _queryClipboard() {
-    if (PRIVATE_MODE) return;
+    if (PRIVATE_MODE) {
+      return;
+    }
 
     Clipboard.get_text(CLIPBOARD_TYPE, (clipBoard, text) => {
       this._processClipboardContent(text);
@@ -519,20 +647,20 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    let entry = this._fastTextEntryLookup(text);
+    let entry = this.entries.findTextItem(text);
     if (entry) {
-      this._selectMenuItem(entry.menuItem, false);
       this._moveEntryFirst(entry);
+      this._selectEntry(entry, false);
     } else {
-      entry = {
-        id: CACHE_ONLY_FAVORITES ? undefined : this.nextId++,
-        type: 'text',
-        text,
-        favorite: false,
-      };
+      entry = new DS.LLNode();
+      entry.id = this.nextId++;
+      entry.diskId = CACHE_ONLY_FAVORITES ? undefined : this.nextDiskId++;
+      entry.type = DS.TYPE_TEXT;
+      entry.text = text;
+      entry.favorite = false;
+      this.entries.append(entry);
       this._addEntry(entry, true, false, 0);
 
-      this._insertEntryIntoFastLookupMap(entry);
       if (!CACHE_ONLY_FAVORITES) {
         Utils.storeTextEntry(text);
       }
@@ -542,7 +670,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (NOTIFY_ON_COPY) {
       this._showNotification(_('Copied to clipboard'), (notif) => {
         notif.addAction(_('Cancel'), () =>
-          this._deleteItemAndRestoreLatest(this.currentlySelectedMenuItem),
+          this._deleteEntryAndRestoreLatest(this.currentlySelectedEntry),
         );
       });
     }
@@ -559,33 +687,31 @@ class ClipboardIndicator extends PanelMenu.Button {
     } else {
       menu = this.historySection;
     }
-    menu.moveMenuItem(entry.menuItem, 0);
+    if (entry.menuItem) {
+      menu.moveMenuItem(entry.menuItem, 0);
+    } else {
+      this._addEntry(entry, false, false, 0);
+    }
 
-    if (entry.id) {
-      Utils.moveEntryToEnd(entry.id);
+    this.entries.append(entry);
+    if (entry.diskId) {
+      Utils.moveEntryToEnd(entry.diskId);
     }
   }
 
   _currentStateBuilder() {
-    let state = this._getAllMenuItems();
-    if (CACHE_ONLY_FAVORITES) {
-      state = state.filter((item) => item.entry.favorite);
-    }
-    state = state.map((item) => item.entry);
-    state.reverse();
+    const state = [];
 
-    this.nextId = 1;
-    for (const entry of state) {
+    this.nextDiskId = this.nextId = 1;
+    for (const entry of this.entries) {
       entry.id = this.nextId++;
+      if (!CACHE_ONLY_FAVORITES || entry.favorite) {
+        entry.diskId = this.nextDiskId++;
+        state.push(entry);
+      }
     }
 
     return state;
-  }
-
-  _getAllMenuItems() {
-    return this.historySection
-      ._getMenuItems()
-      .concat(this.favoritesSection._getMenuItems());
   }
 
   _setupSelectionChangeListener() {
@@ -612,10 +738,6 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._selectionOwnerChangedId = undefined;
   }
 
-  _openSettings() {
-    ExtensionUtils.openPrefs();
-  }
-
   _initNotifSource() {
     if (this._notifSource) {
       return;
@@ -631,11 +753,11 @@ class ClipboardIndicator extends PanelMenu.Button {
     Main.messageTray.add(this._notifSource);
   }
 
-  _deleteItemAndRestoreLatest(menuItem) {
-    this._removeEntry(menuItem, true);
-    const nextItem = this.historySection.firstMenuItem;
-    if (nextItem) {
-      this._selectMenuItem(nextItem, true);
+  _deleteEntryAndRestoreLatest(entry) {
+    this._removeEntry(entry, true);
+    const nextEntry = this.entries.last();
+    if (nextEntry) {
+      this._selectEntry(nextEntry, true);
     }
   }
 
@@ -669,8 +791,8 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._updateButtonText();
     } else {
       this.icon.remove_style_class_name('private-mode');
-      if (this.currentlySelectedMenuItem) {
-        this._selectMenuItem(this.currentlySelectedMenuItem, true);
+      if (this.currentlySelectedEntry) {
+        this._selectEntry(this.currentlySelectedEntry, true);
       } else {
         this._resetSelectedMenuItem();
       }
@@ -730,19 +852,13 @@ class ClipboardIndicator extends PanelMenu.Button {
       prevCacheOnlyFavorites !== undefined &&
       CACHE_ONLY_FAVORITES !== prevCacheOnlyFavorites
     ) {
-      if (CACHE_ONLY_FAVORITES) {
-        this._getAllMenuItems().forEach((item) => {
-          if (!item.entry.favorite) {
-            Utils.deleteTextEntry(item.entry.id);
-            delete item.entry.id;
-          }
-        });
-      } else {
-        let items = this._getAllMenuItems();
-        for (let i = items.length - 1; i >= 0; i--) {
-          const entry = items[i].entry;
-          if (!entry.favorite) {
-            entry.id = this.nextId++;
+      for (const entry of this.entries) {
+        if (!entry.favorite) {
+          if (CACHE_ONLY_FAVORITES) {
+            Utils.deleteTextEntry(entry.diskId);
+            delete entry.diskId;
+          } else {
+            entry.diskId = this.nextDiskId++;
             Utils.storeTextEntry(entry.text);
           }
         }
@@ -757,13 +873,13 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._pruneOldestEntries();
 
     // Re-set menu-items labels in case preview size changed
-    this._getAllMenuItems().forEach((item) => {
-      this._setEntryLabel(item);
-    });
+    const resetLabel = (item) => this._setEntryLabel(item);
+    this.favoritesSection._getMenuItems().forEach(resetLabel);
+    this.historySection._getMenuItems().forEach(resetLabel);
 
     this._updateTopbarLayout();
-    if (this.currentlySelectedMenuItem) {
-      this._updateButtonText(this.currentlySelectedMenuItem);
+    if (this.currentlySelectedEntry) {
+      this._updateButtonText(this.currentlySelectedEntry);
     }
 
     if (ENABLE_KEYBINDING) {
@@ -879,33 +995,19 @@ class ClipboardIndicator extends PanelMenu.Button {
     });
   }
 
-  _selectEntryWithDelay(entry) {
-    this._selectMenuItem(entry, false);
-    this._delayedSelectionTimeoutId = Mainloop.timeout_add(1000, () => {
-      this._selectMenuItem(entry); //select the item
-
-      this._delayedSelectionTimeoutId = null;
-      return false;
-    });
-  }
-
-  _clearDelayedSelectionTimeout() {
-    if (this._delayedSelectionTimeoutId) {
-      Mainloop.source_remove(this._delayedSelectionTimeoutId);
-    }
-  }
-
-  _truncated(string, length) {
-    // TODO optimize
+  _truncated(s, length) {
+    // Reduce regex search space. If the string is mostly whitespace,
+    // we might end up removing too many characters, but oh well.
+    s = s.substring(0, length + 100);
 
     // Remove new lines and extra spaces so the text fits nicely on one line
-    let shortened = string.replace(/\s+/g, ' ');
+    s = s.replace(/\s+/g, ' ').trim();
 
-    if (shortened.length > length) {
-      shortened = shortened.substring(0, length - 3) + '...';
+    if (s.length > length) {
+      s = s.substring(0, length - 3) + '...';
     }
 
-    return shortened;
+    return s;
   }
 }
 
