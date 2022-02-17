@@ -79,7 +79,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     hbox.add(this._downArrow);
     this.add_child(hbox);
 
-    this._loadSettings();
+    this._fetchSettings();
     this._buildMenu();
     this._updateTopbarLayout();
   }
@@ -93,65 +93,107 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _buildMenu() {
+    this.searchEntry = new St.Entry({
+      name: 'searchEntry',
+      style_class: 'search-entry',
+      can_focus: true,
+      hint_text: _('Type here to search...'),
+      track_hover: true,
+      x_expand: true,
+      y_expand: true,
+    });
+
+    const entryItem = new PopupMenu.PopupBaseMenuItem({
+      reactive: false,
+      can_focus: false,
+    });
+    entryItem.add(this.searchEntry);
+    this.menu.addMenuItem(entryItem);
+
+    this.menu.connect('open-state-changed', (self, open) => {
+      if (open) {
+        global.stage.set_key_focus(this.searchEntry);
+        this.searchEntry.set_text('');
+      }
+    });
+
+    // Create menu sections for items
+    // Favorites
+    this.favoritesSection = new PopupMenu.PopupMenuSection();
+
+    this.scrollViewFavoritesMenuSection = new PopupMenu.PopupMenuSection();
+    const favoritesScrollView = new St.ScrollView({
+      style_class: 'ci-history-menu-section',
+      overlay_scrollbars: true,
+    });
+    favoritesScrollView.add_actor(this.favoritesSection.actor);
+
+    this.scrollViewFavoritesMenuSection.actor.add_actor(favoritesScrollView);
+    this.menu.addMenuItem(this.scrollViewFavoritesMenuSection);
+    this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
+    // History
+    this.historySection = new PopupMenu.PopupMenuSection();
+
+    this.scrollViewMenuSection = new PopupMenu.PopupMenuSection();
+    const historyScrollView = new St.ScrollView({
+      style_class: 'ci-history-menu-section',
+      overlay_scrollbars: true,
+    });
+    historyScrollView.add_actor(this.historySection.actor);
+
+    this.scrollViewMenuSection.actor.add_actor(historyScrollView);
+
+    this.menu.addMenuItem(this.scrollViewMenuSection);
+
+    this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
+    // Prev/next page buttons
+    const pageNavigationContainer = new PopupMenu.PopupMenuItem('', {
+      hover: false,
+      can_focus: false,
+    });
+
+    const prevPage = new St.Button({
+      label: _('Previous page'),
+      x_expand: true,
+    });
+    prevPage.connect('clicked', this._navigatePrevPage.bind(this));
+    pageNavigationContainer.add_child(prevPage);
+
+    const nextPage = new St.Button({ label: _('Next page'), x_expand: true });
+    nextPage.connect('clicked', this._navigateNextPage.bind(this));
+    pageNavigationContainer.add_child(nextPage);
+
+    this.menu.addMenuItem(pageNavigationContainer);
+
+    this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+
+    // Private mode switch
+    this.privateModeMenuItem = new PopupMenu.PopupSwitchMenuItem(
+      _('Private mode'),
+      PRIVATE_MODE,
+      { reactive: true },
+    );
+    this.privateModeMenuItem.connect('toggled', () => {
+      Prefs.Settings.set_boolean(
+        Prefs.Fields.PRIVATE_MODE,
+        this.privateModeMenuItem.state,
+      );
+    });
+    this.menu.addMenuItem(this.privateModeMenuItem);
+    this._updatePrivateModeState();
+
+    // Add 'Clear' button which removes all items from cache
+    const clearMenuItem = new PopupMenu.PopupMenuItem(_('Clear history'));
+    this.menu.addMenuItem(clearMenuItem);
+
+    // Add 'Settings' menu item to open settings
+    const settingsMenuItem = new PopupMenu.PopupMenuItem(_('Settings'));
+    this.menu.addMenuItem(settingsMenuItem);
+    settingsMenuItem.connect('activate', () => ExtensionUtils.openPrefs());
+
     Store.buildClipboardStateFromLog((history, nextId) => {
-      this.searchEntry = new St.Entry({
-        name: 'searchEntry',
-        style_class: 'search-entry',
-        can_focus: true,
-        hint_text: _('Type here to search...'),
-        track_hover: true,
-        x_expand: true,
-        y_expand: true,
-      });
-
-      this.searchEntry
-        .get_clutter_text()
-        .connect('text-changed', this._onSearchTextChanged.bind(this));
-
-      const entryItem = new PopupMenu.PopupBaseMenuItem({
-        reactive: false,
-        can_focus: false,
-      });
-      entryItem.add(this.searchEntry);
-      this.menu.addMenuItem(entryItem);
-
-      this.menu.connect('open-state-changed', (self, open) => {
-        if (open) {
-          global.stage.set_key_focus(this.searchEntry);
-          this.searchEntry.set_text('');
-        }
-      });
-
-      // Create menu sections for items
-      // Favorites
-      this.favoritesSection = new PopupMenu.PopupMenuSection();
-
-      this.scrollViewFavoritesMenuSection = new PopupMenu.PopupMenuSection();
-      const favoritesScrollView = new St.ScrollView({
-        style_class: 'ci-history-menu-section',
-        overlay_scrollbars: true,
-      });
-      favoritesScrollView.add_actor(this.favoritesSection.actor);
-
-      this.scrollViewFavoritesMenuSection.actor.add_actor(favoritesScrollView);
-      this.menu.addMenuItem(this.scrollViewFavoritesMenuSection);
-      this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-
-      // History
-      this.historySection = new PopupMenu.PopupMenuSection();
-
-      this.scrollViewMenuSection = new PopupMenu.PopupMenuSection();
-      const historyScrollView = new St.ScrollView({
-        style_class: 'ci-history-menu-section',
-        overlay_scrollbars: true,
-      });
-      historyScrollView.add_actor(this.historySection.actor);
-
-      this.scrollViewMenuSection.actor.add_actor(historyScrollView);
-
-      this.menu.addMenuItem(this.scrollViewMenuSection);
-
-      // Add cached items
       /**
        * This field stores the number of items in the historySection to avoid calling _getMenuItems
        * since that method is slow.
@@ -185,53 +227,18 @@ class ClipboardIndicator extends PanelMenu.Button {
         }
       }
 
-      this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-
-      // Prev/next page buttons
-      const pageNavigationContainer = new PopupMenu.PopupMenuItem('', {
-        hover: false,
-        can_focus: false,
-      });
-
-      const prevPage = new St.Button({
-        label: _('Previous page'),
-        x_expand: true,
-      });
-      prevPage.connect('clicked', this._navigatePrevPage.bind(this));
-      pageNavigationContainer.add_child(prevPage);
-
-      const nextPage = new St.Button({ label: _('Next page'), x_expand: true });
-      nextPage.connect('clicked', this._navigateNextPage.bind(this));
-      pageNavigationContainer.add_child(nextPage);
-
-      this.menu.addMenuItem(pageNavigationContainer);
-
-      this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
-
-      // Private mode switch
-      this.privateModeMenuItem = new PopupMenu.PopupSwitchMenuItem(
-        _('Private mode'),
-        PRIVATE_MODE,
-        { reactive: true },
+      this._settingsChangedId = Prefs.Settings.connect(
+        'changed',
+        this._onSettingsChange.bind(this),
       );
-      this.privateModeMenuItem.connect('toggled', () => {
-        Prefs.Settings.set_boolean(
-          Prefs.Fields.PRIVATE_MODE,
-          this.privateModeMenuItem.state,
-        );
-      });
-      this.menu.addMenuItem(this.privateModeMenuItem);
-      this._updatePrivateModeState();
+      if (ENABLE_KEYBINDING) {
+        this._bindShortcuts();
+      }
 
-      // Add 'Clear' button which removes all items from cache
-      const clearMenuItem = new PopupMenu.PopupMenuItem(_('Clear history'));
-      this.menu.addMenuItem(clearMenuItem);
+      this.searchEntry
+        .get_clutter_text()
+        .connect('text-changed', this._onSearchTextChanged.bind(this));
       clearMenuItem.connect('activate', this._removeAll.bind(this));
-
-      // Add 'Settings' menu item to open settings
-      const settingsMenuItem = new PopupMenu.PopupMenuItem(_('Settings'));
-      this.menu.addMenuItem(settingsMenuItem);
-      settingsMenuItem.connect('activate', () => ExtensionUtils.openPrefs());
 
       this._setupSelectionChangeListener();
     });
@@ -802,19 +809,6 @@ class ClipboardIndicator extends PanelMenu.Button {
       } else {
         this._resetSelectedMenuItem();
       }
-    }
-  }
-
-  _loadSettings() {
-    this._settingsChangedId = Prefs.Settings.connect(
-      'changed',
-      this._onSettingsChange.bind(this),
-    );
-
-    this._fetchSettings();
-
-    if (ENABLE_KEYBINDING) {
-      this._bindShortcuts();
     }
   }
 
