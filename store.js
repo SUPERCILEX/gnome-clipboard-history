@@ -296,7 +296,7 @@ function resetDatabase(currentStateBuilder) {
               throw new TypeError('Unknown type: ' + entry.type);
             }
             if (entry.favorite) {
-              _updateFavoriteStatusOp(entry.id, true)(dataStream);
+              _updateFavoriteStatusOp(entry.diskId, true)(dataStream);
             }
 
             i++;
