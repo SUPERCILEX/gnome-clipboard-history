@@ -343,7 +343,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
   _favoriteToggle(menuItem) {
     const entry = menuItem.entry;
-    const wasSelected = this.currentlySelectedEntry.id === entry.id;
+    const wasSelected = this.currentlySelectedEntry?.id === entry.id;
 
     this.entries.append(entry); // Move to front (end of list)
     this._removeEntry(entry);
@@ -416,7 +416,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       }
     }
 
-    if (entry.id === this.currentlySelectedEntry.id) {
+    if (entry.id === this.currentlySelectedEntry?.id) {
       this._resetSelectedMenuItem();
     }
     entry.menuItem?.destroy();
@@ -590,7 +590,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _rewriteMenuItem(item, entry) {
-    if (item.entry.id === this.currentlySelectedEntry.id) {
+    if (item.entry.id === this.currentlySelectedEntry?.id) {
       item.setOrnament(PopupMenu.Ornament.NONE);
     }
 
@@ -598,7 +598,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     entry.menuItem = item;
 
     this._setEntryLabel(item);
-    if (entry.id === this.currentlySelectedEntry.id) {
+    if (entry.id === this.currentlySelectedEntry?.id) {
       item.setOrnament(PopupMenu.Ornament.DOT);
     }
   }
