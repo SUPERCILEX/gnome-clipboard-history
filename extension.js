@@ -37,7 +37,7 @@ const PAGE_SIZE = 50;
 const IndicatorName = 'ClipboardIndicator';
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
-const Utils = Me.imports.utils;
+const Store = Me.imports.store;
 const DS = Me.imports.dataStructures;
 const ConfirmDialog = Me.imports.confirmDialog;
 const Prefs = Me.imports.prefs;
@@ -93,7 +93,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _buildMenu() {
-    Utils.buildClipboardStateFromLog((history, nextId) => {
+    Store.buildClipboardStateFromLog((history, nextId) => {
       this.searchEntry = new St.Entry({
         name: 'searchEntry',
         style_class: 'search-entry',
@@ -354,14 +354,14 @@ class ClipboardIndicator extends PanelMenu.Button {
       if (entry.favorite) {
         entry.diskId = this.nextDiskId++;
 
-        Utils.storeTextEntry(entry.text);
-        Utils.updateFavoriteStatus(entry.diskId, true);
+        Store.storeTextEntry(entry.text);
+        Store.updateFavoriteStatus(entry.diskId, true);
       } else {
-        Utils.deleteTextEntry(entry.diskId);
+        Store.deleteTextEntry(entry.diskId);
         delete entry.diskId;
       }
     } else {
-      Utils.updateFavoriteStatus(entry.diskId, entry.favorite);
+      Store.updateFavoriteStatus(entry.diskId, entry.favorite);
     }
   }
 
@@ -404,7 +404,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       this.entries.prepend(item.entry);
     });
 
-    Utils.resetDatabase(this._currentStateBuilder.bind(this));
+    Store.resetDatabase(this._currentStateBuilder.bind(this));
   }
 
   _removeEntry(entry, fullyDelete) {
@@ -412,7 +412,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       entry.detach();
 
       if (entry.diskId) {
-        Utils.deleteTextEntry(entry.diskId);
+        Store.deleteTextEntry(entry.diskId);
       }
     }
 
@@ -437,7 +437,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     // TODO prune by num bytes
 
-    Utils.maybePerformLogCompaction(this._currentStateBuilder.bind(this));
+    Store.maybePerformLogCompaction(this._currentStateBuilder.bind(this));
   }
 
   _selectEntry(entry, updateClipboard, triggerPaste) {
@@ -662,7 +662,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._addEntry(entry, true, false, 0);
 
       if (!CACHE_ONLY_FAVORITES) {
-        Utils.storeTextEntry(text);
+        Store.storeTextEntry(text);
       }
       this._pruneOldestEntries();
     }
@@ -695,7 +695,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this.entries.append(entry);
     if (entry.diskId) {
-      Utils.moveEntryToEnd(entry.diskId);
+      Store.moveEntryToEnd(entry.diskId);
     }
   }
 
@@ -862,11 +862,11 @@ class ClipboardIndicator extends PanelMenu.Button {
         if (!entry.favorite) {
           if (CACHE_ONLY_FAVORITES) {
             // TODO Just perform a DB reset instead since we'll probably have to do a compaction right afterwards
-            Utils.deleteTextEntry(entry.diskId);
+            Store.deleteTextEntry(entry.diskId);
             delete entry.diskId;
           } else {
             entry.diskId = this.nextDiskId++;
-            Utils.storeTextEntry(entry.text);
+            Store.storeTextEntry(entry.text);
           }
         }
       }
@@ -1027,7 +1027,7 @@ function init() {
 let clipboardIndicator;
 
 function enable() {
-  Utils.init();
+  Store.init();
 
   clipboardIndicator = new ClipboardIndicatorObj();
   Main.panel.addToStatusArea(IndicatorName, clipboardIndicator, 1);
@@ -1037,5 +1037,5 @@ function disable() {
   clipboardIndicator.destroy();
   clipboardIndicator = undefined;
 
-  Utils.destroy();
+  Store.destroy();
 }
