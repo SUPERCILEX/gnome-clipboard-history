@@ -46,7 +46,7 @@ function init() {
 
 function destroy() {
   _pushToOpQueue((resolve) => {
-    writeStream.close_async(0, null, (src, res) => {
+    writeStream?.close_async(0, null, (src, res) => {
       src.close_finish(res);
       resolve();
     });
