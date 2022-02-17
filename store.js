@@ -258,6 +258,12 @@ function resetDatabase(currentStateBuilder) {
 
   const state = currentStateBuilder();
   _pushToOpQueue((resolve) => {
+    // Sigh, can't use truncate because it doesn't have an async variant. Instead, nuke the stream
+    // and let the next append re-create it. Note that we can't use this stream because it tries to
+    // apply our operations atomically and therefore writes to a temporary file instead of the one
+    // we asked for.
+    writeStream = undefined;
+
     const priority = -10;
     Gio.File.new_for_path(DATABASE_FILE).replace_async(
       /*etag=*/ null,
@@ -266,15 +272,21 @@ function resetDatabase(currentStateBuilder) {
       priority,
       null,
       (src, res) => {
-        writeStream = _intoDataStream(src.replace_finish(res));
+        const stream = _intoDataStream(src.replace_finish(res));
+        const finish = () => {
+          stream.close_async(priority, null, (src, res) => {
+            src.close_finish(res);
+            resolve();
+          });
+        };
 
         if (state.length === 0) {
-          resolve();
+          finish();
           return;
         }
 
         let i = 0;
-        _writeToStream(writeStream, priority, resolve, (dataStream) => {
+        _writeToStream(stream, priority, finish, (dataStream) => {
           do {
             const entry = state[i];
 
