@@ -1,0 +1,21 @@
+[package]
+name = "tools"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.53"
+clap = { version = "3.1.0", features = ["derive", "wrap_help"] }
+clap-num = "1.0.0"
+cli-errors = "0.3.0"
+dirs = "4.0.0"
+exitcode = "1.1.2"
+rand = { version = "0.8.5", features = ["simd_support"] }
+rand_distr = "0.4.3"
+rand_xoshiro = "0.6.0"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+panic = "abort"
