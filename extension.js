@@ -702,6 +702,12 @@ class ClipboardIndicator extends PanelMenu.Button {
   _currentStateBuilder() {
     const state = [];
 
+    // TODO With the op queue based write system, we should be able to progressively rebuild the
+    //  IDs with a polling lambda. All other updates would also have to use the lambda system to
+    //  get their item's ID since we could be in the middle of rewriting everything. This would
+    //  add significant complexity with the only benefit being that we chunk the work, thus freeing
+    //  the main thread while it is flushing to disk. Then again, all we're doing is some memory
+    //  allocations and ++, so I need to check the perf with 1M items.
     this.nextDiskId = this.nextId = 1;
     for (const entry of this.entries) {
       entry.id = this.nextId++;
@@ -855,6 +861,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       for (const entry of this.entries) {
         if (!entry.favorite) {
           if (CACHE_ONLY_FAVORITES) {
+            // TODO Just perform a DB reset instead since we'll probably have to do a compaction right afterwards
             Utils.deleteTextEntry(entry.diskId);
             delete entry.diskId;
           } else {
@@ -1029,4 +1036,6 @@ function enable() {
 function disable() {
   clipboardIndicator.destroy();
   clipboardIndicator = undefined;
+
+  Utils.destroy();
 }

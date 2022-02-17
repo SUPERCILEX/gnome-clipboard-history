@@ -182,6 +182,10 @@ var LLNode = class Item {
 
   _addToIndex() {
     const hash = this._hash();
+    if (hash === undefined || hash === null) {
+      return;
+    }
+
     let entries = this.list.invertedIndex[hash];
     if (!entries) {
       entries = [];
@@ -193,6 +197,10 @@ var LLNode = class Item {
 
   _removeFromIndex() {
     const hash = this._hash();
+    if (hash === undefined || hash === null) {
+      return;
+    }
+
     const entries = this.list.invertedIndex[hash];
     if (entries.length === 1) {
       delete this.list.invertedIndex[hash];
@@ -206,7 +214,7 @@ var LLNode = class Item {
     if (this.type === TYPE_TEXT) {
       return _hashText(this.text);
     } else {
-      throw new TypeError('Unknown type: ' + this.type);
+      return null;
     }
   }
 };

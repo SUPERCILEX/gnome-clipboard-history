@@ -30,6 +30,10 @@ const OP_TYPE_MOVE_ITEM_TO_END = 5;
 const MAX_WASTED_OPS = 500;
 let uselessOpCount;
 
+let opQueue = new DS.LinkedList();
+let opInProgress = false;
+let writeStream;
+
 function init() {
   if (GLib.mkdir_with_parents(REGISTRY_DIR, 0o775) !== 0) {
     log(
@@ -38,6 +42,17 @@ function init() {
       REGISTRY_DIR,
     );
   }
+}
+
+function destroy() {
+  _pushToOpQueue((resolve) => {
+    writeStream.close_async(0, null, (src, res) => {
+      src.close_finish(res);
+      resolve();
+    });
+
+    writeStream = undefined;
+  });
 }
 
 function buildClipboardStateFromLog(callback) {
@@ -241,42 +256,46 @@ function maybePerformLogCompaction(currentStateBuilder) {
 function resetDatabase(currentStateBuilder) {
   uselessOpCount = 0;
 
-  const priority = -10;
-  Gio.File.new_for_path(DATABASE_FILE).replace_async(
-    /*etag=*/ null,
-    /*make_backup=*/ false,
-    Gio.FileCreateFlags.PRIVATE,
-    priority,
-    null,
-    (src, res) => {
-      const state = currentStateBuilder();
-      if (state.length === 0) {
-        _writeToStream(src.replace_finish(res), priority, () => true);
-        return;
-      }
+  const state = currentStateBuilder();
+  _pushToOpQueue((resolve) => {
+    const priority = -10;
+    Gio.File.new_for_path(DATABASE_FILE).replace_async(
+      /*etag=*/ null,
+      /*make_backup=*/ false,
+      Gio.FileCreateFlags.PRIVATE,
+      priority,
+      null,
+      (src, res) => {
+        writeStream = _intoDataStream(src.replace_finish(res));
 
-      let i = 0;
-      _writeToStream(src.replace_finish(res), priority, (dataStream) => {
-        do {
-          const entry = state[i];
+        if (state.length === 0) {
+          resolve();
+          return;
+        }
 
-          if (entry.type === DS.TYPE_TEXT) {
-            _storeTextOp(entry.text)(dataStream);
-          } else {
-            throw new TypeError('Unknown type: ' + entry.type);
-          }
-          if (entry.favorite) {
-            _updateFavoriteStatusOp(entry.id, true)(dataStream);
-          }
+        let i = 0;
+        _writeToStream(writeStream, priority, resolve, (dataStream) => {
+          do {
+            const entry = state[i];
 
-          i++;
-        } while (i % 1000 !== 0 && i < state.length);
+            if (entry.type === DS.TYPE_TEXT) {
+              _storeTextOp(entry.text)(dataStream);
+            } else {
+              throw new TypeError('Unknown type: ' + entry.type);
+            }
+            if (entry.favorite) {
+              _updateFavoriteStatusOp(entry.id, true)(dataStream);
+            }
 
-        // Flush the buffer every 1000 entries
-        return i >= state.length;
-      });
-    },
-  );
+            i++;
+          } while (i % 1000 !== 0 && i < state.length);
+
+          // Flush the buffer every 1000 entries
+          return i >= state.length;
+        });
+      },
+    );
+  });
 }
 
 function storeTextEntry(text) {
@@ -353,25 +372,32 @@ function _normalizedText(text) {
 
 function _appendBytesToLog(callback, priority) {
   priority = priority || 0;
-  Gio.File.new_for_path(DATABASE_FILE).append_to_async(
-    Gio.FileCreateFlags.PRIVATE,
-    priority,
-    null,
-    (src, res) => {
-      _writeToStream(src.append_to_finish(res), priority, callback);
-    },
-  );
+  _pushToOpQueue((resolve) => {
+    const runUnsafe = () => {
+      _writeToStream(writeStream, priority, resolve, callback);
+    };
+
+    if (writeStream === undefined) {
+      Gio.File.new_for_path(DATABASE_FILE).append_to_async(
+        Gio.FileCreateFlags.PRIVATE,
+        priority,
+        null,
+        (src, res) => {
+          writeStream = _intoDataStream(src.append_to_finish(res));
+          runUnsafe();
+        },
+      );
+    } else {
+      runUnsafe();
+    }
+  });
 }
 
-function _writeToStream(stream, priority, callback) {
-  const bufStream = Gio.BufferedOutputStream.new(stream);
-  bufStream.set_auto_grow(true); // Blocks flushing, needed for hack
-  const ioStream = Gio.DataOutputStream.new(bufStream);
-  ioStream.set_byte_order(BYTE_ORDER);
-
-  _writeCallbackBytesAsyncHack(callback, ioStream, priority, () => {
-    ioStream.close_async(priority, null, (src, res) => {
-      src.close_finish(res);
+function _writeToStream(stream, priority, resolve, callback) {
+  _writeCallbackBytesAsyncHack(callback, stream, priority, () => {
+    stream.flush_async(priority, null, (src, res) => {
+      src.flush_finish(res);
+      resolve();
     });
   });
 }
@@ -394,5 +420,38 @@ function _writeCallbackBytesAsyncHack(
       src.flush_finish(res);
       _writeCallbackBytesAsyncHack(dataCallback, stream, priority, callback);
     });
+  }
+}
+
+function _intoDataStream(stream) {
+  const bufStream = Gio.BufferedOutputStream.new(stream);
+  bufStream.set_auto_grow(true); // Blocks flushing, needed for hack
+  const ioStream = Gio.DataOutputStream.new(bufStream);
+  ioStream.set_byte_order(BYTE_ORDER);
+  return ioStream;
+}
+
+function _pushToOpQueue(op) {
+  const consumeOp = () => {
+    const resolve = () => {
+      opInProgress = false;
+
+      const next = opQueue.head;
+      if (next) {
+        next.detach();
+        next.op();
+      }
+    };
+
+    opInProgress = true;
+    op(resolve);
+  };
+
+  if (opInProgress) {
+    const node = new DS.LLNode();
+    node.op = consumeOp;
+    opQueue.append(node);
+  } else {
+    consumeOp();
   }
 }
