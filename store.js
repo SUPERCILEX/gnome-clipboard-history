@@ -118,41 +118,25 @@ function _consumeStream(stream, state, callback) {
 
   const opType = stream.read_byte(null);
   if (opType === OP_TYPE_SAVE_TEXT) {
-    // We need to go through this recursive mess because read_upto_async doesn't support scanning
-    // invalid UTF-8. Of course, ideally we'd just want to store the length of the string and read
-    // exactly that many characters... but there also isn't an API for that. Furthermore, JavaScript
-    // uses UTF-16 so we wouldn't even be able to get the proper length easily. Basically all our
-    // options suck.suck
-    const loop = (builder) => {
-      stream.read_upto_async(
-        /*stop_chars=*/ '\0',
-        /*stop_chars_len=*/ 1,
-        0,
-        null,
-        (src, res) => {
-          let [text] = src.read_upto_finish(res);
-          if (builder !== undefined) {
-            text = builder + '\0' + text;
-          }
-          src.read_byte(null); // Consume the NUL terminator
-          if (src.read_byte(null) !== 0xff) {
-            loop(text);
-            return;
-          }
+    stream.read_upto_async(
+      /*stop_chars=*/ '\0',
+      /*stop_chars_len=*/ 1,
+      0,
+      null,
+      (src, res) => {
+        const [text] = src.read_upto_finish(res);
+        src.read_byte(null);
 
-          const node = new DS.LLNode();
-          node.diskId = node.id = state.nextId++;
-          node.type = DS.TYPE_TEXT;
-          node.text = text;
-          node.favorite = false;
-          state.entries.append(node);
+        const node = new DS.LLNode();
+        node.diskId = node.id = state.nextId++;
+        node.type = DS.TYPE_TEXT;
+        node.text = text;
+        node.favorite = false;
+        state.entries.append(node);
 
-          _consumeStream(stream, state, callback);
-        },
-      );
-    };
-    loop();
-
+        _consumeStream(stream, state, callback);
+      },
+    );
     return;
   } else if (opType === OP_TYPE_DELETE_TEXT) {
     parseAvailableAware(4, () => {
@@ -334,8 +318,7 @@ function _storeTextOp(text) {
   return (dataStream) => {
     dataStream.put_byte(OP_TYPE_SAVE_TEXT, null);
     dataStream.put_string(text, null);
-    dataStream.put_byte(0, null);
-    dataStream.put_byte(0xff, null);
+    dataStream.put_byte(0, null); // NUL terminator
     return true;
   };
 }
