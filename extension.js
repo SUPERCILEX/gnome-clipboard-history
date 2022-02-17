@@ -401,7 +401,6 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (this.currentlySelectedEntry && !this.currentlySelectedEntry.favorite) {
       this._resetSelectedMenuItem();
     }
-    this.historySection.removeAll();
 
     // Rebuild the entries from scratch since presumably people have fewer favorites than actual
     // items.
@@ -410,6 +409,10 @@ class ClipboardIndicator extends PanelMenu.Button {
     this.favoritesSection._getMenuItems().forEach((item) => {
       this.entries.prepend(item.entry);
     });
+
+    // This needs to happen *after* we nuke the entries from memory, otherwise
+    // _maybeRestoreMenuPages will use the soon-to-be-deleted items to restore a page.
+    this.historySection.removeAll();
 
     Store.resetDatabase(this._currentStateBuilder.bind(this));
   }
