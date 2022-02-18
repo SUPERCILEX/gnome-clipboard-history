@@ -1,0 +1,170 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"PO-Revision-Date: 2021-11-20 14:03+0100\n"
+"Last-Translator: Quentin PAGÈS\n"
+"Language-Team: \n"
+"Language: oc\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+
+#: extension.js:100
+msgid "Type here to search..."
+msgstr "Picatz aquí per recercar..."
+
+#: extension.js:158
+#, fuzzy
+msgid "Previous page"
+msgstr "Entrada precedenta"
+
+#: extension.js:164
+#, fuzzy
+msgid "Next page"
+msgstr "Entrada seguenta"
+
+#: extension.js:174
+msgid "Private mode"
+msgstr "Mòde privat"
+
+#: extension.js:188 prefs.js:101
+msgid "Clear history"
+msgstr "Escafar l’istoric"
+
+#: extension.js:192
+msgid "Settings"
+msgstr "Preferéncias"
+
+#: extension.js:384
+msgid "Clear all?"
+msgstr "Tot escafar ?"
+
+#: extension.js:385
+msgid "Are you sure you want to delete all clipboard items?"
+msgstr "Volètz vertadièrament suprimir totes los elements del quichapapièr ?"
+
+#: extension.js:386
+msgid "This operation cannot be undone."
+msgstr "Aquò pòt pas èsser anullat."
+
+#: extension.js:392
+msgid "Clear"
+msgstr "Escafar"
+
+#: extension.js:393 extension.js:682
+msgid "Cancel"
+msgstr "Anullar"
+
+#: extension.js:681
+msgid "Copied to clipboard"
+msgstr "Copiat dins lo quichapapièrs"
+
+#: prefs.js:95
+msgid "Toggle the menu"
+msgstr "Alternar menú"
+
+#: prefs.js:107
+msgid "Previous entry"
+msgstr "Entrada precedenta"
+
+#: prefs.js:113
+msgid "Next entry"
+msgstr "Entrada seguenta"
+
+#: prefs.js:119
+#, fuzzy
+msgid "Toggle private mode"
+msgstr "Mòde privat"
+
+#: prefs.js:128
+msgid "Max number of items"
+msgstr ""
+
+#: prefs.js:133
+#, fuzzy
+msgid "Item preview size (characters)"
+msgstr "Talha de la previsualizacion (caractèrs)"
+
+#: prefs.js:138
+#, fuzzy
+msgid "Max clipboard history size (MiB)"
+msgstr "Istoric del quichapapièrs escafat"
+
+#: prefs.js:143
+msgid "Only save favorites to disk"
+msgstr ""
+
+#: prefs.js:148
+msgid "Show notification on copy"
+msgstr "Afichar una notificacion en copiant"
+
+#: prefs.js:153
+#, fuzzy
+msgid "Show confirmation on Clear History"
+msgstr "Afichar una notificacion en copiant"
+
+#: prefs.js:158
+msgid "Move previously copied items to the top"
+msgstr ""
+
+#: prefs.js:163
+msgid "Keyboard shortcuts"
+msgstr "Acorchis de clavièr"
+
+#: prefs.js:168
+msgid "Number of characters in top bar"
+msgstr "Nombre de caractèrs a la barra d’ennaut"
+
+#: prefs.js:173
+msgid "What to show in top bar"
+msgstr "Qué veire a la barra d’ennaut"
+
+#: prefs.js:178
+msgid "Remove down arrow in top bar"
+msgstr "Suprimir la sageta bassa de la barra d’ennaut"
+
+#: prefs.js:183
+msgid "Remove whitespace around text"
+msgstr "Suprimir los espacis blancs a l’entorn del tèxt"
+
+#: prefs.js:188
+msgid "Paste on selection"
+msgstr ""
+
+#: prefs.js:312
+msgid "Icon"
+msgstr "Icòna"
+
+#: prefs.js:313
+msgid "Clipboard Content"
+msgstr "Contengut del quichapapièrs"
+
+#: prefs.js:314
+msgid "Both"
+msgstr "Los dos"
+
+#~ msgid "Text will be here"
+#~ msgstr "Lo tèxt serà aicí"
+
+#~ msgid "History Size"
+#~ msgstr "Talha de l'istoric"
+
+#~ msgid "Refresh Interval (ms)"
+#~ msgstr "Interval de refresquiment (ms)"
+
+#~ msgid "Max cache file size (kb)"
+#~ msgstr "Talha maximala del fichièr de cache (ko)"
+
+#~ msgid "Cache only favorites"
+#~ msgstr "Metre sonque los favorits en cache"
+
+#~ msgid "Move item to the top after selection"
+#~ msgstr "Desplaçar l’element ennaut aprèp seleccion"

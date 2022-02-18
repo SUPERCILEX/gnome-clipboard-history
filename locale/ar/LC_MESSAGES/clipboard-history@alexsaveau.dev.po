@@ -1,0 +1,169 @@
+# Catalan translation for gnome-shell-extension-clipboard-indicator.
+# Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-shell-extension-clipboard-indicator package.
+# Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-shell-extension-clipboard-indicator\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"PO-Revision-Date: 2018-03-10 10:10-0600\n"
+"Last-Translator: Ahmed Ayman <ahmedayman055g@gmail.com>\n"
+"Language-Team: \n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: extension.js:100
+msgid "Type here to search..."
+msgstr "اكتب هنا للبحث"
+
+#: extension.js:158
+#, fuzzy
+msgid "Previous page"
+msgstr "المدخل السابق"
+
+#: extension.js:164
+#, fuzzy
+msgid "Next page"
+msgstr "المدخل التالي"
+
+#: extension.js:174
+msgid "Private mode"
+msgstr "الوضع السري"
+
+#: extension.js:188 prefs.js:101
+msgid "Clear history"
+msgstr "محو السجلات"
+
+#: extension.js:192
+msgid "Settings"
+msgstr "ضبط"
+
+#: extension.js:384
+msgid "Clear all?"
+msgstr ""
+
+#: extension.js:385
+msgid "Are you sure you want to delete all clipboard items?"
+msgstr ""
+
+#: extension.js:386
+msgid "This operation cannot be undone."
+msgstr ""
+
+#: extension.js:392
+msgid "Clear"
+msgstr ""
+
+#: extension.js:393 extension.js:682
+msgid "Cancel"
+msgstr ""
+
+#: extension.js:681
+msgid "Copied to clipboard"
+msgstr "تم النسخ في الحافظة"
+
+#: prefs.js:95
+msgid "Toggle the menu"
+msgstr "بدل حالة القائمة"
+
+#: prefs.js:107
+msgid "Previous entry"
+msgstr "المدخل السابق"
+
+#: prefs.js:113
+msgid "Next entry"
+msgstr "المدخل التالي"
+
+#: prefs.js:119
+#, fuzzy
+msgid "Toggle private mode"
+msgstr "الوضع السري"
+
+#: prefs.js:128
+msgid "Max number of items"
+msgstr ""
+
+#: prefs.js:133
+#, fuzzy
+msgid "Item preview size (characters)"
+msgstr "عدد الاحرف في المراجعه"
+
+#: prefs.js:138
+#, fuzzy
+msgid "Max clipboard history size (MiB)"
+msgstr "تم ازالة سجلات الحافظة"
+
+#: prefs.js:143
+msgid "Only save favorites to disk"
+msgstr ""
+
+#: prefs.js:148
+msgid "Show notification on copy"
+msgstr "اظهار الاشعارات عند النسخ"
+
+#: prefs.js:153
+#, fuzzy
+msgid "Show confirmation on Clear History"
+msgstr "اظهار الاشعارات عند النسخ"
+
+#: prefs.js:158
+msgid "Move previously copied items to the top"
+msgstr ""
+
+#: prefs.js:163
+msgid "Keyboard shortcuts"
+msgstr "اختصارات الكيبورد"
+
+#: prefs.js:168
+msgid "Number of characters in top bar"
+msgstr "عدد الاحرف في الشريط العلوي"
+
+#: prefs.js:173
+msgid "What to show in top bar"
+msgstr "ما سيظهر في الشريط العلوي"
+
+#: prefs.js:178
+#, fuzzy
+msgid "Remove down arrow in top bar"
+msgstr "عدد الاحرف في الشريط العلوي"
+
+#: prefs.js:183
+msgid "Remove whitespace around text"
+msgstr ""
+
+#: prefs.js:188
+msgid "Paste on selection"
+msgstr ""
+
+#: prefs.js:312
+msgid "Icon"
+msgstr "أيقونة"
+
+#: prefs.js:313
+msgid "Clipboard Content"
+msgstr "محتوي الحافظة"
+
+#: prefs.js:314
+msgid "Both"
+msgstr "كلاهما"
+
+#~ msgid "Text will be here"
+#~ msgstr "النص سيكون هنا"
+
+#~ msgid "History Size"
+#~ msgstr "عدد العناصر في السجل "
+
+#~ msgid "Refresh Interval (ms)"
+#~ msgstr "فترة الريفريش بالمللي ثانية"
+
+#~ msgid "Max cache file size (kb)"
+#~ msgstr "اقصي حجم للكاش فايل بالكيلوبايت"
+
+#~ msgid "Disable cache file"
+#~ msgstr "الغاء الكاش في فايل"

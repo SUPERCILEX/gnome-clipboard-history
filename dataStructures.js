@@ -19,7 +19,7 @@ class Iterator {
 }
 
 // Creates a new `Item`:
-// An item is a bit like DOM node: It knows only about its “parent” (`list`),
+// An item is a bit like DOM node: It knows only about its "parent" (`list`),
 // the item before it (`prev`), and the item after it (`next`).
 var LLNode = class Item {
   // Prepends the given item *before* the item operated on.
@@ -97,7 +97,7 @@ var LLNode = class Item {
     const transient = this.list === item.list;
     item.detach(transient);
 
-    // If self has a next item…
+    // If self has a next item...
     if (this.next) {
       item.next = this.next;
       this.next.prev = item;
@@ -244,7 +244,7 @@ var LinkedList = class List {
     this.invertedIndex = {};
   }
 
-  // Returns the list’s items as an array.
+  // Returns the list's items as an array.
   // This does *not* detach the items.
   toArray() {
     let item = this.head;
@@ -311,7 +311,7 @@ var LinkedList = class List {
       return this.head.append(item);
     }
 
-    // …otherwise, there is no `tail` or `head` item yet.
+    // ...otherwise, there is no `tail` or `head` item yet.
     item.detach();
     item.list = this;
     this.head = item;

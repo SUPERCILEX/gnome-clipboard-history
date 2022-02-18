@@ -1,3 +1,5 @@
 *.zip
 .idea
 node_modules/
+gschemas.compiled
+*.mo

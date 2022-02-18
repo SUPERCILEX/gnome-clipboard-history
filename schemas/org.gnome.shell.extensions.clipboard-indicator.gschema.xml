@@ -1,7 +1,7 @@
 <schemalist gettext-domain="gnome-shell-extensions">
   <schema
-      id="org.gnome.shell.extensions.clipboard-indicator"
-      path="/org/gnome/shell/extensions/clipboard-indicator/">
+      id="org.gnome.shell.extensions.clipboard-history"
+      path="/org/gnome/shell/extensions/clipboard-history/">
 
     <key type="i" name="history-size">
       <default>1000</default>
@@ -21,7 +21,7 @@
     </key>
 
     <key type="i" name="preview-size">
-      <default>80</default>
+      <default>100</default>
       <summary>Number of visible characters for clipboard items</summary>
       <description>
         The number of characters to display for every clipboard item in
@@ -40,7 +40,7 @@
     </key>
 
     <key type="i" name="cache-size">
-      <default>10</default>
+      <default>100</default>
       <summary>The maximum clipboard history size (MiB)</summary>
       <description>
         Note that this is the maximum number of clipboard item bytes to store, not the maximum file
@@ -86,7 +86,7 @@
     </key>
 
     <key name="move-item-first" type="b">
-      <default>false</default>
+      <default>true</default>
       <summary>Move previously copied items to the top of the list</summary>
     </key>
 

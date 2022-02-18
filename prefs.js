@@ -4,9 +4,10 @@ const { GObject, Gtk, Gio } = imports.gi;
 const Lang = imports.lang;
 
 const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
 
 const Gettext = imports.gettext;
-const _ = Gettext.domain('clipboard-indicator').gettext;
+const _ = Gettext.domain(Me.uuid).gettext;
 
 var Fields = {
   HISTORY_SIZE: 'history-size',
@@ -25,15 +26,15 @@ var Fields = {
   PASTE_ON_SELECTION: 'paste-on-selection',
 };
 
-const SCHEMA_NAME = 'org.gnome.shell.extensions.clipboard-indicator';
+const SCHEMA_NAME = 'org.gnome.shell.extensions.clipboard-history';
 var Settings = ExtensionUtils.getSettings(SCHEMA_NAME);
 
 function init() {
-  ExtensionUtils.initTranslations('ClipboardIndicator');
+  ExtensionUtils.initTranslations(Me.uuid);
 }
 
 const App = new Lang.Class({
-  Name: 'ClipboardIndicator.App',
+  Name: 'ClipboardHistory.App',
   _init: function () {
     this.main = new Gtk.Grid({
       margin_top: 10,

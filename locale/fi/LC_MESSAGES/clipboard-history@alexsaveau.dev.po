@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Jiri Grönroos <jiri.gronroos+l10n@iki.fi>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"PO-Revision-Date: 2017-09-06 09:53+0300\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
+"Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 2.91.7\n"
+
+#: extension.js:100
+msgid "Type here to search..."
+msgstr ""
+
+#: extension.js:158
+#, fuzzy
+msgid "Previous page"
+msgstr "Edellinen tietue"
+
+#: extension.js:164
+#, fuzzy
+msgid "Next page"
+msgstr "Seuraava tietue"
+
+#: extension.js:174
+msgid "Private mode"
+msgstr "Yksityistila"
+
+#: extension.js:188 prefs.js:101
+msgid "Clear history"
+msgstr "Tyhjennä historia"
+
+#: extension.js:192
+msgid "Settings"
+msgstr "Asetukset"
+
+#: extension.js:384
+msgid "Clear all?"
+msgstr ""
+
+#: extension.js:385
+msgid "Are you sure you want to delete all clipboard items?"
+msgstr ""
+
+#: extension.js:386
+msgid "This operation cannot be undone."
+msgstr ""
+
+#: extension.js:392
+msgid "Clear"
+msgstr ""
+
+#: extension.js:393 extension.js:682
+msgid "Cancel"
+msgstr ""
+
+#: extension.js:681
+msgid "Copied to clipboard"
+msgstr "Kopioitu leikepöydälle"
+
+#: prefs.js:95
+msgid "Toggle the menu"
+msgstr "Näytä/piilota valikko"
+
+#: prefs.js:107
+msgid "Previous entry"
+msgstr "Edellinen tietue"
+
+#: prefs.js:113
+msgid "Next entry"
+msgstr "Seuraava tietue"
+
+#: prefs.js:119
+#, fuzzy
+msgid "Toggle private mode"
+msgstr "Yksityistila"
+
+#: prefs.js:128
+msgid "Max number of items"
+msgstr ""
+
+#: prefs.js:133
+#, fuzzy
+msgid "Item preview size (characters)"
+msgstr "Esikatselun koko (merkkejä)"
+
+#: prefs.js:138
+#, fuzzy
+msgid "Max clipboard history size (MiB)"
+msgstr "Leikepöydän sisältö tyhjennetty"
+
+#: prefs.js:143
+msgid "Only save favorites to disk"
+msgstr ""
+
+#: prefs.js:148
+msgid "Show notification on copy"
+msgstr "Näytä ilmoitus kopioitaessa"
+
+#: prefs.js:153
+#, fuzzy
+msgid "Show confirmation on Clear History"
+msgstr "Näytä ilmoitus kopioitaessa"
+
+#: prefs.js:158
+msgid "Move previously copied items to the top"
+msgstr ""
+
+#: prefs.js:163
+msgid "Keyboard shortcuts"
+msgstr "Pikanäppäimet"
+
+#: prefs.js:168
+msgid "Number of characters in top bar"
+msgstr ""
+
+#: prefs.js:173
+msgid "What to show in top bar"
+msgstr ""
+
+#: prefs.js:178
+msgid "Remove down arrow in top bar"
+msgstr ""
+
+#: prefs.js:183
+msgid "Remove whitespace around text"
+msgstr ""
+
+#: prefs.js:188
+msgid "Paste on selection"
+msgstr ""
+
+#: prefs.js:312
+msgid "Icon"
+msgstr ""
+
+#: prefs.js:313
+msgid "Clipboard Content"
+msgstr ""
+
+#: prefs.js:314
+msgid "Both"
+msgstr ""
+
+#~ msgid "History Size"
+#~ msgstr "Historian koko"
+
+#~ msgid "Refresh Interval (ms)"
+#~ msgstr "Päivitysväli (ms)"
+
+#~ msgid "Max cache file size (kb)"
+#~ msgstr "Välimuistin enimmäiskoko (kt)"

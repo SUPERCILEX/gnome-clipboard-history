@@ -1,0 +1,177 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"PO-Revision-Date: 2021-08-27 16:24+0900\n"
+"Last-Translator: nexryai <nexryai@outlook.com>\n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-SearchPath-0: prefs.js\n"
+"X-Poedit-SearchPath-1: extension.js\n"
+
+#: extension.js:100
+msgid "Type here to search..."
+msgstr "検索ワードを入力..."
+
+#: extension.js:158
+#, fuzzy
+msgid "Previous page"
+msgstr "前へ"
+
+#: extension.js:164
+#, fuzzy
+msgid "Next page"
+msgstr "次へ"
+
+#: extension.js:174
+msgid "Private mode"
+msgstr "プライベートモード"
+
+#: extension.js:188 prefs.js:101
+msgid "Clear history"
+msgstr "履歴を消去"
+
+#: extension.js:192
+msgid "Settings"
+msgstr "設定"
+
+#: extension.js:384
+msgid "Clear all?"
+msgstr "全消去しますか？"
+
+#: extension.js:385
+msgid "Are you sure you want to delete all clipboard items?"
+msgstr "クリップボードの履歴を全て削除してよろしいですか？"
+
+#: extension.js:386
+msgid "This operation cannot be undone."
+msgstr "この操作を元に戻すことはできません。"
+
+#: extension.js:392
+msgid "Clear"
+msgstr "クリア"
+
+#: extension.js:393 extension.js:682
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: extension.js:681
+msgid "Copied to clipboard"
+msgstr "コピーしました"
+
+#: prefs.js:95
+msgid "Toggle the menu"
+msgstr "メニュー"
+
+#: prefs.js:107
+msgid "Previous entry"
+msgstr "前へ"
+
+#: prefs.js:113
+msgid "Next entry"
+msgstr "次へ"
+
+#: prefs.js:119
+#, fuzzy
+msgid "Toggle private mode"
+msgstr "プライベートモード"
+
+#: prefs.js:128
+msgid "Max number of items"
+msgstr ""
+
+#: prefs.js:133
+#, fuzzy
+msgid "Item preview size (characters)"
+msgstr "プレビュー文字数"
+
+#: prefs.js:138
+#, fuzzy
+msgid "Max clipboard history size (MiB)"
+msgstr "消去しました"
+
+#: prefs.js:143
+msgid "Only save favorites to disk"
+msgstr ""
+
+#: prefs.js:148
+msgid "Show notification on copy"
+msgstr "コピー時に通知を表示する"
+
+#: prefs.js:153
+#, fuzzy
+msgid "Show confirmation on Clear History"
+msgstr "コピー時に通知を表示する"
+
+#: prefs.js:158
+msgid "Move previously copied items to the top"
+msgstr ""
+
+#: prefs.js:163
+msgid "Keyboard shortcuts"
+msgstr "キーボードショートカット"
+
+#: prefs.js:168
+msgid "Number of characters in top bar"
+msgstr "トップバーの単語数"
+
+#: prefs.js:173
+msgid "What to show in top bar"
+msgstr "表示内容"
+
+#: prefs.js:178
+msgid "Remove down arrow in top bar"
+msgstr "トップバーの単語数"
+
+#: prefs.js:183
+msgid "Remove whitespace around text"
+msgstr "テキスト周りのホワイトスペースを削除する"
+
+#: prefs.js:188
+msgid "Paste on selection"
+msgstr ""
+
+#: prefs.js:312
+msgid "Icon"
+msgstr "アイコン"
+
+#: prefs.js:313
+msgid "Clipboard Content"
+msgstr "クリップボードの内容"
+
+#: prefs.js:314
+msgid "Both"
+msgstr "両方"
+
+#~ msgid "Text will be here"
+#~ msgstr "ここにテキストを入力"
+
+#~ msgid "History Size"
+#~ msgstr "保存件数"
+
+#~ msgid "Refresh Interval (ms)"
+#~ msgstr "更新間隔（ミリ秒）"
+
+#~ msgid "Max cache file size (kb)"
+#~ msgstr "最大キャッシュサイズ（KB）"
+
+#~ msgid "Cache only favorites"
+#~ msgstr "お気に入りのみをキャッシュ"
+
+#~ msgid "Move item to the top after selection"
+#~ msgstr "選択後にアイテムをトップに移動"
+
+#~ msgid "Disable cache file"
+#~ msgstr "キャッシュを無効化"

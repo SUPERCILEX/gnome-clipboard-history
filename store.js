@@ -6,8 +6,13 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const DS = Me.imports.dataStructures;
 
-const REGISTRY_DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), Me.uuid]);
-const OLD_REGISTRY_FILE = GLib.build_filenamev([REGISTRY_DIR, '/registry.txt']);
+const CACHE_DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), Me.uuid]);
+const OLD_REGISTRY_FILE = GLib.build_filenamev([
+  GLib.get_user_cache_dir(),
+  'clipboard-indicator@tudmotu.com',
+  'registry.txt',
+]);
+
 /**
  * Stores our compacting log implementation. Here are its key ideas:
  * - We only ever append to the log.
@@ -17,7 +22,7 @@ const OLD_REGISTRY_FILE = GLib.build_filenamev([REGISTRY_DIR, '/registry.txt']);
  * - An add op never moves (until compaction), allowing us to derive globally unique entry IDs based
  *   on the order in which these add ops are discovered.
  */
-const DATABASE_FILE = GLib.build_filenamev([REGISTRY_DIR, '/database.log']);
+const DATABASE_FILE = GLib.build_filenamev([CACHE_DIR, 'database.log']);
 const BYTE_ORDER = Gio.DataStreamByteOrder.LITTLE_ENDIAN;
 
 // Don't use zero b/c DataInputStream uses 0 as its error value
@@ -35,11 +40,11 @@ let opInProgress = false;
 let writeStream;
 
 function init() {
-  if (GLib.mkdir_with_parents(REGISTRY_DIR, 0o775) !== 0) {
+  if (GLib.mkdir_with_parents(CACHE_DIR, 0o775) !== 0) {
     log(
       Me.uuid,
       "Failed to create cache dir, extension likely won't work",
-      REGISTRY_DIR,
+      CACHE_DIR,
     );
   }
 }

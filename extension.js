@@ -9,7 +9,6 @@ const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
 
 const Gettext = imports.gettext;
-const _ = Gettext.domain('clipboard-indicator').gettext;
 
 const Clipboard = St.Clipboard.get_default();
 const CLIPBOARD_TYPE = St.ClipboardType.CLIPBOARD;
@@ -34,13 +33,15 @@ const INDICATOR_ICON = 'edit-paste-symbolic';
 
 const PAGE_SIZE = 50;
 
-const IndicatorName = 'ClipboardIndicator';
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Store = Me.imports.store;
 const DS = Me.imports.dataStructures;
 const ConfirmDialog = Me.imports.confirmDialog;
 const Prefs = Me.imports.prefs;
+
+const IndicatorName = `${Me.metadata.name} Indicator`;
+const _ = Gettext.domain(Me.uuid).gettext;
 
 let MAX_REGISTRY_LENGTH;
 let MAX_ENTRY_LENGTH;
@@ -71,7 +72,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     });
     hbox.add_child(this.icon);
     this._buttonText = new St.Label({
-      text: _('Text will be here'),
+      text: '',
       y_align: Clutter.ActorAlign.CENTER,
     });
     hbox.add_child(this._buttonText);
@@ -755,10 +756,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    this._notifSource = new MessageTray.Source(
-      'ClipboardIndicator',
-      INDICATOR_ICON,
-    );
+    this._notifSource = new MessageTray.Source(Me.uuid, INDICATOR_ICON);
     this._notifSource.connect('destroy', () => {
       this._notifSource = undefined;
     });
@@ -979,7 +977,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 const ClipboardIndicatorObj = GObject.registerClass(ClipboardIndicator);
 
 function init() {
-  ExtensionUtils.initTranslations(IndicatorName);
+  ExtensionUtils.initTranslations(Me.uuid);
 }
 
 let clipboardIndicator;
