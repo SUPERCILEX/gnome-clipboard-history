@@ -946,51 +946,18 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _previousEntry() {
-    this._clearDelayedSelectionTimeout();
-
-    this._getAllMenuItems().some((mItem, i, menuItems) => {
-      if (mItem === this.currentlySelectedMenuItem) {
-        i--; //get the previous index
-        if (i < 0) {
-          i = menuItems.length - 1;
-        } //cycle if out of bound
-        const index = i + 1; //index to be displayed
-        this._showNotification(
-          index + ' / ' + menuItems.length + ': ' + menuItems[i].label.text,
-        );
-        if (MOVE_ITEM_FIRST) {
-          this._selectEntryWithDelay(menuItems[i]);
-        } else {
-          this._selectMenuItem(menuItems[i]);
-        }
-        return true;
-      }
-      return false;
-    });
+    const prev = this.currentlySelectedEntry.nextCyclic() || this.entries.head;
+    if (prev) {
+      this._selectEntry(prev, true);
+    }
   }
 
   _nextEntry() {
-    this._clearDelayedSelectionTimeout();
-
-    this._getAllMenuItems().some((mItem, i, menuItems) => {
-      if (mItem === this.currentlySelectedMenuItem) {
-        i++; //get the next index
-        if (i === menuItems.length) {
-          i = 0;
-        } //cycle if out of bound
-        const index = i + 1; //index to be displayed
-        this._showNotification(
-          index + ' / ' + menuItems.length + ': ' + menuItems[i].label.text,
-        );
-        if (MOVE_ITEM_FIRST) {
-          this._selectEntryWithDelay(menuItems[i]);
-        } else {
-          this._selectMenuItem(menuItems[i]);
-        }
-        return true;
-      }
-      return false;
-    });
+    const next =
+      this.currentlySelectedEntry.prevCyclic() || this.entries.last();
+    if (next) {
+      this._selectEntry(next, true);
+    }
   }
 
   _truncated(s, length) {
