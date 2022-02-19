@@ -267,6 +267,18 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _addEntry(entry, selectEntry, updateClipboard, insertIndex) {
+    if (!entry.favorite && this.activeHistoryMenuItems >= PAGE_SIZE) {
+      const items = this.historySection._getMenuItems();
+      const item = items[items.length - 1];
+      this._rewriteMenuItem(item, entry);
+      this.historySection.moveMenuItem(item, 0);
+
+      if (selectEntry) {
+        this._selectEntry(entry, updateClipboard);
+      }
+      return;
+    }
+
     const menuItem = new PopupMenu.PopupMenuItem('');
 
     menuItem.entry = entry;
@@ -336,7 +348,6 @@ class ClipboardIndicator extends PanelMenu.Button {
       this.historySection.addMenuItem(menuItem, insertIndex);
 
       this.activeHistoryMenuItems++;
-      this._maybeReclaimMenuPages();
     }
 
     if (selectEntry) {
@@ -539,17 +550,6 @@ class ClipboardIndicator extends PanelMenu.Button {
     this.currentlySelectedEntry = undefined;
     this._updateButtonText();
     this._setClipboardText('');
-  }
-
-  _maybeReclaimMenuPages() {
-    if (this.activeHistoryMenuItems < 2 * PAGE_SIZE) {
-      return;
-    }
-
-    const items = this.historySection._getMenuItems();
-    for (let i = items.length - 1; i >= PAGE_SIZE; i--) {
-      items[i].destroy();
-    }
   }
 
   _maybeRestoreMenuPages() {
