@@ -149,28 +149,36 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
-    // Prev/next page buttons
-    const pageNavigationContainer = new PopupMenu.PopupMenuItem('', {
-      hover: false,
-      can_focus: false,
+    const actionsSection = new PopupMenu.PopupMenuSection();
+    const actionsBox = new St.BoxLayout({
+      vertical: false,
     });
 
-    const prevPage = new St.Button({
-      label: _('Previous page'),
-      x_expand: true,
-    });
-    prevPage.connect('clicked', this._navigatePrevPage.bind(this));
-    pageNavigationContainer.add_child(prevPage);
+    actionsSection.actor.add(actionsBox);
+    this.menu.addMenuItem(actionsSection);
 
-    const nextPage = new St.Button({ label: _('Next page'), x_expand: true });
-    nextPage.connect('clicked', this._navigateNextPage.bind(this));
-    pageNavigationContainer.add_child(nextPage);
+    const prevPage = new PopupMenu.PopupBaseMenuItem();
+    prevPage.add_child(
+      new St.Icon({
+        icon_name: 'go-previous-symbolic',
+        style_class: 'popup-menu-icon',
+      }),
+    );
+    prevPage.connect('activate', this._navigatePrevPage.bind(this));
+    actionsBox.add(prevPage);
 
-    this.menu.addMenuItem(pageNavigationContainer);
+    const nextPage = new PopupMenu.PopupBaseMenuItem();
+    nextPage.add_child(
+      new St.Icon({
+        icon_name: 'go-next-symbolic',
+        style_class: 'popup-menu-icon',
+      }),
+    );
+    nextPage.connect('activate', this._navigateNextPage.bind(this));
+    actionsBox.add(nextPage);
 
-    this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
+    actionsBox.add(new St.BoxLayout({ x_expand: true }));
 
-    // Private mode switch
     this.privateModeMenuItem = new PopupMenu.PopupSwitchMenuItem(
       _('Private mode'),
       PRIVATE_MODE,
@@ -182,17 +190,30 @@ class ClipboardIndicator extends PanelMenu.Button {
         this.privateModeMenuItem.state,
       );
     });
-    this.menu.addMenuItem(this.privateModeMenuItem);
+    actionsBox.add(this.privateModeMenuItem);
     this._updatePrivateModeState();
 
-    // Add 'Clear' button which removes all items from cache
-    const clearMenuItem = new PopupMenu.PopupMenuItem(_('Clear history'));
-    this.menu.addMenuItem(clearMenuItem);
+    const clearMenuItem = new PopupMenu.PopupBaseMenuItem();
+    clearMenuItem.add_child(
+      new St.Icon({
+        icon_name: 'edit-delete-symbolic',
+        style_class: 'popup-menu-icon',
+      }),
+    );
+    actionsBox.add(clearMenuItem);
 
-    // Add 'Settings' menu item to open settings
-    const settingsMenuItem = new PopupMenu.PopupMenuItem(_('Settings'));
-    this.menu.addMenuItem(settingsMenuItem);
-    settingsMenuItem.connect('activate', () => ExtensionUtils.openPrefs());
+    const settingsMenuItem = new PopupMenu.PopupBaseMenuItem();
+    settingsMenuItem.add_child(
+      new St.Icon({
+        icon_name: 'emblem-system-symbolic',
+        style_class: 'popup-menu-icon',
+      }),
+    );
+    settingsMenuItem.connect('activate', () => {
+      ExtensionUtils.openPrefs();
+      this.menu.close();
+    });
+    actionsBox.add(settingsMenuItem);
 
     Store.buildClipboardStateFromLog((history, nextId) => {
       /**
