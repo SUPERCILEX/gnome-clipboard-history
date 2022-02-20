@@ -552,15 +552,15 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._setClipboardText('');
   }
 
-  _maybeRestoreMenuPages() {
-    if (this.activeHistoryMenuItems > 0) {
+  _maybeRestoreMenuPages(includeFavorites) {
+    if (this.activeHistoryMenuItems > 0 || this.searchPartitionEntry) {
       return;
     }
 
     let entry = this.entries.last();
     while (entry && this.activeHistoryMenuItems < PAGE_SIZE) {
-      if (!entry.favorite) {
-        this._addEntry(entry);
+      if (!entry.favorite || includeFavorites) {
+        this._addEntry(entry, this.currentlySelectedEntry === entry);
       }
 
       entry = entry.prev;
@@ -582,6 +582,11 @@ class ClipboardIndicator extends PanelMenu.Button {
    * oldest whereas `entries` is ordered from oldest to latest.
    */
   _navigatePrevPage() {
+    if (this.searchPartitionEntry) {
+      this.populateSearchResults(this.searchEntry.get_text(), false);
+      return;
+    }
+
     const items = this.historySection._getMenuItems();
     if (items.length === 0) {
       return;
@@ -602,6 +607,11 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _navigateNextPage() {
+    if (this.searchPartitionEntry) {
+      this.populateSearchResults(this.searchEntry.get_text(), true);
+      return;
+    }
+
     const items = this.historySection._getMenuItems();
     if (items.length === 0) {
       return;
@@ -635,24 +645,63 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
   }
 
-  /* When text change, this function will check, for each item of the
-  historySection and favoritesSestion, if it should be visible or not (based on words contained
-  in the clipContents attribute of the item). It doesn't destroy or create
-  items. It the entry is empty, the section is restored with all items
-  set as visible. */
   _onSearchTextChanged() {
-    const searchedText = this.searchEntry.get_text().toLowerCase();
+    const query = this.searchEntry.get_text();
 
-    if (searchedText === '') {
-      this._getAllMenuItems().forEach((mItem) => {
-        mItem.actor.visible = true;
-      });
-    } else {
-      this._getAllMenuItems().forEach((mItem) => {
-        const text = mItem.entry.text.toLowerCase();
-        const isMatching = text.indexOf(searchedText) >= 0;
-        mItem.actor.visible = isMatching;
-      });
+    if (!query) {
+      // Must come before setting searchPartitionEntry so page restoration gets blocked
+      this.historySection.removeAll();
+      this.favoritesSection.removeAll();
+
+      this.searchPartitionEntry = undefined;
+      this._maybeRestoreMenuPages(true);
+      return;
+    }
+
+    if (!this.searchPartitionEntry) {
+      this.searchPartitionEntry = this.entries.last();
+    }
+
+    this.populateSearchResults(query);
+  }
+
+  populateSearchResults(query, forward) {
+    // Must come after setting searchPartitionEntry so page restoration gets blocked
+    this.historySection.removeAll();
+    this.favoritesSection.removeAll();
+
+    if (!forward) {
+      forward = true;
+    }
+    const next = (entry) => (forward ? entry.prevCyclic() : entry.nextCyclic());
+
+    for (
+      const start = this.searchPartitionEntry;
+      start &&
+      next(this.searchPartitionEntry) !== start &&
+      this.activeHistoryMenuItems < PAGE_SIZE;
+      this.searchPartitionEntry = next(this.searchPartitionEntry)
+    ) {
+      const entry = this.searchPartitionEntry;
+      if (entry.type === DS.TYPE_TEXT) {
+        const matches = entry.text.match(new RegExp(query, 'i'));
+
+        if (!matches) {
+          continue;
+        }
+        const best = matches.index;
+
+        this._addEntry(entry);
+        entry.menuItem.label.set_text(
+          this._truncated(
+            entry.text,
+            best - MAX_ENTRY_LENGTH / 2,
+            best + MAX_ENTRY_LENGTH / 2,
+          ),
+        );
+      } else {
+        throw new TypeError('Unknown type: ' + entry.type);
+      }
     }
   }
 
@@ -734,9 +783,8 @@ class ClipboardIndicator extends PanelMenu.Button {
   _currentStateBuilder() {
     const state = [];
 
-    this.nextDiskId = this.nextId = 1;
+    this.nextDiskId = 1;
     for (const entry of this.entries) {
-      entry.id = this.nextId++;
       if (!CACHE_ONLY_FAVORITES || entry.favorite) {
         entry.diskId = this.nextDiskId++;
         state.push(entry);
@@ -979,16 +1027,39 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
   }
 
-  _truncated(s, length) {
+  _truncated(s, start, end) {
+    if (start < 0) {
+      start = 0;
+    }
+    if (!end) {
+      end = start;
+      start = 0;
+    }
+    if (end > s.length) {
+      end = s.length;
+    }
+
+    const includesStart = start === 0;
+    const includesEnd = end === s.length;
+    const isMiddle = !includesStart && !includesEnd;
+    const length = end - start;
+    const overflow = s.length > length;
+
     // Reduce regex search space. If the string is mostly whitespace,
     // we might end up removing too many characters, but oh well.
-    s = s.substring(0, length + 100);
+    s = s.substring(start, end + 100);
 
     // Remove new lines and extra spaces so the text fits nicely on one line
     s = s.replace(/\s+/g, ' ').trim();
 
-    if (s.length > length) {
+    if (includesStart && overflow) {
       s = s.substring(0, length - 3) + '...';
+    }
+    if (includesEnd && overflow) {
+      s = '...' + s.substring(3, length);
+    }
+    if (isMiddle) {
+      s = '...' + s.substring(3, length - 3) + '...';
     }
 
     return s;
