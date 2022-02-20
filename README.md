@@ -1,6 +1,7 @@
 # Gnome Clipboard History
 
-Gnome Clipboard History is a Gnome extension that saves items you've copied into an easily
+[Gnome Clipboard History](https://extensions.gnome.org/extension/4839/clipboard-history/) is a Gnome
+extension that saves what you've copied into an easily
 accessible, searchable history panel.
 
 The extension is a rewrite of
@@ -10,7 +11,7 @@ vastly improved performance, new features, and
 
 ## Download
 
-TODO
+Install the extension from here: https://extensions.gnome.org/extension/4839/clipboard-history/.
 
 ## Tips
 
