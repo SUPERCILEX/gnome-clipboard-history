@@ -313,6 +313,7 @@ const App = new Lang.Class({
       { name: _('Icon') },
       { name: _('Clipboard Content') },
       { name: _('Both') },
+      { name: _('Neither') },
     ];
     let liststore = new Gtk.ListStore();
     liststore.set_column_types([GObject.TYPE_STRING]);

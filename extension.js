@@ -52,7 +52,7 @@ let PRIVATE_MODE;
 let NOTIFY_ON_COPY;
 let CONFIRM_ON_CLEAR;
 let MAX_TOPBAR_LENGTH;
-let TOPBAR_DISPLAY_MODE; //0 - only icon, 1 - only clipbord content, 2 - both
+let TOPBAR_DISPLAY_MODE; // 0 - only icon, 1 - only clipboard content, 2 - both, 3 - none
 let DISABLE_DOWN_ARROW;
 let STRIP_TEXT;
 let PASTE_ON_SELECTION;
@@ -988,6 +988,16 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _updateTopbarLayout() {
+    if (TOPBAR_DISPLAY_MODE === 3) {
+      this.icon.visible = false;
+      this._buttonText.visible = false;
+
+      this._style_class = this.style_class;
+      this.style_class = '';
+    } else if (this._style_class) {
+      this.style_class = this._style_class;
+    }
+
     if (TOPBAR_DISPLAY_MODE === 0) {
       this.icon.visible = true;
       this._buttonText.visible = false;
