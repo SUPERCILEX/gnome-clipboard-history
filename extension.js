@@ -113,8 +113,11 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this.menu.connect('open-state-changed', (self, open) => {
       if (open) {
-        global.stage.set_key_focus(this.searchEntry);
         this.searchEntry.set_text('');
+        Mainloop.timeout_add(1, () => {
+          global.stage.set_key_focus(this.searchEntry);
+          return false;
+        });
       }
     });
 
