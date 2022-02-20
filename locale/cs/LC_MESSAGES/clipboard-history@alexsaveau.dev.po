@@ -16,141 +16,142 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:100
+#: extension.js:101
 msgid "Type here to search..."
 msgstr "Vyhledávejte psaním sem…"
 
-#: extension.js:158
-#, fuzzy
-msgid "Previous page"
-msgstr "Předchozí položka"
-
-#: extension.js:164
-#, fuzzy
-msgid "Next page"
-msgstr "Následující položka"
-
-#: extension.js:174
+#: extension.js:183
 msgid "Private mode"
 msgstr "Stop (proti úniku citlivých údajů)"
 
-#: extension.js:188 prefs.js:101
-msgid "Clear history"
-msgstr "Vyčistit historii"
-
-#: extension.js:192
-msgid "Settings"
-msgstr "Nastavení"
-
-#: extension.js:384
+#: extension.js:417
 msgid "Clear all?"
 msgstr ""
 
-#: extension.js:385
+#: extension.js:418
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr ""
 
-#: extension.js:386
+#: extension.js:419
 msgid "This operation cannot be undone."
 msgstr ""
 
-#: extension.js:392
+#: extension.js:425
 msgid "Clear"
 msgstr ""
 
-#: extension.js:393 extension.js:682
+#: extension.js:426 extension.js:753
 msgid "Cancel"
 msgstr "Storno"
 
-#: extension.js:681
+#: extension.js:752
 msgid "Copied to clipboard"
 msgstr "Zkopírováno do schránky"
 
-#: prefs.js:95
+#: prefs.js:96
 msgid "Toggle the menu"
 msgstr "Přepnout nabídku"
 
-#: prefs.js:107
+#: prefs.js:102
+msgid "Clear history"
+msgstr "Vyčistit historii"
+
+#: prefs.js:108
 msgid "Previous entry"
 msgstr "Předchozí položka"
 
-#: prefs.js:113
+#: prefs.js:114
 msgid "Next entry"
 msgstr "Následující položka"
 
-#: prefs.js:119
+#: prefs.js:120
 #, fuzzy
 msgid "Toggle private mode"
 msgstr "Stop (proti úniku citlivých údajů)"
 
-#: prefs.js:128
+#: prefs.js:129
 msgid "Max number of items"
 msgstr ""
 
-#: prefs.js:133
+#: prefs.js:134
 #, fuzzy
 msgid "Item preview size (characters)"
 msgstr "Velikost náhledu (znaky)"
 
-#: prefs.js:138
+#: prefs.js:139
 #, fuzzy
 msgid "Max clipboard history size (MiB)"
 msgstr "Historie schránky vyčištěna"
 
-#: prefs.js:143
+#: prefs.js:144
 msgid "Only save favorites to disk"
 msgstr ""
 
-#: prefs.js:148
+#: prefs.js:149
 msgid "Show notification on copy"
 msgstr "Při zkopírování zobrazit oznámení"
 
-#: prefs.js:153
+#: prefs.js:154
 #, fuzzy
 msgid "Show confirmation on Clear History"
 msgstr "Při zkopírování zobrazit oznámení"
 
-#: prefs.js:158
+#: prefs.js:159
 msgid "Move previously copied items to the top"
 msgstr ""
 
-#: prefs.js:163
+#: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "Klávesové zkratky"
 
-#: prefs.js:168
+#: prefs.js:169
 msgid "Number of characters in top bar"
 msgstr "Počet znaků v horní liště"
 
-#: prefs.js:173
+#: prefs.js:174
 msgid "What to show in top bar"
 msgstr "Co zobrazovat v horní liště"
 
-#: prefs.js:178
+#: prefs.js:179
 #, fuzzy
 msgid "Remove down arrow in top bar"
 msgstr "Počet znaků v horní liště"
 
-#: prefs.js:183
+#: prefs.js:184
 msgid "Remove whitespace around text"
 msgstr "Odebrat prázdné místo kolem textu"
 
-#: prefs.js:188
+#: prefs.js:189
 #, fuzzy
 msgid "Paste on selection"
 msgstr "Zapnout mazání"
 
-#: prefs.js:312
+#: prefs.js:313
 msgid "Icon"
 msgstr "Ikonu"
 
-#: prefs.js:313
+#: prefs.js:314
 msgid "Clipboard Content"
 msgstr "Obsah schránky"
 
-#: prefs.js:314
+#: prefs.js:315
 msgid "Both"
 msgstr "Obojí"
+
+#: prefs.js:316
+msgid "Neither"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Previous page"
+#~ msgstr "Předchozí položka"
+
+#, fuzzy
+#~ msgid "Next page"
+#~ msgstr "Následující položka"
+
+#~ msgid "Settings"
+#~ msgstr "Nastavení"
 
 #~ msgid "Text will be here"
 #~ msgstr "Zde bude text"

@@ -18,141 +18,142 @@ msgstr ""
 "X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: extension.js:100
+#: extension.js:101
 msgid "Type here to search..."
 msgstr "Digita qui per cercare…"
 
-#: extension.js:158
-#, fuzzy
-msgid "Previous page"
-msgstr "Voce precedente"
-
-#: extension.js:164
-#, fuzzy
-msgid "Next page"
-msgstr "Voce successiva"
-
-#: extension.js:174
+#: extension.js:183
 msgid "Private mode"
 msgstr "Modalità privata"
 
-#: extension.js:188 prefs.js:101
-msgid "Clear history"
-msgstr "Cancella la cronologia"
-
-#: extension.js:192
-msgid "Settings"
-msgstr "Impostazioni"
-
-#: extension.js:384
+#: extension.js:417
 msgid "Clear all?"
 msgstr "Cancellare tutto?"
 
-#: extension.js:385
+#: extension.js:418
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Si è certi di voler eliminare tutti gli appunti nella cronologia?"
 
-#: extension.js:386
+#: extension.js:419
 msgid "This operation cannot be undone."
 msgstr "Questa operazione non può essere annullata."
 
-#: extension.js:392
+#: extension.js:425
 msgid "Clear"
 msgstr "Elimina"
 
-#: extension.js:393 extension.js:682
+#: extension.js:426 extension.js:753
 msgid "Cancel"
 msgstr "Annulla"
 
-#: extension.js:681
+#: extension.js:752
 msgid "Copied to clipboard"
 msgstr "Copiato negli appunti"
 
-#: prefs.js:95
+#: prefs.js:96
 msgid "Toggle the menu"
 msgstr "Mostra/nascondi il menu"
 
-#: prefs.js:107
+#: prefs.js:102
+msgid "Clear history"
+msgstr "Cancella la cronologia"
+
+#: prefs.js:108
 msgid "Previous entry"
 msgstr "Voce precedente"
 
-#: prefs.js:113
+#: prefs.js:114
 msgid "Next entry"
 msgstr "Voce successiva"
 
-#: prefs.js:119
+#: prefs.js:120
 #, fuzzy
 msgid "Toggle private mode"
 msgstr "Modalità privata"
 
-#: prefs.js:128
+#: prefs.js:129
 msgid "Max number of items"
 msgstr ""
 
-#: prefs.js:133
+#: prefs.js:134
 #, fuzzy
 msgid "Item preview size (characters)"
 msgstr "Dimensioni dell'anteprima (caratteri)"
 
-#: prefs.js:138
+#: prefs.js:139
 #, fuzzy
 msgid "Max clipboard history size (MiB)"
 msgstr "Cronologia cancellata"
 
-#: prefs.js:143
+#: prefs.js:144
 msgid "Only save favorites to disk"
 msgstr ""
 
-#: prefs.js:148
+#: prefs.js:149
 msgid "Show notification on copy"
 msgstr "Mostra una notifica quando copi"
 
-#: prefs.js:153
+#: prefs.js:154
 #, fuzzy
 msgid "Show confirmation on Clear History"
 msgstr "Mostra una notifica quando copi"
 
-#: prefs.js:158
+#: prefs.js:159
 msgid "Move previously copied items to the top"
 msgstr ""
 
-#: prefs.js:163
+#: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "Scorciatoie da tastiera"
 
-#: prefs.js:168
+#: prefs.js:169
 msgid "Number of characters in top bar"
 msgstr "Numero di caratteri sul pannello"
 
-#: prefs.js:173
+#: prefs.js:174
 msgid "What to show in top bar"
 msgstr "Cosa mostrare sul pannello"
 
-#: prefs.js:178
+#: prefs.js:179
 #, fuzzy
 msgid "Remove down arrow in top bar"
 msgstr "Numero di caratteri sul pannello"
 
-#: prefs.js:183
+#: prefs.js:184
 msgid "Remove whitespace around text"
 msgstr "Rimuovi lo spazio bianco intorno al testo"
 
-#: prefs.js:188
+#: prefs.js:189
 #, fuzzy
 msgid "Paste on selection"
 msgstr "Abilita cancellazione"
 
-#: prefs.js:312
+#: prefs.js:313
 msgid "Icon"
 msgstr "Icona"
 
-#: prefs.js:313
+#: prefs.js:314
 msgid "Clipboard Content"
 msgstr "Contenuto Clipboard"
 
-#: prefs.js:314
+#: prefs.js:315
 msgid "Both"
 msgstr "Entrambi"
+
+#: prefs.js:316
+msgid "Neither"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Previous page"
+#~ msgstr "Voce precedente"
+
+#, fuzzy
+#~ msgid "Next page"
+#~ msgstr "Voce successiva"
+
+#~ msgid "Settings"
+#~ msgstr "Impostazioni"
 
 #~ msgid "Text will be here"
 #~ msgstr "Il testo sarà qui"

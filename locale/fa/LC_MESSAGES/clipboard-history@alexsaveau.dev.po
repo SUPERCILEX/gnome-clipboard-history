@@ -18,139 +18,140 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: extension.js:100
+#: extension.js:101
 msgid "Type here to search..."
 msgstr "برای جست‌وجو اینجا بنویسید..."
 
-#: extension.js:158
-#, fuzzy
-msgid "Previous page"
-msgstr "ورودی قبلی"
-
-#: extension.js:164
-#, fuzzy
-msgid "Next page"
-msgstr "ورودی بعدی"
-
-#: extension.js:174
+#: extension.js:183
 msgid "Private mode"
 msgstr "حالت خصوصی"
 
-#: extension.js:188 prefs.js:101
-msgid "Clear history"
-msgstr "پاک‌کردن تاریخچه"
-
-#: extension.js:192
-msgid "Settings"
-msgstr "تنظیمات"
-
-#: extension.js:384
+#: extension.js:417
 msgid "Clear all?"
 msgstr "همه پاک شوند؟"
 
-#: extension.js:385
+#: extension.js:418
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "آیا از حذف همه موارد تخته‌گیره مطمئنید؟"
 
-#: extension.js:386
+#: extension.js:419
 msgid "This operation cannot be undone."
 msgstr "این عملیات قابل بازگردانی نیست."
 
-#: extension.js:392
+#: extension.js:425
 msgid "Clear"
 msgstr "پاک‌کردن"
 
-#: extension.js:393 extension.js:682
+#: extension.js:426 extension.js:753
 msgid "Cancel"
 msgstr "لغو"
 
-#: extension.js:681
+#: extension.js:752
 msgid "Copied to clipboard"
 msgstr "رونوشت به تخته‌گیره"
 
-#: prefs.js:95
+#: prefs.js:96
 msgid "Toggle the menu"
 msgstr "تغییر وضعیت فهرست"
 
-#: prefs.js:107
+#: prefs.js:102
+msgid "Clear history"
+msgstr "پاک‌کردن تاریخچه"
+
+#: prefs.js:108
 msgid "Previous entry"
 msgstr "ورودی قبلی"
 
-#: prefs.js:113
+#: prefs.js:114
 msgid "Next entry"
 msgstr "ورودی بعدی"
 
-#: prefs.js:119
+#: prefs.js:120
 #, fuzzy
 msgid "Toggle private mode"
 msgstr "حالت خصوصی"
 
-#: prefs.js:128
+#: prefs.js:129
 msgid "Max number of items"
 msgstr ""
 
-#: prefs.js:133
+#: prefs.js:134
 #, fuzzy
 msgid "Item preview size (characters)"
 msgstr "اندازهٔ پیش‌نمایش (نویسه)"
 
-#: prefs.js:138
+#: prefs.js:139
 #, fuzzy
 msgid "Max clipboard history size (MiB)"
 msgstr "تاریخچهٔ تخته‌گیره پاک شد"
 
-#: prefs.js:143
+#: prefs.js:144
 msgid "Only save favorites to disk"
 msgstr ""
 
-#: prefs.js:148
+#: prefs.js:149
 msgid "Show notification on copy"
 msgstr "نمایش آگاهی هنگام رونوشت"
 
-#: prefs.js:153
+#: prefs.js:154
 #, fuzzy
 msgid "Show confirmation on Clear History"
 msgstr "نمایش آگاهی هنگام رونوشت"
 
-#: prefs.js:158
+#: prefs.js:159
 msgid "Move previously copied items to the top"
 msgstr ""
 
-#: prefs.js:163
+#: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "میان‌بر صفحه‌کلید"
 
-#: prefs.js:168
+#: prefs.js:169
 msgid "Number of characters in top bar"
 msgstr "تعداد نویسه‌ها در نوار بالا"
 
-#: prefs.js:173
+#: prefs.js:174
 msgid "What to show in top bar"
 msgstr "چه‌چیزی در نوار بالا دیده شود"
 
-#: prefs.js:178
+#: prefs.js:179
 msgid "Remove down arrow in top bar"
 msgstr "برداشتن فلش روبه پایین در نوار بالا"
 
-#: prefs.js:183
+#: prefs.js:184
 msgid "Remove whitespace around text"
 msgstr "برداشتن فاصلهٔ اطراف متن"
 
-#: prefs.js:188
+#: prefs.js:189
 msgid "Paste on selection"
 msgstr ""
 
-#: prefs.js:312
+#: prefs.js:313
 msgid "Icon"
 msgstr "نقشک"
 
-#: prefs.js:313
+#: prefs.js:314
 msgid "Clipboard Content"
 msgstr "محتویات تخته‌گیره"
 
-#: prefs.js:314
+#: prefs.js:315
 msgid "Both"
 msgstr "هر دو"
+
+#: prefs.js:316
+msgid "Neither"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Previous page"
+#~ msgstr "ورودی قبلی"
+
+#, fuzzy
+#~ msgid "Next page"
+#~ msgstr "ورودی بعدی"
+
+#~ msgid "Settings"
+#~ msgstr "تنظیمات"
 
 #~ msgid "Text will be here"
 #~ msgstr "متن اینجا خواهد بود"

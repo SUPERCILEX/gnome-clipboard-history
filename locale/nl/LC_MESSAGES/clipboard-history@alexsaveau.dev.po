@@ -18,139 +18,140 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: extension.js:100
+#: extension.js:101
 msgid "Type here to search..."
 msgstr "Typ om te zoeken…"
 
-#: extension.js:158
-#, fuzzy
-msgid "Previous page"
-msgstr "Vorig item"
-
-#: extension.js:164
-#, fuzzy
-msgid "Next page"
-msgstr "Volgend item"
-
-#: extension.js:174
+#: extension.js:183
 msgid "Private mode"
 msgstr "Privémodus"
 
-#: extension.js:188 prefs.js:101
-msgid "Clear history"
-msgstr "Geschiedenis wissen"
-
-#: extension.js:192
-msgid "Settings"
-msgstr "Instellingen"
-
-#: extension.js:384
+#: extension.js:417
 msgid "Clear all?"
 msgstr "Alles wissen?"
 
-#: extension.js:385
+#: extension.js:418
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Weet u zeker dat u alle klemborditems wilt wissen?"
 
-#: extension.js:386
+#: extension.js:419
 msgid "This operation cannot be undone."
 msgstr "Dit kan niet ongedaan worden gemaakt."
 
-#: extension.js:392
+#: extension.js:425
 msgid "Clear"
 msgstr "Wissen"
 
-#: extension.js:393 extension.js:682
+#: extension.js:426 extension.js:753
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: extension.js:681
+#: extension.js:752
 msgid "Copied to clipboard"
 msgstr "Gekopieerd naar het klembord"
 
-#: prefs.js:95
+#: prefs.js:96
 msgid "Toggle the menu"
 msgstr "Menu tonen/verbergen"
 
-#: prefs.js:107
+#: prefs.js:102
+msgid "Clear history"
+msgstr "Geschiedenis wissen"
+
+#: prefs.js:108
 msgid "Previous entry"
 msgstr "Vorig item"
 
-#: prefs.js:113
+#: prefs.js:114
 msgid "Next entry"
 msgstr "Volgend item"
 
-#: prefs.js:119
+#: prefs.js:120
 #, fuzzy
 msgid "Toggle private mode"
 msgstr "Privémodus"
 
-#: prefs.js:128
+#: prefs.js:129
 msgid "Max number of items"
 msgstr ""
 
-#: prefs.js:133
+#: prefs.js:134
 #, fuzzy
 msgid "Item preview size (characters)"
 msgstr "Voorvertoningsomvang (aantal tekens)"
 
-#: prefs.js:138
+#: prefs.js:139
 #, fuzzy
 msgid "Max clipboard history size (MiB)"
 msgstr "De klembordgeschiedenis is gewist"
 
-#: prefs.js:143
+#: prefs.js:144
 msgid "Only save favorites to disk"
 msgstr ""
 
-#: prefs.js:148
+#: prefs.js:149
 msgid "Show notification on copy"
 msgstr "Melding tonen na kopiëren"
 
-#: prefs.js:153
+#: prefs.js:154
 #, fuzzy
 msgid "Show confirmation on Clear History"
 msgstr "Melding tonen na kopiëren"
 
-#: prefs.js:158
+#: prefs.js:159
 msgid "Move previously copied items to the top"
 msgstr ""
 
-#: prefs.js:163
+#: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "Sneltoetsen"
 
-#: prefs.js:168
+#: prefs.js:169
 msgid "Number of characters in top bar"
 msgstr "Aantal tekens op bovenbalk"
 
-#: prefs.js:173
+#: prefs.js:174
 msgid "What to show in top bar"
 msgstr "Tonen op bovenbalk:"
 
-#: prefs.js:178
+#: prefs.js:179
 msgid "Remove down arrow in top bar"
 msgstr "Geen uitklappijl tonen op bovenbalk"
 
-#: prefs.js:183
+#: prefs.js:184
 msgid "Remove whitespace around text"
 msgstr "Witruimte rondom tekst wissen"
 
-#: prefs.js:188
+#: prefs.js:189
 msgid "Paste on selection"
 msgstr ""
 
-#: prefs.js:312
+#: prefs.js:313
 msgid "Icon"
 msgstr "Pictogram"
 
-#: prefs.js:313
+#: prefs.js:314
 msgid "Clipboard Content"
 msgstr "Klembordinhoud"
 
-#: prefs.js:314
+#: prefs.js:315
 msgid "Both"
 msgstr "Beide"
+
+#: prefs.js:316
+msgid "Neither"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Previous page"
+#~ msgstr "Vorig item"
+
+#, fuzzy
+#~ msgid "Next page"
+#~ msgstr "Volgend item"
+
+#~ msgid "Settings"
+#~ msgstr "Instellingen"
 
 #~ msgid "Text will be here"
 #~ msgstr "Gekopieerde tekst wordt hier getoond"
