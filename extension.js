@@ -91,6 +91,13 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._unbindShortcuts();
     this._disconnectSelectionListener();
 
+    if (this._searchFocusHackCallbackId) {
+      Mainloop.source_remove(this._searchFocusHackCallbackId);
+    }
+    if (this._pasteHackCallbackId) {
+      Mainloop.source_remove(this._pasteHackCallbackId);
+    }
+
     super.destroy();
   }
 
@@ -115,8 +122,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     this.menu.connect('open-state-changed', (self, open) => {
       if (open) {
         this.searchEntry.set_text('');
-        Mainloop.timeout_add(1, () => {
+        this._searchFocusHackCallbackId = Mainloop.timeout_add(1, () => {
           global.stage.set_key_focus(this.searchEntry);
+          this._searchFocusHackCallbackId = undefined;
           return false;
         });
       }
@@ -574,7 +582,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _triggerPasteHack() {
-    Mainloop.timeout_add(
+    this._pasteHackCallbackId = Mainloop.timeout_add(
       1, // Just post to the end of the event loop
       () => {
         const eventTime = Clutter.get_current_event_time() * 1000;
@@ -599,6 +607,7 @@ class ClipboardIndicator extends PanelMenu.Button {
           Clutter.KeyState.RELEASED,
         );
 
+        this._pasteHackCallbackId = undefined;
         return false;
       },
     );
