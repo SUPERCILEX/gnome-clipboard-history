@@ -21,6 +21,13 @@ TODO add screenshot or video
 - Modify shortcuts in settings or delete them by hitting backspace while editing a shortcut
 - Use the `Only save favorites to disk` feature to wipe your non-favorited items on shutdown
 - Use `Private mode` to temporarily stop processing copied items
+- Use keyboard shortcuts while the panel is open
+  - <kbd>Ctrl</kbd> + <kbd>N</kbd> where `N` is a number from 1 to 9 to select the Nth
+    non-favorited entry
+  - <kbd>Super</kbd> + <kbd>Ctrl</kbd> + <kbd>N</kbd> where `N` is a number from 1 to 9 to select
+    the Nth favorited entry
+  - <kbd>Ctrl</kbd> + <kbd>p/n</kbd> to navigate to the previous/next page
+  - <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>S</kbd> to open settings
 
 ## Install from source
 

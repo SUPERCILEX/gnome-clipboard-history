@@ -212,10 +212,7 @@ class ClipboardIndicator extends PanelMenu.Button {
         style_class: 'popup-menu-icon',
       }),
     );
-    settingsMenuItem.connect('activate', () => {
-      ExtensionUtils.openPrefs();
-      this.menu.close();
-    });
+    settingsMenuItem.connect('activate', this._openSettings.bind(this));
     actionsBox.add(settingsMenuItem);
 
     Store.buildClipboardStateFromLog((history, nextId) => {
@@ -264,9 +261,63 @@ class ClipboardIndicator extends PanelMenu.Button {
         .get_clutter_text()
         .connect('text-changed', this._onSearchTextChanged.bind(this));
       clearMenuItem.connect('activate', this._removeAll.bind(this));
+      global.stage.connect('key-press-event', (_, event) =>
+        this._handleGlobalKeyEvent(event),
+      );
 
       this._setupSelectionChangeListener();
     });
+  }
+
+  _handleGlobalKeyEvent(event) {
+    if (!this.menu.isOpen) {
+      return;
+    }
+
+    this._handleCtrlSelectKeyEvent(event);
+    this._handleSettingsKeyEvent(event);
+    this._handleNavigationKeyEvent(event);
+  }
+
+  _handleCtrlSelectKeyEvent(event) {
+    if (!event.has_control_modifier()) {
+      return;
+    }
+
+    const index = parseInt(event.get_key_unicode()); // Starts at 1
+    if (isNaN(index) || index <= 0) {
+      return;
+    }
+
+    const items =
+      event.get_state() === 68 // Ctrl + Super
+        ? this.favoritesSection._getMenuItems()
+        : this.historySection._getMenuItems();
+    if (index > items.length) {
+      return;
+    }
+
+    this._onMenuItemSelectedAndMenuClose(items[index - 1]);
+  }
+
+  _handleSettingsKeyEvent(event) {
+    if (event.get_state() !== 12 || event.get_key_unicode() !== 's') {
+      return;
+    }
+
+    this._openSettings();
+  }
+
+  _handleNavigationKeyEvent(event) {
+    if (!event.has_control_modifier()) {
+      return;
+    }
+
+    if (event.get_key_unicode() === 'n') {
+      this._navigateNextPage();
+    } else if (event.get_key_unicode() === 'p') {
+      this._navigatePrevPage();
+    }
   }
 
   _addEntry(entry, selectEntry, updateClipboard, insertIndex) {
@@ -1023,6 +1074,11 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     Prefs.Settings.disconnect(this._settingsChangedId);
     this._settingsChangedId = undefined;
+  }
+
+  _openSettings() {
+    ExtensionUtils.openPrefs();
+    this.menu.close();
   }
 
   _previousEntry() {
