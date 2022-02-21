@@ -1,7 +1,6 @@
 'use strict';
 
 const { GObject, Gtk, Gio } = imports.gi;
-const Lang = imports.lang;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
@@ -33,9 +32,8 @@ function init() {
   ExtensionUtils.initTranslations(Me.uuid);
 }
 
-const App = new Lang.Class({
-  Name: 'ClipboardHistory.App',
-  _init: function () {
+class Prefs extends GObject.Object {
+  _init() {
     this.main = new Gtk.Grid({
       margin_top: 10,
       margin_bottom: 10,
@@ -307,8 +305,9 @@ const App = new Lang.Class({
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-  },
-  _create_display_mode_options: function () {
+  }
+
+  _create_display_mode_options() {
     let options = [
       { name: _('Icon') },
       { name: _('Clipboard Content') },
@@ -323,11 +322,13 @@ const App = new Lang.Class({
       liststore.set(iter, [0], [option.name]);
     }
     return liststore;
-  },
-});
+  }
+}
+
+const PrefsObj = new GObject.registerClass(Prefs);
 
 function buildPrefsWidget() {
-  let widget = new App();
+  let widget = new PrefsObj();
   return widget.main;
 }
 
