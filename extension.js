@@ -44,6 +44,7 @@ const IndicatorName = `${Me.metadata.name} Indicator`;
 const _ = Gettext.domain(Me.uuid).gettext;
 
 let MAX_REGISTRY_LENGTH;
+let MAX_BYTES;
 let MAX_ENTRY_LENGTH;
 let CACHE_ONLY_FAVORITES;
 let MOVE_ITEM_FIRST;
@@ -532,7 +533,16 @@ class ClipboardIndicator extends PanelMenu.Button {
       entry = next;
     }
 
-    // TODO prune by num bytes
+    while (entry && this.entries.bytes > MAX_BYTES) {
+      if (entry.favorite) {
+        // Favorites don't count, so ignore
+        continue;
+      }
+
+      const next = entry.next;
+      this._removeEntry(entry, true);
+      entry = next;
+    }
 
     Store.maybePerformLogCompaction(this._currentStateBuilder.bind(this));
   }
@@ -934,6 +944,8 @@ class ClipboardIndicator extends PanelMenu.Button {
 
   _fetchSettings() {
     MAX_REGISTRY_LENGTH = Prefs.Settings.get_int(Prefs.Fields.HISTORY_SIZE);
+    MAX_BYTES =
+      (1 << 20) * Prefs.Settings.get_int(Prefs.Fields.CACHE_FILE_SIZE);
     MAX_ENTRY_LENGTH = Prefs.Settings.get_int(Prefs.Fields.PREVIEW_SIZE);
     CACHE_ONLY_FAVORITES = Prefs.Settings.get_boolean(
       Prefs.Fields.CACHE_ONLY_FAVORITES,

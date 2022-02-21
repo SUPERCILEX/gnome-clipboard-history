@@ -186,6 +186,10 @@ var LLNode = class Item {
       return;
     }
 
+    if (this.type === TYPE_TEXT) {
+      this.list.bytes += this.text.length;
+    }
+
     let entries = this.list.invertedIndex[hash];
     if (!entries) {
       entries = [];
@@ -199,6 +203,10 @@ var LLNode = class Item {
     const hash = this._hash();
     if (hash === undefined || hash === null) {
       return;
+    }
+
+    if (this.type === TYPE_TEXT) {
+      this.list.bytes -= this.text.length;
     }
 
     const entries = this.list.invertedIndex[hash];
@@ -242,6 +250,8 @@ var LinkedList = class List {
     appendAll(this, items);
     this.idsToItems = {};
     this.invertedIndex = {};
+    /** Note: this isn't an accurate count because of UTF encoding and other JS mumbo jumbo. */
+    this.bytes = 0;
   }
 
   // Returns the list's items as an array.
