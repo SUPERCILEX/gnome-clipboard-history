@@ -97,6 +97,10 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (this._pasteHackCallbackId) {
       Mainloop.source_remove(this._pasteHackCallbackId);
     }
+    if (this._keyPressCallbackId) {
+      global.stage.disconnect(this._keyPressCallbackId);
+      this._keyPressCallbackId = undefined;
+    }
 
     super.destroy();
   }
@@ -270,8 +274,9 @@ class ClipboardIndicator extends PanelMenu.Button {
         .get_clutter_text()
         .connect('text-changed', this._onSearchTextChanged.bind(this));
       clearMenuItem.connect('activate', this._removeAll.bind(this));
-      global.stage.connect('key-press-event', (_, event) =>
-        this._handleGlobalKeyEvent(event),
+      this._keyPressCallbackId = global.stage.connect(
+        'key-press-event',
+        (_, event) => this._handleGlobalKeyEvent(event),
       );
 
       this._setupSelectionChangeListener();
