@@ -1108,17 +1108,25 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _previousEntry() {
-    const prev = this.currentlySelectedEntry.nextCyclic() || this.entries.head;
-    if (prev) {
-      this._selectEntry(prev, true);
-    }
+    this._selectNextPrevEntry(
+      this.currentlySelectedEntry.nextCyclic() || this.entries.head,
+    );
   }
 
   _nextEntry() {
-    const next =
-      this.currentlySelectedEntry.prevCyclic() || this.entries.last();
-    if (next) {
-      this._selectEntry(next, true);
+    this._selectNextPrevEntry(
+      this.currentlySelectedEntry.prevCyclic() || this.entries.last(),
+    );
+  }
+
+  _selectNextPrevEntry(entry) {
+    if (!entry) {
+      return;
+    }
+
+    this._selectEntry(entry, true);
+    if (entry.type === DS.TYPE_TEXT) {
+      this._showNotification(_('Copied: ') + entry.text);
     }
   }
 
