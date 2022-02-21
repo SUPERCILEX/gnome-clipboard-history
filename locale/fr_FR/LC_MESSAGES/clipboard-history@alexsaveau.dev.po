@@ -18,129 +18,133 @@ msgstr ""
 "X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: extension.js:101
+#: extension.js:113
 msgid "Type here to search..."
 msgstr "Tapez ici pour chercher ..."
 
-#: extension.js:183
+#: extension.js:199
 msgid "Private mode"
 msgstr "Mode privé"
 
-#: extension.js:417
+#: extension.js:485
 msgid "Clear all?"
 msgstr "Tout effacer ?"
 
-#: extension.js:418
+#: extension.js:486
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Etes-vous sûr de vouloir tout effacer ?"
 
-#: extension.js:419
+#: extension.js:487
 msgid "This operation cannot be undone."
 msgstr "Cette action ne peut être annulée."
 
-#: extension.js:425
+#: extension.js:493
 msgid "Clear"
 msgstr "Effacer"
 
-#: extension.js:426 extension.js:753
+#: extension.js:494 extension.js:831
 msgid "Cancel"
 msgstr "Annuler"
 
-#: extension.js:752
+#: extension.js:830
 msgid "Copied to clipboard"
 msgstr "Copié dans le presse-papier"
 
-#: prefs.js:96
+#: extension.js:1129
+msgid "Copied: "
+msgstr ""
+
+#: prefs.js:94
 msgid "Toggle the menu"
 msgstr "Afficher/cacher le menu"
 
-#: prefs.js:102
+#: prefs.js:100
 msgid "Clear history"
 msgstr "Vider l'historique"
 
-#: prefs.js:108
+#: prefs.js:106
 msgid "Previous entry"
 msgstr "Entrée précédente"
 
-#: prefs.js:114
+#: prefs.js:112
 msgid "Next entry"
 msgstr "Entrée suivante"
 
-#: prefs.js:120
+#: prefs.js:118
 #, fuzzy
 msgid "Toggle private mode"
 msgstr "Mode privé"
 
-#: prefs.js:129
+#: prefs.js:127
 msgid "Max number of items"
 msgstr ""
 
-#: prefs.js:134
+#: prefs.js:132
 #, fuzzy
 msgid "Item preview size (characters)"
 msgstr "Longueur de l'aperçu (caractères)"
 
-#: prefs.js:139
+#: prefs.js:137
 #, fuzzy
 msgid "Max clipboard history size (MiB)"
 msgstr "Historique vidé"
 
-#: prefs.js:144
+#: prefs.js:142
 msgid "Only save favorites to disk"
 msgstr ""
 
-#: prefs.js:149
+#: prefs.js:147
 msgid "Show notification on copy"
 msgstr "Afficher une notification à chaque copie"
 
-#: prefs.js:154
+#: prefs.js:152
 #, fuzzy
 msgid "Show confirmation on Clear History"
 msgstr "Afficher une notification à chaque copie"
 
-#: prefs.js:159
+#: prefs.js:157
 msgid "Move previously copied items to the top"
 msgstr ""
 
-#: prefs.js:164
+#: prefs.js:162
 msgid "Keyboard shortcuts"
 msgstr "Raccourcis clavier"
 
-#: prefs.js:169
+#: prefs.js:167
 msgid "Number of characters in top bar"
 msgstr "Nombre de caractères dans le panneau"
 
-#: prefs.js:174
+#: prefs.js:172
 msgid "What to show in top bar"
 msgstr "Afficher dans le panneau"
 
-#: prefs.js:179
+#: prefs.js:177
 #, fuzzy
 msgid "Remove down arrow in top bar"
 msgstr "Supprimer la flèche vers le bas dans le panneau"
 
-#: prefs.js:184
+#: prefs.js:182
 msgid "Remove whitespace around text"
 msgstr "Supprimer les espaces autour du texte"
 
-#: prefs.js:189
+#: prefs.js:187
 #, fuzzy
 msgid "Paste on selection"
 msgstr "Activer la suppression"
 
-#: prefs.js:313
+#: prefs.js:312
 msgid "Icon"
 msgstr "Icône"
 
-#: prefs.js:314
+#: prefs.js:313
 msgid "Clipboard Content"
 msgstr "Contenu"
 
-#: prefs.js:315
+#: prefs.js:314
 msgid "Both"
 msgstr "Les deux"
 
-#: prefs.js:316
+#: prefs.js:315
 msgid "Neither"
 msgstr ""
 

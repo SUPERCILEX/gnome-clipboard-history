@@ -18,127 +18,131 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: extension.js:101
+#: extension.js:113
 msgid "Type here to search..."
 msgstr "Aramak için buraya yazınız..."
 
-#: extension.js:183
+#: extension.js:199
 msgid "Private mode"
 msgstr "Gizli kip"
 
-#: extension.js:417
+#: extension.js:485
 msgid "Clear all?"
 msgstr "Hepsi temizlensin mi?"
 
-#: extension.js:418
+#: extension.js:486
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Tüm pano öğelerini silmek istediğinizden emin misiniz?"
 
-#: extension.js:419
+#: extension.js:487
 msgid "This operation cannot be undone."
 msgstr "Bu işlem geri alınamaz."
 
-#: extension.js:425
+#: extension.js:493
 msgid "Clear"
 msgstr "Temizle"
 
-#: extension.js:426 extension.js:753
+#: extension.js:494 extension.js:831
 msgid "Cancel"
 msgstr "İptal"
 
-#: extension.js:752
+#: extension.js:830
 msgid "Copied to clipboard"
 msgstr "Panoya kopyalandı"
 
-#: prefs.js:96
+#: extension.js:1129
+msgid "Copied: "
+msgstr ""
+
+#: prefs.js:94
 msgid "Toggle the menu"
 msgstr "Menüyü değiştir"
 
-#: prefs.js:102
+#: prefs.js:100
 msgid "Clear history"
 msgstr "Geçmişi temizle"
 
-#: prefs.js:108
+#: prefs.js:106
 msgid "Previous entry"
 msgstr "Önceki girdi"
 
-#: prefs.js:114
+#: prefs.js:112
 msgid "Next entry"
 msgstr "Sonraki girdi"
 
-#: prefs.js:120
+#: prefs.js:118
 #, fuzzy
 msgid "Toggle private mode"
 msgstr "Gizli kip"
 
-#: prefs.js:129
+#: prefs.js:127
 msgid "Max number of items"
 msgstr ""
 
-#: prefs.js:134
+#: prefs.js:132
 #, fuzzy
 msgid "Item preview size (characters)"
 msgstr "Önizleme boyutu (karakter)"
 
-#: prefs.js:139
+#: prefs.js:137
 #, fuzzy
 msgid "Max clipboard history size (MiB)"
 msgstr "Pano geçmişi temizlendi"
 
-#: prefs.js:144
+#: prefs.js:142
 msgid "Only save favorites to disk"
 msgstr ""
 
-#: prefs.js:149
+#: prefs.js:147
 msgid "Show notification on copy"
 msgstr "Kopyalandığında bildirim göster"
 
-#: prefs.js:154
+#: prefs.js:152
 #, fuzzy
 msgid "Show confirmation on Clear History"
 msgstr "Kopyalandığında bildirim göster"
 
-#: prefs.js:159
+#: prefs.js:157
 msgid "Move previously copied items to the top"
 msgstr ""
 
-#: prefs.js:164
+#: prefs.js:162
 msgid "Keyboard shortcuts"
 msgstr "Kılavye kısayolları"
 
-#: prefs.js:169
+#: prefs.js:167
 msgid "Number of characters in top bar"
 msgstr "Üst çubukta görüntülenecek karakter sayısı"
 
-#: prefs.js:174
+#: prefs.js:172
 msgid "What to show in top bar"
 msgstr "Üst çubukta görüntülenecek"
 
-#: prefs.js:179
+#: prefs.js:177
 msgid "Remove down arrow in top bar"
 msgstr "Üst çubuktaki oku kaldır"
 
-#: prefs.js:184
+#: prefs.js:182
 msgid "Remove whitespace around text"
 msgstr "\t"
 
-#: prefs.js:189
+#: prefs.js:187
 msgid "Paste on selection"
 msgstr ""
 
-#: prefs.js:313
+#: prefs.js:312
 msgid "Icon"
 msgstr "İkon"
 
-#: prefs.js:314
+#: prefs.js:313
 msgid "Clipboard Content"
 msgstr "Pano İçeriği"
 
-#: prefs.js:315
+#: prefs.js:314
 msgid "Both"
 msgstr "Her ikisi de"
 
-#: prefs.js:316
+#: prefs.js:315
 msgid "Neither"
 msgstr ""
 
