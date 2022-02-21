@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-15 13:20+0300\n"
-"PO-Revision-Date: 2020-09-27 13:21+0200\n"
+"PO-Revision-Date: 2022-02-21 21:21+0100\n"
 "Last-Translator: Onno Giesmann <nutzer3105@gmail.com>\n"
 "Language-Team: Deutsch <openweather@jenslody.de>\n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: extension.js:101
 msgid "Type here to search..."
@@ -67,40 +67,36 @@ msgid "Next entry"
 msgstr "Nächster Eintrag"
 
 #: prefs.js:120
-#, fuzzy
 msgid "Toggle private mode"
-msgstr "Privater Modus"
+msgstr "Privaten Modus umschalten"
 
 #: prefs.js:129
 msgid "Max number of items"
-msgstr ""
+msgstr "Maximale Anzahl an Einträgen"
 
 #: prefs.js:134
-#, fuzzy
 msgid "Item preview size (characters)"
-msgstr "Vorschaugröße (Zeichen)"
+msgstr "Anzahl der Zeichen in der Vorschau"
 
 #: prefs.js:139
-#, fuzzy
 msgid "Max clipboard history size (MiB)"
-msgstr "Verlauf der Zwischenablage gelöscht"
+msgstr "Maximale Größe des Verlaufs der Zwischenablage (MiB)"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
-msgstr ""
+msgstr "Nur die Favoriten auf der Festplatte speichern"
 
 #: prefs.js:149
 msgid "Show notification on copy"
 msgstr "Benachrichtigung beim Kopieren anzeigen"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Show confirmation on Clear History"
-msgstr "Benachrichtigung beim Kopieren anzeigen"
+msgstr "Bestätigung beim Löschen des Verlaufs anzeigen"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr ""
+msgstr "Kürzlich kopierte Einträge oben anzeigen"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
@@ -112,7 +108,7 @@ msgstr "Anzahl der Zeichen in oberer Leiste"
 
 #: prefs.js:174
 msgid "What to show in top bar"
-msgstr "Folgendes in oberer Leiste anzeigen:"
+msgstr "Folgendes in oberer Leiste anzeigen"
 
 #: prefs.js:179
 msgid "Remove down arrow in top bar"
@@ -123,9 +119,8 @@ msgid "Remove whitespace around text"
 msgstr "Leerzeichen vor und nach dem Text entfernen"
 
 #: prefs.js:189
-#, fuzzy
 msgid "Paste on selection"
-msgstr "Löschen ermöglichen"
+msgstr "Bei Auswahl einfügen"
 
 #: prefs.js:313
 msgid "Icon"
@@ -141,7 +136,7 @@ msgstr "Beides"
 
 #: prefs.js:316
 msgid "Neither"
-msgstr ""
+msgstr "Nichts"
 
 #, fuzzy
 #~ msgid "Previous page"
