@@ -28,6 +28,7 @@ TODO add screenshot or video
     the Nth favorited entry
   - <kbd>Ctrl</kbd> + <kbd>p/n</kbd> to navigate to the previous/next page
   - <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>S</kbd> to open settings
+- Search uses [regex](https://regex101.com/?flavor=javascript)
 
 ## Install from source
 
