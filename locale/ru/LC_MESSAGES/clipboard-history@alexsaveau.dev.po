@@ -142,3 +142,32 @@ msgstr "Оба"
 #: prefs.js:315
 msgid "Neither"
 msgstr "Ничего"
+
+#, fuzzy
+#~ msgid "Previous page"
+#~ msgstr "Предыдущая запись"
+
+#, fuzzy
+#~ msgid "Next page"
+#~ msgstr "Следующая запись"
+
+#~ msgid "Settings"
+#~ msgstr "Настройки"
+
+#~ msgid "Text will be here"
+#~ msgstr "Текст будет здесь"
+
+#~ msgid "History Size"
+#~ msgstr "Размер истории"
+
+#~ msgid "Refresh Interval (ms)"
+#~ msgstr "Интервал обновления (мс)"
+
+#~ msgid "Max cache file size (kb)"
+#~ msgstr "Максимальный размер кэша (кб)"
+
+#~ msgid "Cache only favorites"
+#~ msgstr "Кэшировать только избранное"
+
+#~ msgid "Move item to the top after selection"
+#~ msgstr "Переместить запись в начало после выделения"
