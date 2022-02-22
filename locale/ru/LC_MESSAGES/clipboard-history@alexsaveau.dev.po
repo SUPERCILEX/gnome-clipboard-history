@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-15 13:20+0300\n"
-"PO-Revision-Date: 2022-02-08 13:08+0300\n"
+"PO-Revision-Date: 2022-02-22 22:19+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: extension.js:113
 msgid "Type here to search..."
@@ -53,7 +53,7 @@ msgstr "Скопировано в буфер обмена"
 
 #: extension.js:1129
 msgid "Copied: "
-msgstr ""
+msgstr "Скопировано: "
 
 #: prefs.js:94
 msgid "Toggle the menu"
@@ -72,40 +72,36 @@ msgid "Next entry"
 msgstr "Следующая запись"
 
 #: prefs.js:118
-#, fuzzy
 msgid "Toggle private mode"
-msgstr "Приватный режим"
+msgstr "Переключение приватного режима"
 
 #: prefs.js:127
 msgid "Max number of items"
-msgstr ""
+msgstr "Максимальное количество записей"
 
 #: prefs.js:132
-#, fuzzy
 msgid "Item preview size (characters)"
 msgstr "Длина строки в меню (символов)"
 
 #: prefs.js:137
-#, fuzzy
 msgid "Max clipboard history size (MiB)"
-msgstr "История буфера обмена очищена"
+msgstr "Максимальный размер истории буфера обмена (Мб)"
 
 #: prefs.js:142
 msgid "Only save favorites to disk"
-msgstr ""
+msgstr "Сохранять на диске только избранное"
 
 #: prefs.js:147
 msgid "Show notification on copy"
 msgstr "Уведомление при копировании"
 
 #: prefs.js:152
-#, fuzzy
 msgid "Show confirmation on Clear History"
-msgstr "Уведомление при копировании"
+msgstr "Показывать подтверждение при очистке истории"
 
 #: prefs.js:157
 msgid "Move previously copied items to the top"
-msgstr ""
+msgstr "Перемещать ранее скопированные записи наверх"
 
 #: prefs.js:162
 msgid "Keyboard shortcuts"
@@ -129,7 +125,7 @@ msgstr "Удалить пробелы в тексте"
 
 #: prefs.js:187
 msgid "Paste on selection"
-msgstr ""
+msgstr "Вставить при нажатии на запись"
 
 #: prefs.js:312
 msgid "Icon"
@@ -145,7 +141,7 @@ msgstr "Оба"
 
 #: prefs.js:315
 msgid "Neither"
-msgstr ""
+msgstr "Ничего"
 
 #, fuzzy
 #~ msgid "Previous page"
