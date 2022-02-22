@@ -808,8 +808,13 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     let entry = this.entries.findTextItem(text);
     if (entry) {
-      this._moveEntryFirst(entry);
-      this._selectEntry(entry, false);
+      const isFirst = entry === this.entries.last();
+      if (!isFirst) {
+        this._moveEntryFirst(entry);
+      }
+      if (!isFirst || entry !== this.currentlySelectedEntry) {
+        this._selectEntry(entry, false);
+      }
     } else {
       entry = new DS.LLNode();
       entry.id = this.nextId++;
