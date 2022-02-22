@@ -135,7 +135,7 @@ function _consumeStream(stream, state, callback) {
         const node = new DS.LLNode();
         node.diskId = node.id = state.nextId++;
         node.type = DS.TYPE_TEXT;
-        node.text = text;
+        node.text = text || '';
         node.favorite = false;
         state.entries.append(node);
 
