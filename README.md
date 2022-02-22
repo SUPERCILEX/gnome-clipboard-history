@@ -15,7 +15,7 @@ Install the extension from here: https://extensions.gnome.org/extension/4839/cli
 
 ## Tips
 
-TODO add screenshot or video
+![Tutorial screenshot](tutorial-screenshot.png)
 
 - Open the panel from anywhere with <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd>
 - Modify shortcuts in settings or delete them by hitting backspace while editing a shortcut
