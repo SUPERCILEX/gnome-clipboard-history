@@ -799,11 +799,11 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
+    if (STRIP_TEXT && text) {
+      text = text.trim();
+    }
     if (!text) {
       return;
-    }
-    if (STRIP_TEXT) {
-      text = text.trim();
     }
 
     let entry = this.entries.findTextItem(text);
