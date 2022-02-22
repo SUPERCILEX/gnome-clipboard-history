@@ -583,7 +583,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (this._debouncing !== undefined) {
       this._debouncing++;
     }
+
     Clipboard.set_text(CLIPBOARD_TYPE, text);
+    Clipboard.set_text(St.ClipboardType.PRIMARY, text);
   }
 
   _triggerPasteHack() {
