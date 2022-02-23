@@ -634,7 +634,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _maybeRestoreMenuPages(includeFavorites) {
-    if (this.activeHistoryMenuItems > 0 || this.searchPartitionEntry) {
+    if (this.activeHistoryMenuItems > 0 || this.searchEntryFront) {
       return;
     }
 
@@ -663,7 +663,7 @@ class ClipboardIndicator extends PanelMenu.Button {
    * oldest whereas `entries` is ordered from oldest to latest.
    */
   _navigatePrevPage() {
-    if (this.searchPartitionEntry) {
+    if (this.searchEntryFront) {
       this.populateSearchResults(this.searchEntry.get_text(), false);
       return;
     }
@@ -688,7 +688,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _navigateNextPage() {
-    if (this.searchPartitionEntry) {
+    if (this.searchEntryFront) {
       this.populateSearchResults(this.searchEntry.get_text(), true);
       return;
     }
@@ -730,47 +730,52 @@ class ClipboardIndicator extends PanelMenu.Button {
     const query = this.searchEntry.get_text();
 
     if (!query) {
-      // Must come before setting searchPartitionEntry so page restoration gets blocked
+      // Must come before setting searchEntryFront so page restoration gets blocked
       this.historySection.removeAll();
       this.favoritesSection.removeAll();
 
-      this.searchPartitionEntry = undefined;
+      this.searchEntryFront = this.searchEntryBack = undefined;
       this._maybeRestoreMenuPages(true);
       return;
     }
 
-    if (!this.searchPartitionEntry) {
-      this.searchPartitionEntry = this.entries.last();
+    if (!this.searchEntryFront) {
+      this.searchEntryFront = this.searchEntryBack = this.entries.last();
     }
 
     this.populateSearchResults(query);
   }
 
   populateSearchResults(query, forward) {
-    // Must come after setting searchPartitionEntry so page restoration gets blocked
+    if (!this.searchEntryFront) {
+      return;
+    }
+
+    // Must come after setting searchEntryFront so page restoration gets blocked
     this.historySection.removeAll();
     this.favoritesSection.removeAll();
 
-    if (!forward) {
+    if (typeof forward !== 'boolean') {
       forward = true;
     }
     const next = (entry) => (forward ? entry.prevCyclic() : entry.nextCyclic());
 
+    const searchExp = new RegExp(query, 'i');
+    const start = forward ? this.searchEntryFront : this.searchEntryBack;
+    let entry = start;
+
     for (
-      const start = this.searchPartitionEntry;
-      start &&
-      next(this.searchPartitionEntry) !== start &&
-      this.activeHistoryMenuItems < PAGE_SIZE;
-      this.searchPartitionEntry = next(this.searchPartitionEntry)
+      ;
+      next(entry) !== start && this.activeHistoryMenuItems < PAGE_SIZE;
+      entry = next(entry)
     ) {
-      const entry = this.searchPartitionEntry;
       if (entry.type === DS.TYPE_TEXT) {
-        const match = entry.text.search(new RegExp(query, 'i'));
+        const match = entry.text.search(searchExp);
         if (match < 0) {
           continue;
         }
 
-        this._addEntry(entry);
+        this._addEntry(entry, false, false, forward ? undefined : 0);
         entry.menuItem.label.set_text(
           this._truncated(
             entry.text,
@@ -781,6 +786,14 @@ class ClipboardIndicator extends PanelMenu.Button {
       } else {
         throw new TypeError('Unknown type: ' + entry.type);
       }
+    }
+
+    if (forward) {
+      this.searchEntryBack = this.searchEntryFront.nextCyclic();
+      this.searchEntryFront = entry;
+    } else {
+      this.searchEntryFront = this.searchEntryBack.prevCyclic();
+      this.searchEntryBack = entry;
     }
   }
 
