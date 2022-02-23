@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"POT-Creation-Date: 2022-02-23 12:15-0800\n"
 "PO-Revision-Date: 2021-07-07 17:43+0200\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
@@ -26,32 +26,32 @@ msgstr "Typ om te zoeken…"
 msgid "Private mode"
 msgstr "Privémodus"
 
-#: extension.js:485
+#: extension.js:486
 msgid "Clear all?"
 msgstr "Alles wissen?"
 
-#: extension.js:486
+#: extension.js:487
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Weet u zeker dat u alle klemborditems wilt wissen?"
 
-#: extension.js:487
+#: extension.js:488
 msgid "This operation cannot be undone."
 msgstr "Dit kan niet ongedaan worden gemaakt."
 
-#: extension.js:493
+#: extension.js:494
 msgid "Clear"
 msgstr "Wissen"
 
-#: extension.js:494 extension.js:831
+#: extension.js:495 extension.js:839
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: extension.js:830
+#: extension.js:838
 msgid "Copied to clipboard"
 msgstr "Gekopieerd naar het klembord"
 
-#: extension.js:1129
-msgid "Copied: "
+#: extension.js:1153
+msgid "Copied"
 msgstr ""
 
 #: prefs.js:94

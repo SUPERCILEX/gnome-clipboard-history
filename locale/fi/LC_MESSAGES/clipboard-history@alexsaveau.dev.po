@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"POT-Creation-Date: 2022-02-23 12:15-0800\n"
 "PO-Revision-Date: 2017-09-06 09:53+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: suomi <lokalisointi-lista@googlegroups.com>\n"
@@ -27,32 +27,32 @@ msgstr ""
 msgid "Private mode"
 msgstr "Yksityistila"
 
-#: extension.js:485
+#: extension.js:486
 msgid "Clear all?"
 msgstr ""
 
-#: extension.js:486
+#: extension.js:487
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr ""
 
-#: extension.js:487
+#: extension.js:488
 msgid "This operation cannot be undone."
 msgstr ""
 
-#: extension.js:493
+#: extension.js:494
 msgid "Clear"
 msgstr ""
 
-#: extension.js:494 extension.js:831
+#: extension.js:495 extension.js:839
 msgid "Cancel"
 msgstr ""
 
-#: extension.js:830
+#: extension.js:838
 msgid "Copied to clipboard"
 msgstr "Kopioitu leikepöydälle"
 
-#: extension.js:1129
-msgid "Copied: "
+#: extension.js:1153
+msgid "Copied"
 msgstr ""
 
 #: prefs.js:94

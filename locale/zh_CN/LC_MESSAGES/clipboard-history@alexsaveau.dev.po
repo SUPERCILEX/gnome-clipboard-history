@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"POT-Creation-Date: 2022-02-23 12:15-0800\n"
 "PO-Revision-Date: 2021-04-18 14:22+0800\n"
 "Last-Translator: WhiredPlanck\n"
 "Language-Team: \n"
@@ -29,32 +29,32 @@ msgstr "在此输入以搜索…"
 msgid "Private mode"
 msgstr "隐私模式"
 
-#: extension.js:485
+#: extension.js:486
 msgid "Clear all?"
 msgstr "清除所有记录吗？"
 
-#: extension.js:486
+#: extension.js:487
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "确定要删除所有剪贴板条目吗？"
 
-#: extension.js:487
+#: extension.js:488
 msgid "This operation cannot be undone."
 msgstr "此操作不可撤销。"
 
-#: extension.js:493
+#: extension.js:494
 msgid "Clear"
 msgstr "清除"
 
-#: extension.js:494 extension.js:831
+#: extension.js:495 extension.js:839
 msgid "Cancel"
 msgstr "取消"
 
-#: extension.js:830
+#: extension.js:838
 msgid "Copied to clipboard"
 msgstr "已复制到剪贴板"
 
-#: extension.js:1129
-msgid "Copied: "
+#: extension.js:1153
+msgid "Copied"
 msgstr ""
 
 #: prefs.js:94

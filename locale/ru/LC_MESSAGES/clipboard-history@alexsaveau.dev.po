@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"POT-Creation-Date: 2022-02-23 12:15-0800\n"
 "PO-Revision-Date: 2022-02-22 22:19+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: \n"
@@ -27,33 +27,33 @@ msgstr "Введите здесь для поиска..."
 msgid "Private mode"
 msgstr "Приватный режим"
 
-#: extension.js:485
+#: extension.js:486
 msgid "Clear all?"
 msgstr "Очистить все?"
 
-#: extension.js:486
+#: extension.js:487
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Вы уверены, что хотите удалить все элементы буфера обмена?"
 
-#: extension.js:487
+#: extension.js:488
 msgid "This operation cannot be undone."
 msgstr "Эту операцию нельзя отменить."
 
-#: extension.js:493
+#: extension.js:494
 msgid "Clear"
 msgstr "Очистить"
 
-#: extension.js:494 extension.js:831
+#: extension.js:495 extension.js:839
 msgid "Cancel"
 msgstr "Отменить"
 
-#: extension.js:830
+#: extension.js:838
 msgid "Copied to clipboard"
 msgstr "Скопировано в буфер обмена"
 
-#: extension.js:1129
-msgid "Copied: "
-msgstr "Скопировано: "
+#: extension.js:1153
+msgid "Copied"
+msgstr "Скопировано"
 
 #: prefs.js:94
 msgid "Toggle the menu"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"POT-Creation-Date: 2022-02-23 12:15-0800\n"
 "PO-Revision-Date: 2018-05-17 09:27+0200\n"
 "Last-Translator: Robin <bisio.97@gmail.com>\n"
 "Language-Team: jimmy.scionti@gmail.com\n"
@@ -26,32 +26,32 @@ msgstr "Digita qui per cercare…"
 msgid "Private mode"
 msgstr "Modalità privata"
 
-#: extension.js:485
+#: extension.js:486
 msgid "Clear all?"
 msgstr "Cancellare tutto?"
 
-#: extension.js:486
+#: extension.js:487
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Si è certi di voler eliminare tutti gli appunti nella cronologia?"
 
-#: extension.js:487
+#: extension.js:488
 msgid "This operation cannot be undone."
 msgstr "Questa operazione non può essere annullata."
 
-#: extension.js:493
+#: extension.js:494
 msgid "Clear"
 msgstr "Elimina"
 
-#: extension.js:494 extension.js:831
+#: extension.js:495 extension.js:839
 msgid "Cancel"
 msgstr "Annulla"
 
-#: extension.js:830
+#: extension.js:838
 msgid "Copied to clipboard"
 msgstr "Copiato negli appunti"
 
-#: extension.js:1129
-msgid "Copied: "
+#: extension.js:1153
+msgid "Copied"
 msgstr ""
 
 #: prefs.js:94

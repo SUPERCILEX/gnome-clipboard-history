@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-15 13:20+0300\n"
+"POT-Creation-Date: 2022-02-23 12:15-0800\n"
 "PO-Revision-Date: 2021-10-15 09:50+0330\n"
 "Last-Translator: eshagh <eshagh094@gmail.com>\n"
 "Language-Team: \n"
@@ -26,32 +26,32 @@ msgstr "برای جست‌وجو اینجا بنویسید..."
 msgid "Private mode"
 msgstr "حالت خصوصی"
 
-#: extension.js:485
+#: extension.js:486
 msgid "Clear all?"
 msgstr "همه پاک شوند؟"
 
-#: extension.js:486
+#: extension.js:487
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "آیا از حذف همه موارد تخته‌گیره مطمئنید؟"
 
-#: extension.js:487
+#: extension.js:488
 msgid "This operation cannot be undone."
 msgstr "این عملیات قابل بازگردانی نیست."
 
-#: extension.js:493
+#: extension.js:494
 msgid "Clear"
 msgstr "پاک‌کردن"
 
-#: extension.js:494 extension.js:831
+#: extension.js:495 extension.js:839
 msgid "Cancel"
 msgstr "لغو"
 
-#: extension.js:830
+#: extension.js:838
 msgid "Copied to clipboard"
 msgstr "رونوشت به تخته‌گیره"
 
-#: extension.js:1129
-msgid "Copied: "
+#: extension.js:1153
+msgid "Copied"
 msgstr ""
 
 #: prefs.js:94
