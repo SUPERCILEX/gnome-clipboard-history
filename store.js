@@ -51,12 +51,15 @@ function init() {
 
 function destroy() {
   _pushToOpQueue((resolve) => {
-    writeStream?.close_async(0, null, (src, res) => {
-      src.close_finish(res);
+    if (writeStream) {
+      writeStream.close_async(0, null, (src, res) => {
+        src.close_finish(res);
+        resolve();
+      });
+      writeStream = undefined;
+    } else {
       resolve();
-    });
-
-    writeStream = undefined;
+    }
   });
 }
 
