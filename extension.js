@@ -835,7 +835,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     if (NOTIFY_ON_COPY) {
-      this._showNotification(_('Copied to clipboard'), (notif) => {
+      this._showNotification(_('Copied to clipboard'), null, (notif) => {
         notif.addAction(_('Cancel'), () =>
           this._deleteEntryAndRestoreLatest(this.currentlySelectedEntry),
         );
@@ -906,6 +906,14 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._selectionOwnerChangedId = undefined;
   }
 
+  _deleteEntryAndRestoreLatest(entry) {
+    this._removeEntry(entry, true);
+    const nextEntry = this.entries.last();
+    if (nextEntry) {
+      this._selectEntry(nextEntry, true);
+    }
+  }
+
   _initNotifSource() {
     if (this._notifSource) {
       return;
@@ -918,23 +926,19 @@ class ClipboardIndicator extends PanelMenu.Button {
     Main.messageTray.add(this._notifSource);
   }
 
-  _deleteEntryAndRestoreLatest(entry) {
-    this._removeEntry(entry, true);
-    const nextEntry = this.entries.last();
-    if (nextEntry) {
-      this._selectEntry(nextEntry, true);
-    }
-  }
-
-  _showNotification(message, transformFn) {
+  _showNotification(title, message, transformFn) {
     this._initNotifSource();
 
     let notification;
     if (this._notifSource.count === 0) {
-      notification = new MessageTray.Notification(this._notifSource, message);
+      notification = new MessageTray.Notification(
+        this._notifSource,
+        title,
+        message,
+      );
     } else {
       notification = this._notifSource.notifications[0];
-      notification.update(message, '', { clear: true });
+      notification.update(title, message, { clear: true });
     }
 
     if (typeof transformFn === 'function') {
@@ -1146,7 +1150,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this._selectEntry(entry, true);
     if (entry.type === DS.TYPE_TEXT) {
-      this._showNotification(_('Copied: ') + entry.text);
+      this._showNotification(_('Copied'), entry.text);
     }
   }
 
