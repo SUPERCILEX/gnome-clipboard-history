@@ -111,11 +111,6 @@ function _consumeStream(stream, state, callback) {
     });
   };
 
-  if (stream.get_available() === 0) {
-    forceFill(1, () => _consumeStream(stream, state, callback));
-    return;
-  }
-
   const parseAvailableAware = (minBytes, parse) => {
     if (stream.get_available() < minBytes) {
       forceFill(minBytes, parse);
@@ -124,70 +119,78 @@ function _consumeStream(stream, state, callback) {
     }
   };
 
-  const opType = stream.read_byte(null);
-  if (opType === OP_TYPE_SAVE_TEXT) {
-    stream.read_upto_async(
-      /*stop_chars=*/ '\0',
-      /*stop_chars_len=*/ 1,
-      0,
-      null,
-      (src, res) => {
-        const [text] = src.read_upto_finish(res);
-        src.read_byte(null);
+  (function loop() {
+    if (stream.get_available() === 0) {
+      forceFill(1, loop);
+      return;
+    }
 
-        const node = new DS.LLNode();
-        node.diskId = node.id = state.nextId++;
-        node.type = DS.TYPE_TEXT;
-        node.text = text || '';
-        node.favorite = false;
-        state.entries.append(node);
+    const opType = stream.read_byte(null);
+    if (opType === OP_TYPE_SAVE_TEXT) {
+      stream.read_upto_async(
+        /*stop_chars=*/ '\0',
+        /*stop_chars_len=*/ 1,
+        0,
+        null,
+        (src, res) => {
+          const [text] = src.read_upto_finish(res);
+          src.read_byte(null);
 
-        _consumeStream(stream, state, callback);
-      },
-    );
-    return;
-  } else if (opType === OP_TYPE_DELETE_TEXT) {
-    parseAvailableAware(4, () => {
-      const id = stream.read_uint32(null);
-      (state.entries.findById(id) || state.favorites.findById(id)).detach();
-    });
-    uselessOpCount += 2;
-  } else if (opType === OP_TYPE_FAVORITE_ITEM) {
-    parseAvailableAware(4, () => {
-      const id = stream.read_uint32(null);
-      const entry = state.entries.findById(id);
+          const node = new DS.LLNode();
+          node.diskId = node.id = state.nextId++;
+          node.type = DS.TYPE_TEXT;
+          node.text = text || '';
+          node.favorite = false;
+          state.entries.append(node);
 
-      entry.favorite = true;
-      state.favorites.append(entry);
-    });
-  } else if (opType === OP_TYPE_UNFAVORITE_ITEM) {
-    parseAvailableAware(4, () => {
-      const id = stream.read_uint32(null);
-      const entry = state.favorites.findById(id);
+          loop();
+        },
+      );
+      return;
+    } else if (opType === OP_TYPE_DELETE_TEXT) {
+      parseAvailableAware(4, () => {
+        const id = stream.read_uint32(null);
+        (state.entries.findById(id) || state.favorites.findById(id)).detach();
+      });
+      uselessOpCount += 2;
+    } else if (opType === OP_TYPE_FAVORITE_ITEM) {
+      parseAvailableAware(4, () => {
+        const id = stream.read_uint32(null);
+        const entry = state.entries.findById(id);
 
-      entry.favorite = false;
-      state.entries.append(entry);
-    });
-    uselessOpCount += 2;
-  } else if (opType === OP_TYPE_MOVE_ITEM_TO_END) {
-    parseAvailableAware(4, () => {
-      const id = stream.read_uint32(null);
-      const entry = state.entries.findById(id) || state.favorites.findById(id);
-
-      if (entry.favorite) {
+        entry.favorite = true;
         state.favorites.append(entry);
-      } else {
-        state.entries.append(entry);
-      }
-    });
-    uselessOpCount++;
-  } else {
-    log(Me.uuid, 'Unknown op type, aborting load.', opType);
-    finish();
-    return;
-  }
+      });
+    } else if (opType === OP_TYPE_UNFAVORITE_ITEM) {
+      parseAvailableAware(4, () => {
+        const id = stream.read_uint32(null);
+        const entry = state.favorites.findById(id);
 
-  _consumeStream(stream, state, callback);
+        entry.favorite = false;
+        state.entries.append(entry);
+      });
+      uselessOpCount += 2;
+    } else if (opType === OP_TYPE_MOVE_ITEM_TO_END) {
+      parseAvailableAware(4, () => {
+        const id = stream.read_uint32(null);
+        const entry =
+          state.entries.findById(id) || state.favorites.findById(id);
+
+        if (entry.favorite) {
+          state.favorites.append(entry);
+        } else {
+          state.entries.append(entry);
+        }
+      });
+      uselessOpCount++;
+    } else {
+      log(Me.uuid, 'Unknown op type, aborting load.', opType);
+      finish();
+      return;
+    }
+
+    loop();
+  })();
 }
 
 function _readAndConsumeOldFormat(callback) {
