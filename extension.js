@@ -765,19 +765,17 @@ class ClipboardIndicator extends PanelMenu.Button {
     ) {
       const entry = this.searchPartitionEntry;
       if (entry.type === DS.TYPE_TEXT) {
-        const matches = entry.text.match(new RegExp(query, 'i'));
-
-        if (!matches) {
+        const match = entry.text.search(new RegExp(query, 'i'));
+        if (match < 0) {
           continue;
         }
-        const best = matches.index;
 
         this._addEntry(entry);
         entry.menuItem.label.set_text(
           this._truncated(
             entry.text,
-            best - MAX_ENTRY_LENGTH / 2,
-            best + MAX_ENTRY_LENGTH / 2,
+            match - MAX_ENTRY_LENGTH / 2,
+            match + MAX_ENTRY_LENGTH / 2,
           ),
         );
       } else {
