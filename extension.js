@@ -228,6 +228,14 @@ class ClipboardIndicator extends PanelMenu.Button {
     settingsMenuItem.connect('activate', this._openSettings.bind(this));
     actionsBox.add(settingsMenuItem);
 
+    if (ENABLE_KEYBINDING) {
+      this._bindShortcuts();
+    }
+    this._keyPressCallbackId = global.stage.connect(
+      'key-press-event',
+      (_, event) => this._handleGlobalKeyEvent(event),
+    );
+
     Store.buildClipboardStateFromLog((history, nextId) => {
       /**
        * This field stores the number of items in the historySection to avoid calling _getMenuItems
@@ -266,18 +274,11 @@ class ClipboardIndicator extends PanelMenu.Button {
         'changed',
         this._onSettingsChange.bind(this),
       );
-      if (ENABLE_KEYBINDING) {
-        this._bindShortcuts();
-      }
 
       this.searchEntry
         .get_clutter_text()
         .connect('text-changed', this._onSearchTextChanged.bind(this));
       clearMenuItem.connect('activate', this._removeAll.bind(this));
-      this._keyPressCallbackId = global.stage.connect(
-        'key-press-event',
-        (_, event) => this._handleGlobalKeyEvent(event),
-      );
 
       this._setupSelectionChangeListener();
     });
@@ -1043,9 +1044,21 @@ class ClipboardIndicator extends PanelMenu.Button {
 
   _bindShortcuts() {
     this._unbindShortcuts();
-    this._bindShortcut(SETTING_KEY_CLEAR_HISTORY, this._removeAll);
-    this._bindShortcut(SETTING_KEY_PREV_ENTRY, this._previousEntry);
-    this._bindShortcut(SETTING_KEY_NEXT_ENTRY, this._nextEntry);
+    this._bindShortcut(SETTING_KEY_CLEAR_HISTORY, () => {
+      if (this.entries) {
+        this._removeAll();
+      }
+    });
+    this._bindShortcut(SETTING_KEY_PREV_ENTRY, () => {
+      if (this.entries) {
+        this._previousEntry();
+      }
+    });
+    this._bindShortcut(SETTING_KEY_NEXT_ENTRY, () => {
+      if (this.entries) {
+        this._nextEntry();
+      }
+    });
     this._bindShortcut(SETTING_KEY_TOGGLE_MENU, () => this.menu.toggle());
     this._bindShortcut(SETTING_KEY_PRIVATE_MODE, () =>
       this.privateModeMenuItem.toggle(),
