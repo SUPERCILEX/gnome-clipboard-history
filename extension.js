@@ -759,33 +759,36 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (typeof forward !== 'boolean') {
       forward = true;
     }
-    const next = (entry) => (forward ? entry.prevCyclic() : entry.nextCyclic());
 
     const searchExp = new RegExp(query, 'i');
     const start = forward ? this.searchEntryFront : this.searchEntryBack;
     let entry = start;
 
-    for (
-      ;
-      next(entry) !== start && this.activeHistoryMenuItems < PAGE_SIZE;
-      entry = next(entry)
-    ) {
+    while (this.activeHistoryMenuItems < PAGE_SIZE) {
       if (entry.type === DS.TYPE_TEXT) {
         const match = entry.text.search(searchExp);
-        if (match < 0) {
-          continue;
+        if (match >= 0) {
+          this._addEntry(
+            entry,
+            entry === this.currentlySelectedEntry,
+            false,
+            forward ? undefined : 0,
+          );
+          entry.menuItem.label.set_text(
+            this._truncated(
+              entry.text,
+              match - MAX_ENTRY_LENGTH / 2,
+              match + MAX_ENTRY_LENGTH / 2,
+            ),
+          );
         }
-
-        this._addEntry(entry, false, false, forward ? undefined : 0);
-        entry.menuItem.label.set_text(
-          this._truncated(
-            entry.text,
-            match - MAX_ENTRY_LENGTH / 2,
-            match + MAX_ENTRY_LENGTH / 2,
-          ),
-        );
       } else {
         throw new TypeError('Unknown type: ' + entry.type);
+      }
+
+      entry = forward ? entry.prevCyclic() : entry.nextCyclic();
+      if (entry === start) {
+        break;
       }
     }
 
