@@ -334,9 +334,12 @@ function _storeTextOp(text) {
   };
 }
 
-function deleteTextEntry(id) {
+function deleteTextEntry(id, isFavorite) {
   _appendBytesToLog(_deleteTextOp(id), 5);
   uselessOpCount += 2;
+  if (isFavorite) {
+    uselessOpCount++;
+  }
 }
 
 function _deleteTextOp(id) {

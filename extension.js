@@ -466,7 +466,7 @@ class ClipboardIndicator extends PanelMenu.Button {
         Store.storeTextEntry(entry.text);
         Store.updateFavoriteStatus(entry.diskId, true);
       } else {
-        Store.deleteTextEntry(entry.diskId);
+        Store.deleteTextEntry(entry.diskId, true);
         delete entry.diskId;
       }
     } else {
@@ -524,7 +524,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       entry.detach();
 
       if (entry.diskId) {
-        Store.deleteTextEntry(entry.diskId);
+        Store.deleteTextEntry(entry.diskId, entry.favorite);
       }
     }
 
