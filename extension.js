@@ -741,10 +741,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    if (!this.searchEntryFront) {
-      this.searchEntryFront = this.searchEntryBack = this.entries.last();
-    }
-
+    this.searchEntryFront = this.searchEntryBack = this.entries.last();
     this.populateSearchResults(query);
   }
 
