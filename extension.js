@@ -407,7 +407,6 @@ class ClipboardIndicator extends PanelMenu.Button {
       delete menuItem.entry.menuItem;
       if (!menuItem.entry.favorite) {
         this.activeHistoryMenuItems--;
-        this._maybeRestoreMenuPages();
       }
     });
 
@@ -458,6 +457,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._removeEntry(entry);
     entry.favorite = !entry.favorite;
     this._addEntry(entry, wasSelected, true, 0);
+    this._maybeRestoreMenuPages();
 
     if (CACHE_ONLY_FAVORITES) {
       if (entry.favorite) {
@@ -532,6 +532,9 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._resetSelectedMenuItem();
     }
     entry.menuItem?.destroy();
+    if (fullyDelete) {
+      this._maybeRestoreMenuPages();
+    }
   }
 
   _pruneOldestEntries() {
@@ -634,7 +637,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _maybeRestoreMenuPages(includeFavorites) {
-    if (this.activeHistoryMenuItems > 0 || this.searchEntryFront) {
+    if (this.activeHistoryMenuItems > 0) {
       return;
     }
 
@@ -730,7 +733,6 @@ class ClipboardIndicator extends PanelMenu.Button {
     const query = this.searchEntry.get_text();
 
     if (!query) {
-      // Must come before setting searchEntryFront so page restoration gets blocked
       this.historySection.removeAll();
       this.favoritesSection.removeAll();
 
@@ -751,7 +753,6 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    // Must come after setting searchEntryFront so page restoration gets blocked
     this.historySection.removeAll();
     this.favoritesSection.removeAll();
 
