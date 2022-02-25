@@ -292,6 +292,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._handleCtrlSelectKeyEvent(event);
     this._handleSettingsKeyEvent(event);
     this._handleNavigationKeyEvent(event);
+    this._handleFocusSearchKeyEvent(event);
   }
 
   _handleCtrlSelectKeyEvent(event) {
@@ -333,6 +334,14 @@ class ClipboardIndicator extends PanelMenu.Button {
     } else if (event.get_key_unicode() === 'p') {
       this._navigatePrevPage();
     }
+  }
+
+  _handleFocusSearchKeyEvent(event) {
+    if (event.get_key_unicode() !== '/') {
+      return;
+    }
+
+    global.stage.set_key_focus(this.searchEntry);
   }
 
   _addEntry(entry, selectEntry, updateClipboard, insertIndex) {
