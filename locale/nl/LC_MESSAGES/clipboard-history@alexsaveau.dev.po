@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2021-07-07 17:43+0200\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2022-02-25 12:37+0100\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: extension.js:113
 msgid "Type here to search..."
@@ -52,7 +52,7 @@ msgstr "Gekopieerd naar het klembord"
 
 #: extension.js:1153
 msgid "Copied"
-msgstr ""
+msgstr "Gekopieerd"
 
 #: prefs.js:94
 msgid "Toggle the menu"
@@ -71,40 +71,36 @@ msgid "Next entry"
 msgstr "Volgend item"
 
 #: prefs.js:118
-#, fuzzy
 msgid "Toggle private mode"
-msgstr "Privémodus"
+msgstr "Privémodus aan/uit"
 
 #: prefs.js:127
 msgid "Max number of items"
-msgstr ""
+msgstr "Max. aantal items"
 
 #: prefs.js:132
-#, fuzzy
 msgid "Item preview size (characters)"
 msgstr "Voorvertoningsomvang (aantal tekens)"
 
 #: prefs.js:137
-#, fuzzy
 msgid "Max clipboard history size (MiB)"
-msgstr "De klembordgeschiedenis is gewist"
+msgstr "Max. omvang van klembordgeschiedenis (in MiB)"
 
 #: prefs.js:142
 msgid "Only save favorites to disk"
-msgstr ""
+msgstr "Alleen favorieten vastleggen op schijf"
 
 #: prefs.js:147
 msgid "Show notification on copy"
 msgstr "Melding tonen na kopiëren"
 
 #: prefs.js:152
-#, fuzzy
 msgid "Show confirmation on Clear History"
-msgstr "Melding tonen na kopiëren"
+msgstr "Om bevestiging vragen bij wissen van geschiedenis"
 
 #: prefs.js:157
 msgid "Move previously copied items to the top"
-msgstr ""
+msgstr "Eerder gekopieerde items bovenaan lijst tonen"
 
 #: prefs.js:162
 msgid "Keyboard shortcuts"
@@ -128,7 +124,7 @@ msgstr "Witruimte rondom tekst wissen"
 
 #: prefs.js:187
 msgid "Paste on selection"
-msgstr ""
+msgstr "Plakken na selecteren"
 
 #: prefs.js:312
 msgid "Icon"
@@ -144,7 +140,7 @@ msgstr "Beide"
 
 #: prefs.js:315
 msgid "Neither"
-msgstr ""
+msgstr "Niets"
 
 #, fuzzy
 #~ msgid "Previous page"
