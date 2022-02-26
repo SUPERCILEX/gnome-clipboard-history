@@ -13,14 +13,13 @@ A clear and concise description of what the bug is.
 #### Versions
 
 <!--
-Run this command to get all the version info you need:
+Run this command to get debugging info and paste it below:
 ```sh
-gnome-shell --version; echo -n "GCH "; gnome-extensions show clipboard-history@alexsaveau.dev | grep Version
+gnome-shell --version; echo -n "GCH "; gnome-extensions show clipboard-history@alexsaveau.dev | grep Version; gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-history@alexsaveau.dev/schemas list-recursively org.gnome.shell.extensions.clipboard-history
 ```
 -->
 
-- Gnome shell version:
-- GCH version:
+PASTE_OUTPUT_HERE
 
 #### Steps to repro
 
