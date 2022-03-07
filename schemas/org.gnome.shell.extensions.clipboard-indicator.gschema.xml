@@ -85,6 +85,11 @@
       <summary>Paste selected items into the previously active window</summary>
     </key>
 
+    <key name="process-primary-selection" type="b">
+      <default>false</default>
+      <summary>Process the primary clipboard selection</summary>
+    </key>
+
     <key name="move-item-first" type="b">
       <default>true</default>
       <summary>Move previously copied items to the top of the list</summary>

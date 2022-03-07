@@ -11,7 +11,6 @@ const PopupMenu = imports.ui.popupMenu;
 const Gettext = imports.gettext;
 
 const Clipboard = St.Clipboard.get_default();
-const CLIPBOARD_TYPE = St.ClipboardType.CLIPBOARD;
 const VirtualKeyboard = (() => {
   let VirtualKeyboard;
   return () => {
@@ -57,6 +56,7 @@ let TOPBAR_DISPLAY_MODE; // 0 - only icon, 1 - only clipboard content, 2 - both,
 let DISABLE_DOWN_ARROW;
 let STRIP_TEXT;
 let PASTE_ON_SELECTION;
+let PROCESS_PRIMARY_SELECTION;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init() {
@@ -93,13 +93,19 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     if (this._searchFocusHackCallbackId) {
       Mainloop.source_remove(this._searchFocusHackCallbackId);
+      this._searchFocusHackCallbackId = undefined;
     }
     if (this._pasteHackCallbackId) {
       Mainloop.source_remove(this._pasteHackCallbackId);
+      this._pasteHackCallbackId = undefined;
     }
     if (this._keyPressCallbackId) {
       global.stage.disconnect(this._keyPressCallbackId);
       this._keyPressCallbackId = undefined;
+    }
+    if (this._primaryClipboardCallbackId) {
+      Mainloop.source_remove(this._primaryClipboardCallbackId);
+      this._primaryClipboardCallbackId = undefined;
     }
 
     super.destroy();
@@ -573,7 +579,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._debouncing++;
     }
 
-    Clipboard.set_text(CLIPBOARD_TYPE, text);
+    Clipboard.set_text(St.ClipboardType.CLIPBOARD, text);
     Clipboard.set_text(St.ClipboardType.PRIMARY, text);
   }
 
@@ -786,8 +792,25 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    Clipboard.get_text(CLIPBOARD_TYPE, (clipBoard, text) => {
+    Clipboard.get_text(St.ClipboardType.CLIPBOARD, (_, text) => {
       this._processClipboardContent(text);
+    });
+  }
+
+  _queryPrimaryClipboard() {
+    if (PRIVATE_MODE) {
+      return;
+    }
+
+    if (this._primaryClipboardCallbackId) {
+      Mainloop.source_remove(this._primaryClipboardCallbackId);
+    }
+    this._primaryClipboardCallbackId = Mainloop.timeout_add(100, () => {
+      Clipboard.get_text(St.ClipboardType.PRIMARY, (_, text) => {
+        this._processClipboardContent(text);
+        this._primaryClipboardCallbackId = undefined;
+        return false;
+      });
     });
   }
 
@@ -897,6 +920,11 @@ class ClipboardIndicator extends PanelMenu.Button {
       (_, selectionType) => {
         if (selectionType === Meta.SelectionType.SELECTION_CLIPBOARD) {
           this._queryClipboard();
+        } else if (
+          PROCESS_PRIMARY_SELECTION &&
+          selectionType === Meta.SelectionType.SELECTION_PRIMARY
+        ) {
+          this._queryPrimaryClipboard();
         }
       },
     );
@@ -1003,6 +1031,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     PRIVATE_MODE = Prefs.Settings.get_boolean(Prefs.Fields.PRIVATE_MODE);
     PASTE_ON_SELECTION = Prefs.Settings.get_boolean(
       Prefs.Fields.PASTE_ON_SELECTION,
+    );
+    PROCESS_PRIMARY_SELECTION = Prefs.Settings.get_boolean(
+      Prefs.Fields.PROCESS_PRIMARY_SELECTION,
     );
   }
 

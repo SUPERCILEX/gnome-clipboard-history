@@ -23,6 +23,7 @@ var Fields = {
   STRIP_TEXT: 'strip-text',
   PRIVATE_MODE: 'private-mode',
   PASTE_ON_SELECTION: 'paste-on-selection',
+  PROCESS_PRIMARY_SELECTION: 'process-primary-selection',
 };
 
 const SCHEMA_NAME = 'org.gnome.shell.extensions.clipboard-history';
@@ -85,6 +86,7 @@ class Prefs extends GObject.Object {
     this.field_confirm_clear_toggle = new Gtk.Switch();
     this.field_strip_text = new Gtk.Switch();
     this.field_paste_on_selection = new Gtk.Switch();
+    this.field_process_primary_selection = new Gtk.Switch();
     this.field_move_item_first = new Gtk.Switch();
     this.field_keybinding = createKeybindingWidget(Settings);
     addKeybinding(
@@ -188,6 +190,11 @@ class Prefs extends GObject.Object {
       hexpand: true,
       halign: Gtk.Align.START,
     });
+    let processPrimarySelection = new Gtk.Label({
+      label: _('Process primary selection'),
+      hexpand: true,
+      halign: Gtk.Align.START,
+    });
 
     const addRow = ((main) => {
       let row = 0;
@@ -219,6 +226,7 @@ class Prefs extends GObject.Object {
     addRow(moveFirstLabel, this.field_move_item_first);
     addRow(stripTextLabel, this.field_strip_text);
     addRow(pasteOnSelectionLabel, this.field_paste_on_selection);
+    addRow(processPrimarySelection, this.field_process_primary_selection);
     addRow(displayModeLabel, this.field_display_mode);
     addRow(disableDownArrowLabel, this.field_disable_down_arrow);
     addRow(topbarPreviewLabel, this.field_topbar_preview_size);
@@ -296,6 +304,12 @@ class Prefs extends GObject.Object {
     Settings.bind(
       Fields.PASTE_ON_SELECTION,
       this.field_paste_on_selection,
+      'active',
+      Gio.SettingsBindFlags.DEFAULT,
+    );
+    Settings.bind(
+      Fields.PROCESS_PRIMARY_SELECTION,
+      this.field_process_primary_selection,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
