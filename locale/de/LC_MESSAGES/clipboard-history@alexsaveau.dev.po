@@ -18,127 +18,132 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: extension.js:113
+#: extension.js:119
 msgid "Type here to search..."
 msgstr "Text eingeben, um zu suchen…"
 
-#: extension.js:199
+#: extension.js:205
 msgid "Private mode"
 msgstr "Privater Modus"
 
-#: extension.js:486
+#: extension.js:497
 msgid "Clear all?"
 msgstr "Alles löschen?"
 
-#: extension.js:487
+#: extension.js:498
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Soll die Zwischenablage wirklich geleert werden?"
 
-#: extension.js:488
+#: extension.js:499
 msgid "This operation cannot be undone."
 msgstr "Diese Aktion kann nicht rückgängig gemacht werden."
 
-#: extension.js:494
+#: extension.js:505
 msgid "Clear"
 msgstr "Löschen"
 
-#: extension.js:495 extension.js:839
+#: extension.js:506 extension.js:860
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: extension.js:838
+#: extension.js:859
 msgid "Copied to clipboard"
 msgstr "In Zwischenablage kopiert"
 
-#: extension.js:1153
+#: extension.js:1188
 msgid "Copied"
 msgstr ""
 
-#: prefs.js:94
+#: prefs.js:96
 msgid "Toggle the menu"
 msgstr "Das Menü öffnen/schließen"
 
-#: prefs.js:100
+#: prefs.js:102
 msgid "Clear history"
 msgstr "Verlauf löschen"
 
-#: prefs.js:106
+#: prefs.js:108
 msgid "Previous entry"
 msgstr "Vorheriger Eintrag"
 
-#: prefs.js:112
+#: prefs.js:114
 msgid "Next entry"
 msgstr "Nächster Eintrag"
 
-#: prefs.js:118
+#: prefs.js:120
 msgid "Toggle private mode"
 msgstr "Privaten Modus umschalten"
 
-#: prefs.js:127
+#: prefs.js:129
 msgid "Max number of items"
 msgstr "Maximale Anzahl an Einträgen"
 
-#: prefs.js:132
+#: prefs.js:134
 msgid "Item preview size (characters)"
 msgstr "Anzahl der Zeichen in der Vorschau"
 
-#: prefs.js:137
+#: prefs.js:139
 msgid "Max clipboard history size (MiB)"
 msgstr "Maximale Größe des Verlaufs der Zwischenablage (MiB)"
 
-#: prefs.js:142
+#: prefs.js:144
 msgid "Only save favorites to disk"
 msgstr "Nur die Favoriten auf der Festplatte speichern"
 
-#: prefs.js:147
+#: prefs.js:149
 msgid "Show notification on copy"
 msgstr "Benachrichtigung beim Kopieren anzeigen"
 
-#: prefs.js:152
+#: prefs.js:154
 msgid "Show confirmation on Clear History"
 msgstr "Bestätigung beim Löschen des Verlaufs anzeigen"
 
-#: prefs.js:157
+#: prefs.js:159
 msgid "Move previously copied items to the top"
 msgstr "Kürzlich kopierte Einträge oben anzeigen"
 
-#: prefs.js:162
+#: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "Tastaturkürzel"
 
-#: prefs.js:167
+#: prefs.js:169
 msgid "Number of characters in top bar"
 msgstr "Anzahl der Zeichen in oberer Leiste"
 
-#: prefs.js:172
+#: prefs.js:174
 msgid "What to show in top bar"
 msgstr "Folgendes in oberer Leiste anzeigen"
 
-#: prefs.js:177
+#: prefs.js:179
 msgid "Remove down arrow in top bar"
 msgstr "Pfeil in der oberen Leiste nicht anzeigen"
 
-#: prefs.js:182
+#: prefs.js:184
 msgid "Remove whitespace around text"
 msgstr "Leerzeichen vor und nach dem Text entfernen"
 
-#: prefs.js:187
+#: prefs.js:189
 msgid "Paste on selection"
 msgstr "Bei Auswahl einfügen"
 
-#: prefs.js:312
+#: prefs.js:194
+#, fuzzy
+msgid "Process primary selection"
+msgstr "Bei Auswahl einfügen"
+
+#: prefs.js:326
 msgid "Icon"
 msgstr "Symbol"
 
-#: prefs.js:313
+#: prefs.js:327
 msgid "Clipboard Content"
 msgstr "Inhalt der Zwischenablage"
 
-#: prefs.js:314
+#: prefs.js:328
 msgid "Both"
 msgstr "Beides"
 
-#: prefs.js:315
+#: prefs.js:329
 msgid "Neither"
 msgstr "Nichts"
 

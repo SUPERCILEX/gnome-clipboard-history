@@ -18,127 +18,132 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: extension.js:113
+#: extension.js:119
 msgid "Type here to search..."
 msgstr "Typ om te zoeken…"
 
-#: extension.js:199
+#: extension.js:205
 msgid "Private mode"
 msgstr "Privémodus"
 
-#: extension.js:486
+#: extension.js:497
 msgid "Clear all?"
 msgstr "Alles wissen?"
 
-#: extension.js:487
+#: extension.js:498
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Weet u zeker dat u alle klemborditems wilt wissen?"
 
-#: extension.js:488
+#: extension.js:499
 msgid "This operation cannot be undone."
 msgstr "Dit kan niet ongedaan worden gemaakt."
 
-#: extension.js:494
+#: extension.js:505
 msgid "Clear"
 msgstr "Wissen"
 
-#: extension.js:495 extension.js:839
+#: extension.js:506 extension.js:860
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: extension.js:838
+#: extension.js:859
 msgid "Copied to clipboard"
 msgstr "Gekopieerd naar het klembord"
 
-#: extension.js:1153
+#: extension.js:1188
 msgid "Copied"
 msgstr "Gekopieerd"
 
-#: prefs.js:94
+#: prefs.js:96
 msgid "Toggle the menu"
 msgstr "Menu tonen/verbergen"
 
-#: prefs.js:100
+#: prefs.js:102
 msgid "Clear history"
 msgstr "Geschiedenis wissen"
 
-#: prefs.js:106
+#: prefs.js:108
 msgid "Previous entry"
 msgstr "Vorig item"
 
-#: prefs.js:112
+#: prefs.js:114
 msgid "Next entry"
 msgstr "Volgend item"
 
-#: prefs.js:118
+#: prefs.js:120
 msgid "Toggle private mode"
 msgstr "Privémodus aan/uit"
 
-#: prefs.js:127
+#: prefs.js:129
 msgid "Max number of items"
 msgstr "Max. aantal items"
 
-#: prefs.js:132
+#: prefs.js:134
 msgid "Item preview size (characters)"
 msgstr "Voorvertoningsomvang (aantal tekens)"
 
-#: prefs.js:137
+#: prefs.js:139
 msgid "Max clipboard history size (MiB)"
 msgstr "Max. omvang van klembordgeschiedenis (in MiB)"
 
-#: prefs.js:142
+#: prefs.js:144
 msgid "Only save favorites to disk"
 msgstr "Alleen favorieten vastleggen op schijf"
 
-#: prefs.js:147
+#: prefs.js:149
 msgid "Show notification on copy"
 msgstr "Melding tonen na kopiëren"
 
-#: prefs.js:152
+#: prefs.js:154
 msgid "Show confirmation on Clear History"
 msgstr "Om bevestiging vragen bij wissen van geschiedenis"
 
-#: prefs.js:157
+#: prefs.js:159
 msgid "Move previously copied items to the top"
 msgstr "Eerder gekopieerde items bovenaan lijst tonen"
 
-#: prefs.js:162
+#: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "Sneltoetsen"
 
-#: prefs.js:167
+#: prefs.js:169
 msgid "Number of characters in top bar"
 msgstr "Aantal tekens op bovenbalk"
 
-#: prefs.js:172
+#: prefs.js:174
 msgid "What to show in top bar"
 msgstr "Tonen op bovenbalk:"
 
-#: prefs.js:177
+#: prefs.js:179
 msgid "Remove down arrow in top bar"
 msgstr "Geen uitklappijl tonen op bovenbalk"
 
-#: prefs.js:182
+#: prefs.js:184
 msgid "Remove whitespace around text"
 msgstr "Witruimte rondom tekst wissen"
 
-#: prefs.js:187
+#: prefs.js:189
 msgid "Paste on selection"
 msgstr "Plakken na selecteren"
 
-#: prefs.js:312
+#: prefs.js:194
+#, fuzzy
+msgid "Process primary selection"
+msgstr "Plakken na selecteren"
+
+#: prefs.js:326
 msgid "Icon"
 msgstr "Pictogram"
 
-#: prefs.js:313
+#: prefs.js:327
 msgid "Clipboard Content"
 msgstr "Klembordinhoud"
 
-#: prefs.js:314
+#: prefs.js:328
 msgid "Both"
 msgstr "Beide"
 
-#: prefs.js:315
+#: prefs.js:329
 msgid "Neither"
 msgstr "Niets"
 
