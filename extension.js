@@ -31,6 +31,7 @@ const SETTING_KEY_PRIVATE_MODE = 'toggle-private-mode';
 const INDICATOR_ICON = 'edit-paste-symbolic';
 
 const PAGE_SIZE = 50;
+const MAX_VISIBLE_CHARS = 200;
 
 const Util = imports.misc.util;
 const ExtensionUtils = imports.misc.extensionUtils;
@@ -45,7 +46,7 @@ const _ = Gettext.domain(Me.uuid).gettext;
 
 let MAX_REGISTRY_LENGTH;
 let MAX_BYTES;
-let MAX_ENTRY_LENGTH;
+let WINDOW_WIDTH_PERCENTAGE;
 let CACHE_ONLY_FAVORITES;
 let MOVE_ITEM_FIRST;
 let ENABLE_KEYBINDING;
@@ -132,6 +133,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this.menu.connect('open-state-changed', (self, open) => {
       if (open) {
+        this._setMenuWidth();
         this.searchEntry.set_text('');
         this._searchFocusHackCallbackId = Mainloop.timeout_add(1, () => {
           global.stage.set_key_focus(this.searchEntry);
@@ -284,6 +286,11 @@ class ClipboardIndicator extends PanelMenu.Button {
 
       this._setupSelectionChangeListener();
     });
+  }
+
+  _setMenuWidth() {
+    this.menu.actor.width =
+      global.screen_width * (WINDOW_WIDTH_PERCENTAGE / 100);
   }
 
   _handleGlobalKeyEvent(event) {
@@ -459,7 +466,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   _setEntryLabel(menuItem) {
     const entry = menuItem.entry;
     if (entry.type === DS.TYPE_TEXT) {
-      menuItem.label.set_text(this._truncated(entry.text, MAX_ENTRY_LENGTH));
+      menuItem.label.set_text(this._truncated(entry.text, MAX_VISIBLE_CHARS));
     } else {
       throw new TypeError('Unknown type: ' + entry.type);
     }
@@ -769,8 +776,8 @@ class ClipboardIndicator extends PanelMenu.Button {
           entry.menuItem.label.set_text(
             this._truncated(
               entry.text,
-              match - MAX_ENTRY_LENGTH / 2,
-              match + MAX_ENTRY_LENGTH / 2,
+              match - 40,
+              match + MAX_VISIBLE_CHARS - 40,
             ),
           );
         }
@@ -1012,7 +1019,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     MAX_REGISTRY_LENGTH = Prefs.Settings.get_int(Prefs.Fields.HISTORY_SIZE);
     MAX_BYTES =
       (1 << 20) * Prefs.Settings.get_int(Prefs.Fields.CACHE_FILE_SIZE);
-    MAX_ENTRY_LENGTH = Prefs.Settings.get_int(Prefs.Fields.PREVIEW_SIZE);
+    WINDOW_WIDTH_PERCENTAGE = Prefs.Settings.get_int(
+      Prefs.Fields.WINDOW_WIDTH_PERCENTAGE,
+    );
     CACHE_ONLY_FAVORITES = Prefs.Settings.get_boolean(
       Prefs.Fields.CACHE_ONLY_FAVORITES,
     );
@@ -1079,6 +1088,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (this.currentlySelectedEntry) {
       this._updateButtonText(this.currentlySelectedEntry);
     }
+    this._setMenuWidth();
 
     if (ENABLE_KEYBINDING) {
       this._bindShortcuts();

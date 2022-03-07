@@ -10,7 +10,7 @@ const _ = Gettext.domain(Me.uuid).gettext;
 
 var Fields = {
   HISTORY_SIZE: 'history-size',
-  PREVIEW_SIZE: 'preview-size',
+  WINDOW_WIDTH_PERCENTAGE: 'window-width-percentage',
   CACHE_FILE_SIZE: 'cache-size',
   CACHE_ONLY_FAVORITES: 'cache-only-favorites',
   NOTIFY_ON_COPY: 'notify-on-copy',
@@ -52,11 +52,11 @@ class Prefs extends GObject.Object {
         step_increment: 100,
       }),
     });
-    this.field_preview_size = new Gtk.SpinButton({
+    this.window_width_percentage = new Gtk.SpinButton({
       adjustment: new Gtk.Adjustment({
-        lower: 10,
-        upper: 200,
-        step_increment: 10,
+        lower: 0,
+        upper: 100,
+        step_increment: 5,
       }),
     });
     this.field_cache_size = new Gtk.SpinButton({
@@ -130,8 +130,8 @@ class Prefs extends GObject.Object {
       hexpand: true,
       halign: Gtk.Align.START,
     });
-    let previewLabel = new Gtk.Label({
-      label: _('Item preview size (characters)'),
+    let windowWidthPercentageLabel = new Gtk.Label({
+      label: _('Window width (%)'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
@@ -219,8 +219,8 @@ class Prefs extends GObject.Object {
       };
     })(this.main);
 
+    addRow(windowWidthPercentageLabel, this.window_width_percentage);
     addRow(sizeLabel, this.field_size);
-    addRow(previewLabel, this.field_preview_size);
     addRow(cacheSizeLabel, this.field_cache_size);
     addRow(cacheDisableLabel, this.field_cache_disable);
     addRow(moveFirstLabel, this.field_move_item_first);
@@ -242,8 +242,8 @@ class Prefs extends GObject.Object {
       Gio.SettingsBindFlags.DEFAULT,
     );
     Settings.bind(
-      Fields.PREVIEW_SIZE,
-      this.field_preview_size,
+      Fields.WINDOW_WIDTH_PERCENTAGE,
+      this.window_width_percentage,
       'value',
       Gio.SettingsBindFlags.DEFAULT,
     );

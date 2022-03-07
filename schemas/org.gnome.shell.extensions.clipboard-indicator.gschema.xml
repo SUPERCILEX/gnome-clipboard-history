@@ -20,14 +20,13 @@
       <summary>Remove down arrow in top bar</summary>
     </key>
 
-    <key type="i" name="preview-size">
-      <default>100</default>
-      <summary>Number of visible characters for clipboard items</summary>
+    <key type="i" name="window-width-percentage">
+      <default>33</default>
+      <summary>Window width (%)</summary>
       <description>
-        The number of characters to display for every clipboard item in
-        the history menu.
+        The width of the clipboard panel as a percentage of screen width.
       </description>
-      <range min="10" max="200" />
+      <range min="0" max="100" />
     </key>
 
     <key type="i" name="topbar-preview-size">
