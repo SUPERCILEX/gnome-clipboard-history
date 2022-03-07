@@ -21,39 +21,40 @@ msgstr ""
 "X-Poedit-SearchPath-0: prefs.js\n"
 "X-Poedit-SearchPath-1: extension.js\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "在此输入以搜索…"
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "隐私模式"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr "清除所有记录吗？"
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "确定要删除所有剪贴板条目吗？"
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr "此操作不可撤销。"
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr "清除"
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr "取消"
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "已复制到剪贴板"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -83,9 +84,8 @@ msgid "Max number of items"
 msgstr ""
 
 #: prefs.js:134
-#, fuzzy
-msgid "Item preview size (characters)"
-msgstr "预览长度"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 #, fuzzy
@@ -152,6 +152,10 @@ msgstr "全部"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Item preview size (characters)"
+#~ msgstr "预览长度"
 
 #, fuzzy
 #~ msgid "Previous page"

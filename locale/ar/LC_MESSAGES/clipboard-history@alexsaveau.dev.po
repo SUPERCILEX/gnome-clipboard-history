@@ -18,39 +18,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.6\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "اكتب هنا للبحث"
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "الوضع السري"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr ""
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr ""
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr ""
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr ""
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr ""
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "تم النسخ في الحافظة"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -80,9 +81,8 @@ msgid "Max number of items"
 msgstr ""
 
 #: prefs.js:134
-#, fuzzy
-msgid "Item preview size (characters)"
-msgstr "عدد الاحرف في المراجعه"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 #, fuzzy
@@ -150,6 +150,10 @@ msgstr "كلاهما"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Item preview size (characters)"
+#~ msgstr "عدد الاحرف في المراجعه"
 
 #, fuzzy
 #~ msgid "Previous page"

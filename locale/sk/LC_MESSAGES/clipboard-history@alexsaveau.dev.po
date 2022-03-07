@@ -21,39 +21,40 @@ msgstr ""
 "X-Poedit-SearchPath-0: prefs.js\n"
 "X-Poedit-SearchPath-1: extension.js\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "Kliknite sem pre vyhľadávanie..."
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "Súkromný režim"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr ""
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr ""
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr ""
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr ""
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr "Zrušiť"
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "Skopírované do schránky"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -83,9 +84,8 @@ msgid "Max number of items"
 msgstr ""
 
 #: prefs.js:134
-#, fuzzy
-msgid "Item preview size (characters)"
-msgstr "Veľkosť náhľadu (v znakoch)"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 #, fuzzy
@@ -155,6 +155,10 @@ msgstr "Obidve"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Item preview size (characters)"
+#~ msgstr "Veľkosť náhľadu (v znakoch)"
 
 #, fuzzy
 #~ msgid "Previous page"

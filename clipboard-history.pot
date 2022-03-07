@@ -3,42 +3,42 @@ msgstr ""
 
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+msgid "Type here to search…"
 msgstr ""
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr ""
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr ""
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr ""
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr ""
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr ""
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr ""
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr ""
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -67,7 +67,7 @@ msgid "Max number of items"
 msgstr ""
 
 #: prefs.js:134
-msgid "Item preview size (characters)"
+msgid "Window width (%)"
 msgstr ""
 
 #: prefs.js:139

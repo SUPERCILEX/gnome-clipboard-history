@@ -18,39 +18,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "Text eingeben, um zu suchen…"
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "Privater Modus"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr "Alles löschen?"
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Soll die Zwischenablage wirklich geleert werden?"
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr "Diese Aktion kann nicht rückgängig gemacht werden."
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr "Löschen"
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "In Zwischenablage kopiert"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -79,8 +80,8 @@ msgid "Max number of items"
 msgstr "Maximale Anzahl an Einträgen"
 
 #: prefs.js:134
-msgid "Item preview size (characters)"
-msgstr "Anzahl der Zeichen in der Vorschau"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
@@ -146,6 +147,9 @@ msgstr "Beides"
 #: prefs.js:329
 msgid "Neither"
 msgstr "Nichts"
+
+#~ msgid "Item preview size (characters)"
+#~ msgstr "Anzahl der Zeichen in der Vorschau"
 
 #, fuzzy
 #~ msgid "Previous page"

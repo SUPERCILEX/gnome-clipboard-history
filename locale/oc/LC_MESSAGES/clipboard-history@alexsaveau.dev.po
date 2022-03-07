@@ -17,39 +17,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "Picatz aquí per recercar..."
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "Mòde privat"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr "Tot escafar ?"
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Volètz vertadièrament suprimir totes los elements del quichapapièr ?"
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr "Aquò pòt pas èsser anullat."
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr "Escafar"
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr "Anullar"
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "Copiat dins lo quichapapièrs"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -79,9 +80,8 @@ msgid "Max number of items"
 msgstr ""
 
 #: prefs.js:134
-#, fuzzy
-msgid "Item preview size (characters)"
-msgstr "Talha de la previsualizacion (caractèrs)"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 #, fuzzy
@@ -148,6 +148,10 @@ msgstr "Los dos"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Item preview size (characters)"
+#~ msgstr "Talha de la previsualizacion (caractèrs)"
 
 #, fuzzy
 #~ msgid "Previous page"

@@ -18,39 +18,40 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "برای جست‌وجو اینجا بنویسید..."
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "حالت خصوصی"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr "همه پاک شوند؟"
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "آیا از حذف همه موارد تخته‌گیره مطمئنید؟"
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr "این عملیات قابل بازگردانی نیست."
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr "پاک‌کردن"
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr "لغو"
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "رونوشت به تخته‌گیره"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -80,9 +81,8 @@ msgid "Max number of items"
 msgstr ""
 
 #: prefs.js:134
-#, fuzzy
-msgid "Item preview size (characters)"
-msgstr "اندازهٔ پیش‌نمایش (نویسه)"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 #, fuzzy
@@ -149,6 +149,10 @@ msgstr "هر دو"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Item preview size (characters)"
+#~ msgstr "اندازهٔ پیش‌نمایش (نویسه)"
 
 #, fuzzy
 #~ msgid "Previous page"

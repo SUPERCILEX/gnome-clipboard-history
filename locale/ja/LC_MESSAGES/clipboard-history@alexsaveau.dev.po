@@ -21,39 +21,40 @@ msgstr ""
 "X-Poedit-SearchPath-0: prefs.js\n"
 "X-Poedit-SearchPath-1: extension.js\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "検索ワードを入力..."
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "プライベートモード"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr "全消去しますか？"
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "クリップボードの履歴を全て削除してよろしいですか？"
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr "この操作を元に戻すことはできません。"
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr "クリア"
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "コピーしました"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -83,9 +84,8 @@ msgid "Max number of items"
 msgstr ""
 
 #: prefs.js:134
-#, fuzzy
-msgid "Item preview size (characters)"
-msgstr "プレビュー文字数"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 #, fuzzy
@@ -152,6 +152,10 @@ msgstr "両方"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Item preview size (characters)"
+#~ msgstr "プレビュー文字数"
 
 #, fuzzy
 #~ msgid "Previous page"

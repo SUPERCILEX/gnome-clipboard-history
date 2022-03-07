@@ -18,39 +18,40 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "Typ om te zoeken…"
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "Privémodus"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr "Alles wissen?"
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Weet u zeker dat u alle klemborditems wilt wissen?"
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr "Dit kan niet ongedaan worden gemaakt."
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr "Wissen"
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "Gekopieerd naar het klembord"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr "Gekopieerd"
 
@@ -79,8 +80,8 @@ msgid "Max number of items"
 msgstr "Max. aantal items"
 
 #: prefs.js:134
-msgid "Item preview size (characters)"
-msgstr "Voorvertoningsomvang (aantal tekens)"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
@@ -146,6 +147,9 @@ msgstr "Beide"
 #: prefs.js:329
 msgid "Neither"
 msgstr "Niets"
+
+#~ msgid "Item preview size (characters)"
+#~ msgstr "Voorvertoningsomvang (aantal tekens)"
 
 #, fuzzy
 #~ msgid "Previous page"

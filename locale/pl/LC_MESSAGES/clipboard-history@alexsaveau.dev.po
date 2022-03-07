@@ -19,39 +19,40 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "Szukaj..."
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "Tryb prywatny"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr ""
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr ""
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr ""
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr ""
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr ""
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "Skopiowano do schowka"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -81,9 +82,8 @@ msgid "Max number of items"
 msgstr ""
 
 #: prefs.js:134
-#, fuzzy
-msgid "Item preview size (characters)"
-msgstr "Rozmiar podglądu (znaki)"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 #, fuzzy
@@ -151,6 +151,10 @@ msgstr "Ikona oraz zawartość schowka"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Item preview size (characters)"
+#~ msgstr "Rozmiar podglądu (znaki)"
 
 #, fuzzy
 #~ msgid "Previous page"

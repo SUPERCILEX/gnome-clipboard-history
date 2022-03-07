@@ -19,39 +19,40 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 3.0.1\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+#, fuzzy
+msgid "Type here to search…"
 msgstr "Введите здесь для поиска..."
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "Приватный режим"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr "Очистить все?"
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Вы уверены, что хотите удалить все элементы буфера обмена?"
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr "Эту операцию нельзя отменить."
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr "Очистить"
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr "Отменить"
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "Скопировано в буфер обмена"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr "Скопировано"
 
@@ -80,8 +81,8 @@ msgid "Max number of items"
 msgstr "Максимальное количество записей"
 
 #: prefs.js:134
-msgid "Item preview size (characters)"
-msgstr "Длина строки в меню (символов)"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
@@ -147,6 +148,9 @@ msgstr "Оба"
 #: prefs.js:329
 msgid "Neither"
 msgstr "Ничего"
+
+#~ msgid "Item preview size (characters)"
+#~ msgstr "Длина строки в меню (символов)"
 
 #, fuzzy
 #~ msgid "Previous page"

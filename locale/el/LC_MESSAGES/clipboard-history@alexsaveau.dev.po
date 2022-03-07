@@ -18,39 +18,39 @@ msgstr ""
 "X-Generator: Poedit 2.0.1\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: extension.js:119
-msgid "Type here to search..."
+#: extension.js:121
+msgid "Type here to search…"
 msgstr ""
 
-#: extension.js:205
+#: extension.js:208
 msgid "Private mode"
 msgstr "Ιδιωτική λειτουργία"
 
-#: extension.js:497
+#: extension.js:510
 msgid "Clear all?"
 msgstr ""
 
-#: extension.js:498
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr ""
 
-#: extension.js:499
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr ""
 
-#: extension.js:505
+#: extension.js:518
 msgid "Clear"
 msgstr ""
 
-#: extension.js:506 extension.js:860
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr ""
 
-#: extension.js:859
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "Αντεγραμμένο στο πρόχειρο"
 
-#: extension.js:1188
+#: extension.js:1204
 msgid "Copied"
 msgstr ""
 
@@ -80,9 +80,8 @@ msgid "Max number of items"
 msgstr ""
 
 #: prefs.js:134
-#, fuzzy
-msgid "Item preview size (characters)"
-msgstr "Μέγεθος προεπισκόπησης (χαρακτήρες)"
+msgid "Window width (%)"
+msgstr ""
 
 #: prefs.js:139
 #, fuzzy
@@ -149,6 +148,10 @@ msgstr ""
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Item preview size (characters)"
+#~ msgstr "Μέγεθος προεπισκόπησης (χαρακτήρες)"
 
 #, fuzzy
 #~ msgid "Previous page"
