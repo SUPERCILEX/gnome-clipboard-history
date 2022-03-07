@@ -96,10 +96,7 @@ function _parseLog(stream, callback) {
 
 function _consumeStream(stream, state, callback) {
   const finish = () => {
-    for (const favorite of state.favorites) {
-      state.entries.append(favorite);
-    }
-    callback(state.entries, state.nextId);
+    callback(state.entries, state.favorites, state.nextId);
   };
   const forceFill = (minBytes, fillCallback) => {
     stream.fill_async(/*count=*/ -1, 0, null, (src, res) => {
@@ -206,7 +203,7 @@ function _readAndConsumeOldFormat(callback) {
         [, contents] = src.load_contents_finish(res);
       } catch (e) {
         if (e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
-          callback(entries, id);
+          callback(entries, favorites, id);
           return;
         } else {
           throw e;
@@ -240,11 +237,7 @@ function _readAndConsumeOldFormat(callback) {
         id++;
       }
 
-      for (const favorite of favorites) {
-        entries.append(favorite);
-      }
-
-      resetDatabase(() => entries.toArray());
+      resetDatabase(() => entries.toArray().concat(favorites.toArray()));
       Gio.File.new_for_path(OLD_REGISTRY_FILE).trash_async(
         0,
         null,
@@ -253,7 +246,7 @@ function _readAndConsumeOldFormat(callback) {
         },
       );
 
-      callback(entries, id);
+      callback(entries, favorites, id);
     },
   );
 }

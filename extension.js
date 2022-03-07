@@ -236,7 +236,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       (_, event) => this._handleGlobalKeyEvent(event),
     );
 
-    Store.buildClipboardStateFromLog((history, nextId) => {
+    Store.buildClipboardStateFromLog((entries, favoriteEntries, nextId) => {
       /**
        * This field stores the number of items in the historySection to avoid calling _getMenuItems
        * since that method is slow.
@@ -258,17 +258,12 @@ class ClipboardIndicator extends PanelMenu.Button {
        * Entries *may* have a menuItem attached, meaning they are currently visible. On the other
        * hand, menu items must always have an entry attached.
        */
-      this.entries = history;
-      for (
-        let i = 0, entry = history.last();
-        i < PAGE_SIZE && entry;
-        entry = entry.prev
-      ) {
-        this._addEntry(entry, i === 0 && !entry.favorite, true);
-        if (!entry.favorite) {
-          i++;
-        }
-      }
+      this.entries = entries;
+      this.favoriteEntries = favoriteEntries;
+
+      this.currentlySelectedEntry = entries.last();
+      this._restoreFavoritedEntries();
+      this._maybeRestoreMenuPages();
 
       this._settingsChangedId = Prefs.Settings.connect(
         'changed',
@@ -462,7 +457,8 @@ class ClipboardIndicator extends PanelMenu.Button {
     const entry = menuItem.entry;
     const wasSelected = this.currentlySelectedEntry?.id === entry.id;
 
-    this.entries.append(entry); // Move to front (end of list)
+    // Move to front (end of list)
+    (entry.favorite ? this.entries : this.favoriteEntries).append(entry);
     this._removeEntry(entry);
     entry.favorite = !entry.favorite;
     this._addEntry(entry, wasSelected, true, 0);
@@ -513,16 +509,8 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._resetSelectedMenuItem();
     }
 
-    // Rebuild the entries from scratch since presumably people have fewer favorites than actual
-    // items.
+    // Favorites aren't touched when clearing history
     this.entries = new DS.LinkedList();
-    // This _getMenuItems access is safe because we don't paginate favorites for now
-    this.favoritesSection._getMenuItems().forEach((item) => {
-      this.entries.prepend(item.entry);
-    });
-
-    // This needs to happen *after* we nuke the entries from memory, otherwise
-    // _maybeRestoreMenuPages will use the soon-to-be-deleted items to restore a page.
     this.historySection.removeAll();
 
     Store.resetDatabase(this._currentStateBuilder.bind(this));
@@ -548,23 +536,11 @@ class ClipboardIndicator extends PanelMenu.Button {
 
   _pruneOldestEntries() {
     let entry = this.entries.head;
-    while (entry && this.entries.length > MAX_REGISTRY_LENGTH) {
-      if (entry.favorite) {
-        // Favorites don't count, so ignore
-        continue;
-      }
-
-      const next = entry.next;
-      this._removeEntry(entry, true);
-      entry = next;
-    }
-
-    while (entry && this.entries.bytes > MAX_BYTES) {
-      if (entry.favorite) {
-        // Favorites don't count, so ignore
-        continue;
-      }
-
+    while (
+      entry &&
+      (this.entries.length > MAX_REGISTRY_LENGTH ||
+        this.entries.bytes > MAX_BYTES)
+    ) {
       const next = entry.next;
       this._removeEntry(entry, true);
       entry = next;
@@ -645,18 +621,23 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._setClipboardText('');
   }
 
-  _maybeRestoreMenuPages(includeFavorites) {
+  _restoreFavoritedEntries() {
+    for (let entry = this.favoriteEntries.last(); entry; entry = entry.prev) {
+      this._addEntry(entry);
+    }
+  }
+
+  _maybeRestoreMenuPages() {
     if (this.activeHistoryMenuItems > 0) {
       return;
     }
 
-    let entry = this.entries.last();
-    while (entry && this.activeHistoryMenuItems < PAGE_SIZE) {
-      if (!entry.favorite || includeFavorites) {
-        this._addEntry(entry, this.currentlySelectedEntry === entry);
-      }
-
-      entry = entry.prev;
+    for (
+      let entry = this.entries.last();
+      entry && this.activeHistoryMenuItems < PAGE_SIZE;
+      entry = entry.prev
+    ) {
+      this._addEntry(entry, this.currentlySelectedEntry === entry);
     }
   }
 
@@ -691,10 +672,6 @@ class ClipboardIndicator extends PanelMenu.Button {
       entry !== start && i >= 0;
       entry = entry.nextCyclic()
     ) {
-      if (entry.favorite) {
-        continue;
-      }
-
       this._rewriteMenuItem(items[i--], entry);
     }
   }
@@ -716,10 +693,6 @@ class ClipboardIndicator extends PanelMenu.Button {
       entry !== start && i < items.length;
       entry = entry.prevCyclic()
     ) {
-      if (entry.favorite) {
-        continue;
-      }
-
       this._rewriteMenuItem(items[i++], entry);
     }
   }
@@ -746,7 +719,8 @@ class ClipboardIndicator extends PanelMenu.Button {
       this.favoritesSection.removeAll();
 
       this.searchEntryFront = this.searchEntryBack = undefined;
-      this._maybeRestoreMenuPages(true);
+      this._restoreFavoritedEntries();
+      this._maybeRestoreMenuPages();
       return;
     }
 
@@ -830,9 +804,12 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    let entry = this.entries.findTextItem(text);
+    let entry =
+      this.entries.findTextItem(text) ||
+      this.favoriteEntries.findTextItem(text);
     if (entry) {
-      const isFirst = entry === this.entries.last();
+      const isFirst =
+        entry === this.entries.last() || entry === this.favoriteEntries.last();
       if (!isFirst) {
         this._moveEntryFirst(entry);
       }
@@ -870,18 +847,22 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     let menu;
+    let entries;
     if (entry.favorite) {
       menu = this.favoritesSection;
+      entries = this.favoriteEntries;
     } else {
       menu = this.historySection;
+      entries = this.entries;
     }
+
     if (entry.menuItem) {
       menu.moveMenuItem(entry.menuItem, 0);
     } else {
       this._addEntry(entry, false, false, 0);
     }
 
-    this.entries.append(entry);
+    entries.append(entry);
     if (entry.diskId) {
       Store.moveEntryToEnd(entry.diskId);
     }
@@ -891,12 +872,16 @@ class ClipboardIndicator extends PanelMenu.Button {
     const state = [];
 
     this.nextDiskId = 1;
+    for (const entry of this.favoriteEntries) {
+      entry.diskId = this.nextDiskId++;
+      state.push(entry);
+    }
     for (const entry of this.entries) {
-      if (!CACHE_ONLY_FAVORITES || entry.favorite) {
+      if (CACHE_ONLY_FAVORITES) {
+        delete entry.diskId;
+      } else {
         entry.diskId = this.nextDiskId++;
         state.push(entry);
-      } else {
-        delete entry.diskId;
       }
     }
 
@@ -1035,10 +1020,8 @@ class ClipboardIndicator extends PanelMenu.Button {
         Store.resetDatabase(this._currentStateBuilder.bind(this));
       } else {
         for (const entry of this.entries) {
-          if (!entry.favorite) {
-            entry.diskId = this.nextDiskId++;
-            Store.storeTextEntry(entry.text);
-          }
+          entry.diskId = this.nextDiskId++;
+          Store.storeTextEntry(entry.text);
         }
       }
     }
