@@ -32,6 +32,7 @@ const INDICATOR_ICON = 'edit-paste-symbolic';
 
 const PAGE_SIZE = 50;
 
+const Util = imports.misc.util;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Store = Me.imports.store;
@@ -159,13 +160,13 @@ class ClipboardIndicator extends PanelMenu.Button {
     this.historySection = new PopupMenu.PopupMenuSection();
 
     this.scrollViewMenuSection = new PopupMenu.PopupMenuSection();
-    const historyScrollView = new St.ScrollView({
+    this.historyScrollView = new St.ScrollView({
       style_class: 'ci-history-menu-section',
       overlay_scrollbars: true,
     });
-    historyScrollView.add_actor(this.historySection.actor);
+    this.historyScrollView.add_actor(this.historySection.actor);
 
-    this.scrollViewMenuSection.actor.add_actor(historyScrollView);
+    this.scrollViewMenuSection.actor.add_actor(this.historyScrollView);
 
     this.menu.addMenuItem(this.scrollViewMenuSection);
 
@@ -417,6 +418,11 @@ class ClipboardIndicator extends PanelMenu.Button {
       delete menuItem.entry.menuItem;
       if (!menuItem.entry.favorite) {
         this.activeHistoryMenuItems--;
+      }
+    });
+    menuItem.connect('key-focus-in', () => {
+      if (!menuItem.entry.favorite) {
+        Util.ensureActorVisibleInScrollView(this.historyScrollView, menuItem);
       }
     });
 
