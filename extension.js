@@ -117,7 +117,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       name: 'searchEntry',
       style_class: 'search-entry',
       can_focus: true,
-      hint_text: _('Type here to search...'),
+      hint_text: _('Type here to search…'),
       track_hover: true,
       x_expand: true,
       y_expand: true,
@@ -448,7 +448,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     if (PRIVATE_MODE) {
-      this._buttonText.set_text('...');
+      this._buttonText.set_text('…');
     } else if (entry) {
       this._buttonText.set_text(this._truncated(entry.text, MAX_TOPBAR_LENGTH));
     } else {
@@ -1221,13 +1221,13 @@ class ClipboardIndicator extends PanelMenu.Button {
     s = s.replace(/\s+/g, ' ').trim();
 
     if (includesStart && overflow) {
-      s = s.substring(0, length - 3) + '...';
+      s = s.substring(0, length - 1) + '…';
     }
     if (includesEnd && overflow) {
-      s = '...' + s.substring(3, length);
+      s = '…' + s.substring(1, length);
     }
     if (isMiddle) {
-      s = '...' + s.substring(3, length - 3) + '...';
+      s = '…' + s.substring(1, length - 1) + '…';
     }
 
     return s;
