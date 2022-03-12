@@ -7,7 +7,7 @@ accessible, searchable history panel.
 The extension is a rewrite of
 [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) with
 vastly improved performance, new features, and
-[bug fixes](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator/pull/338#issuecomment-1031179212).
+[bug fixes](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator/pull/338).
 
 ## Download
 
