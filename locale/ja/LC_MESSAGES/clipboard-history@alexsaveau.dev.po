@@ -1,7 +1,8 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# nexryai <nexryai@outlook.com>, 2021.
+# 小山田 純 <oyamadajun@outlook.jp>, 2022.
 #
 msgid ""
 msgstr ""
