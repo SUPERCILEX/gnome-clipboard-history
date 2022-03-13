@@ -20,7 +20,6 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Type here to search…"
 msgstr "Введите здесь для поиска…"
 
