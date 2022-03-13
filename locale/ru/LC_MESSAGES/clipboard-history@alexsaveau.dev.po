@@ -82,7 +82,7 @@ msgstr "Максимальное количество записей"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr ""
+msgstr "Ширина окна (%)"
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
@@ -129,9 +129,8 @@ msgid "Paste on selection"
 msgstr "Вставить при нажатии на запись"
 
 #: prefs.js:194
-#, fuzzy
 msgid "Process primary selection"
-msgstr "Вставить при нажатии на запись"
+msgstr "Обрабатывать первичный выбор"
 
 #: prefs.js:326
 msgid "Icon"
