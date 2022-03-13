@@ -22,7 +22,7 @@ msgstr ""
 #: extension.js:121
 #, fuzzy
 msgid "Type here to search…"
-msgstr "Введите здесь для поиска..."
+msgstr "Введите здесь для поиска…"
 
 #: extension.js:208
 msgid "Private mode"
