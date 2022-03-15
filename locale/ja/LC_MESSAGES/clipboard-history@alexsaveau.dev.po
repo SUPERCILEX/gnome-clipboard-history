@@ -1,5 +1,5 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Japanese translation for gnome-clipboard-history.
+# Copyright (C) 2021 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # nexryai <nexryai@outlook.com>, 2021.
 # 小山田 純 <oyamadajun@outlook.jp>, 2022.
@@ -8,22 +8,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2021-08-27 16:24+0900\n"
-"Last-Translator: nexryai <nexryai@outlook.com>\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2022-03-15 14:45+0900\n"
+"Last-Translator: 小山田 純 <oyamadajun@outlook.jp>\n"
 "Language-Team: \n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
-"X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: prefs.js\n"
 "X-Poedit-SearchPath-1: extension.js\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Type here to search…"
 msgstr "検索ワードを入力..."
 
@@ -33,7 +32,7 @@ msgstr "プライベートモード"
 
 #: extension.js:510
 msgid "Clear all?"
-msgstr "全消去しますか？"
+msgstr "すべて消去しますか？"
 
 #: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
@@ -45,7 +44,7 @@ msgstr "この操作を元に戻すことはできません。"
 
 #: extension.js:518
 msgid "Clear"
-msgstr "クリア"
+msgstr "削除"
 
 #: extension.js:519 extension.js:873
 msgid "Cancel"
@@ -53,11 +52,11 @@ msgstr "キャンセル"
 
 #: extension.js:872
 msgid "Copied to clipboard"
-msgstr "コピーしました"
+msgstr "クリップボードにコピーしました"
 
 #: extension.js:1204
 msgid "Copied"
-msgstr ""
+msgstr "コピーしました"
 
 #: prefs.js:96
 msgid "Toggle the menu"
@@ -65,50 +64,47 @@ msgstr "メニュー"
 
 #: prefs.js:102
 msgid "Clear history"
-msgstr "履歴を消去"
+msgstr "すべての履歴を削除"
 
 #: prefs.js:108
 msgid "Previous entry"
-msgstr "前へ"
+msgstr "一つ前の履歴をコピー"
 
 #: prefs.js:114
 msgid "Next entry"
-msgstr "次へ"
+msgstr "次の履歴をコピー"
 
 #: prefs.js:120
-#, fuzzy
 msgid "Toggle private mode"
-msgstr "プライベートモード"
+msgstr "プライベートモードの切り替え"
 
 #: prefs.js:129
 msgid "Max number of items"
-msgstr ""
+msgstr "保存する履歴の数"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr ""
+msgstr "ウィンドウの幅(%)"
 
 #: prefs.js:139
-#, fuzzy
 msgid "Max clipboard history size (MiB)"
-msgstr "消去しました"
+msgstr "保存するデータ量 (MiB)"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
-msgstr ""
+msgstr "お気に入り以外の履歴をシャットダウン時に削除"
 
 #: prefs.js:149
 msgid "Show notification on copy"
-msgstr "コピー時に通知を表示する"
+msgstr "コピー時に通知を表示"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Show confirmation on Clear History"
-msgstr "コピー時に通知を表示する"
+msgstr "すべての履歴を削除するときに警告を表示"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr ""
+msgstr "選択した履歴を一番上に表示"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
@@ -116,23 +112,23 @@ msgstr "キーボードショートカット"
 
 #: prefs.js:169
 msgid "Number of characters in top bar"
-msgstr "トップバーの単語数"
+msgstr "トップバーに表示するクリップボードの内容の文字数"
 
 #: prefs.js:174
 msgid "What to show in top bar"
-msgstr "表示内容"
+msgstr "トップバーの表示内容"
 
 #: prefs.js:179
 msgid "Remove down arrow in top bar"
-msgstr "トップバーの単語数"
+msgstr "トップバーの下矢印を非表示"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
-msgstr "テキスト周りのホワイトスペースを削除する"
+msgstr "テキストの周りの空白を削除"
 
 #: prefs.js:189
 msgid "Paste on selection"
-msgstr ""
+msgstr "履歴を選択したときに貼り付ける"
 
 #: prefs.js:194
 msgid "Process primary selection"
@@ -152,40 +148,4 @@ msgstr "両方"
 
 #: prefs.js:329
 msgid "Neither"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Item preview size (characters)"
-#~ msgstr "プレビュー文字数"
-
-#, fuzzy
-#~ msgid "Previous page"
-#~ msgstr "前へ"
-
-#, fuzzy
-#~ msgid "Next page"
-#~ msgstr "次へ"
-
-#~ msgid "Settings"
-#~ msgstr "設定"
-
-#~ msgid "Text will be here"
-#~ msgstr "ここにテキストを入力"
-
-#~ msgid "History Size"
-#~ msgstr "保存件数"
-
-#~ msgid "Refresh Interval (ms)"
-#~ msgstr "更新間隔（ミリ秒）"
-
-#~ msgid "Max cache file size (kb)"
-#~ msgstr "最大キャッシュサイズ（KB）"
-
-#~ msgid "Cache only favorites"
-#~ msgstr "お気に入りのみをキャッシュ"
-
-#~ msgid "Move item to the top after selection"
-#~ msgstr "選択後にアイテムをトップに移動"
-
-#~ msgid "Disable cache file"
-#~ msgstr "キャッシュを無効化"
+msgstr "表示しない"
