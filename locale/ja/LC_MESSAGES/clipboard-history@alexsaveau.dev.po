@@ -24,7 +24,7 @@ msgstr ""
 
 #: extension.js:121
 msgid "Type here to search…"
-msgstr "検索ワードを入力..."
+msgstr "検索ワードを入力…"
 
 #: extension.js:208
 msgid "Private mode"
@@ -149,3 +149,39 @@ msgstr "両方"
 #: prefs.js:329
 msgid "Neither"
 msgstr "表示しない"
+
+#, fuzzy
+#~ msgid "Item preview size (characters)"
+#~ msgstr "プレビュー文字数"
+
+#, fuzzy
+#~ msgid "Previous page"
+#~ msgstr "前へ"
+
+#, fuzzy
+#~ msgid "Next page"
+#~ msgstr "次へ"
+
+#~ msgid "Settings"
+#~ msgstr "設定"
+
+#~ msgid "Text will be here"
+#~ msgstr "ここにテキストを入力"
+
+#~ msgid "History Size"
+#~ msgstr "保存件数"
+
+#~ msgid "Refresh Interval (ms)"
+#~ msgstr "更新間隔（ミリ秒）"
+
+#~ msgid "Max cache file size (kb)"
+#~ msgstr "最大キャッシュサイズ（KB）"
+
+#~ msgid "Cache only favorites"
+#~ msgstr "お気に入りのみをキャッシュ"
+
+#~ msgid "Move item to the top after selection"
+#~ msgstr "選択後にアイテムをトップに移動"
+
+#~ msgid "Disable cache file"
+#~ msgstr "キャッシュを無効化"
