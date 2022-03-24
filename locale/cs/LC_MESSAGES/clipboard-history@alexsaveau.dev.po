@@ -18,37 +18,37 @@ msgstr ""
 
 #: extension.js:121
 msgid "Type here to search…"
-msgstr "Vyhledávejte psaním …"
+msgstr "Vyhledávejte psaním…"
 
 #: extension.js:208
 msgid "Private mode"
 msgstr "Stop (proti úniku citlivých údajů)"
 
-#: extension.js:514
+#: extension.js:510
 msgid "Clear all?"
 msgstr "Vyčistit vše?"
 
-#: extension.js:515
+#: extension.js:511
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Opravdu chcete smazat všechny položky schránky?"
 
-#: extension.js:516
+#: extension.js:512
 msgid "This operation cannot be undone."
 msgstr "Tato operace nejde vrátit."
 
-#: extension.js:522
+#: extension.js:518
 msgid "Clear"
 msgstr "Vyčistit"
 
-#: extension.js:523 extension.js:877
+#: extension.js:519 extension.js:873
 msgid "Cancel"
 msgstr "Storno"
 
-#: extension.js:876
+#: extension.js:872
 msgid "Copied to clipboard"
 msgstr "Zkopírováno do schránky"
 
-#: extension.js:1208
+#: extension.js:1204
 msgid "Copied"
 msgstr "Zkopírováno"
 
