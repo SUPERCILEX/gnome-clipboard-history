@@ -959,9 +959,12 @@ class ClipboardIndicator extends PanelMenu.Button {
 
   _deleteEntryAndRestoreLatest(entry) {
     this._removeEntry(entry, true);
-    const nextEntry = this.entries.last();
-    if (nextEntry) {
-      this._selectEntry(nextEntry, true);
+
+    if (!this.currentlySelectedEntry) {
+      const nextEntry = this.entries.last();
+      if (nextEntry) {
+        this._selectEntry(nextEntry, true);
+      }
     }
   }
 
