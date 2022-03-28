@@ -108,15 +108,9 @@ function _consumeStream(stream, state, callback) {
     });
   };
 
-  const parseAvailableAware = (minBytes, parse) => {
-    if (stream.get_available() < minBytes) {
-      forceFill(minBytes, parse);
-    } else {
-      parse();
-    }
-  };
+  let parseAvailableAware;
 
-  (function loop() {
+  function loop() {
     if (stream.get_available() === 0) {
       forceFill(1, loop);
       return;
@@ -143,13 +137,12 @@ function _consumeStream(stream, state, callback) {
           loop();
         },
       );
-      return;
     } else if (opType === OP_TYPE_DELETE_TEXT) {
+      uselessOpCount += 2;
       parseAvailableAware(4, () => {
         const id = stream.read_uint32(null);
         (state.entries.findById(id) || state.favorites.findById(id)).detach();
       });
-      uselessOpCount += 2;
     } else if (opType === OP_TYPE_FAVORITE_ITEM) {
       parseAvailableAware(4, () => {
         const id = stream.read_uint32(null);
@@ -159,6 +152,7 @@ function _consumeStream(stream, state, callback) {
         state.favorites.append(entry);
       });
     } else if (opType === OP_TYPE_UNFAVORITE_ITEM) {
+      uselessOpCount += 2;
       parseAvailableAware(4, () => {
         const id = stream.read_uint32(null);
         const entry = state.favorites.findById(id);
@@ -166,8 +160,8 @@ function _consumeStream(stream, state, callback) {
         entry.favorite = false;
         state.entries.append(entry);
       });
-      uselessOpCount += 2;
     } else if (opType === OP_TYPE_MOVE_ITEM_TO_END) {
+      uselessOpCount++;
       parseAvailableAware(4, () => {
         const id = stream.read_uint32(null);
         const entry =
@@ -179,15 +173,25 @@ function _consumeStream(stream, state, callback) {
           state.entries.append(entry);
         }
       });
-      uselessOpCount++;
     } else {
       log(Me.uuid, 'Unknown op type, aborting load.', opType);
       finish();
-      return;
     }
+  }
 
-    loop();
-  })();
+  parseAvailableAware = (minBytes, parse) => {
+    if (stream.get_available() < minBytes) {
+      forceFill(minBytes, () => {
+        parse();
+        loop();
+      });
+    } else {
+      parse();
+      loop();
+    }
+  };
+
+  loop();
 }
 
 function _readAndConsumeOldFormat(callback) {
