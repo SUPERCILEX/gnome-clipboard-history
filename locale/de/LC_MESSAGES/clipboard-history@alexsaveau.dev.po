@@ -2,13 +2,14 @@
 # Copyright (C) 2014-2015, Yotam Bar-On
 # This file is distributed under the same license as the gnome-shell-extension-clipboard-indicator package.
 # Jens Lody <openweather@jenslody.de>, 2015.
+# Onno Giesmann <nutzer3105@gmail.com, 2019-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2022-02-21 21:21+0100\n"
+"PO-Revision-Date: 2022-03-29 14:43+0200\n"
 "Last-Translator: Onno Giesmann <nutzer3105@gmail.com>\n"
 "Language-Team: Deutsch <openweather@jenslody.de>\n"
 "Language: de\n"
@@ -19,9 +20,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Type here to search…"
-msgstr "Text eingeben, um zu suchen…"
+msgstr "Suchen…"
 
 #: extension.js:208
 msgid "Private mode"
@@ -37,7 +37,7 @@ msgstr "Soll die Zwischenablage wirklich geleert werden?"
 
 #: extension.js:512
 msgid "This operation cannot be undone."
-msgstr "Diese Aktion kann nicht rückgängig gemacht werden."
+msgstr "Dieser Vorgang kann nicht rückgängig gemacht werden."
 
 #: extension.js:518
 msgid "Clear"
@@ -53,7 +53,7 @@ msgstr "In Zwischenablage kopiert"
 
 #: extension.js:1204
 msgid "Copied"
-msgstr ""
+msgstr "Kopiert"
 
 #: prefs.js:96
 msgid "Toggle the menu"
@@ -81,7 +81,7 @@ msgstr "Maximale Anzahl an Einträgen"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr ""
+msgstr "Fensterbreite (%)"
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
@@ -109,15 +109,15 @@ msgstr "Tastaturkürzel"
 
 #: prefs.js:169
 msgid "Number of characters in top bar"
-msgstr "Anzahl der Zeichen in oberer Leiste"
+msgstr "Anzahl der Zeichen in der oberen Leiste"
 
 #: prefs.js:174
 msgid "What to show in top bar"
-msgstr "Folgendes in oberer Leiste anzeigen"
+msgstr "Folgendes in der oberen Leiste anzeigen"
 
 #: prefs.js:179
 msgid "Remove down arrow in top bar"
-msgstr "Pfeil in der oberen Leiste nicht anzeigen"
+msgstr "Keinen Pfeil in der oberen Leiste anzeigen"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
@@ -128,9 +128,8 @@ msgid "Paste on selection"
 msgstr "Bei Auswahl einfügen"
 
 #: prefs.js:194
-#, fuzzy
 msgid "Process primary selection"
-msgstr "Bei Auswahl einfügen"
+msgstr "Erste Auswahl verarbeiten"
 
 #: prefs.js:326
 msgid "Icon"
