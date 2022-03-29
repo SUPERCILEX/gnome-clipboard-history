@@ -14,31 +14,31 @@ msgstr ""
 msgid "Private mode"
 msgstr ""
 
-#: extension.js:510
+#: extension.js:514
 msgid "Clear all?"
 msgstr ""
 
-#: extension.js:511
+#: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr ""
 
-#: extension.js:512
+#: extension.js:516
 msgid "This operation cannot be undone."
 msgstr ""
 
-#: extension.js:518
+#: extension.js:522
 msgid "Clear"
 msgstr ""
 
-#: extension.js:519 extension.js:873
+#: extension.js:523 extension.js:877
 msgid "Cancel"
 msgstr ""
 
-#: extension.js:872
+#: extension.js:876
 msgid "Copied to clipboard"
 msgstr ""
 
-#: extension.js:1204
+#: extension.js:1211
 msgid "Copied"
 msgstr ""
 

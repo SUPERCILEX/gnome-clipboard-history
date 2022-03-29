@@ -2,58 +2,58 @@
 # Copyright (C) 2014-2015, Yotam Bar-On
 # This file is distributed under the same license as the gnome-shell-extension-clipboard-indicator package.
 # Jens Lody <openweather@jenslody.de>, 2015.
+# Philipp Kiemle <philipp.kiemle@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2022-02-21 21:21+0100\n"
-"Last-Translator: Onno Giesmann <nutzer3105@gmail.com>\n"
-"Language-Team: Deutsch <openweather@jenslody.de>\n"
+"POT-Creation-Date: 2022-03-29 13:45+0200\n"
+"PO-Revision-Date: 2022-03-29 13:59+0200\n"
+"Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.0\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Type here to search…"
-msgstr "Text eingeben, um zu suchen…"
+msgstr "Hier tippen um zu suchen …"
 
 #: extension.js:208
 msgid "Private mode"
 msgstr "Privater Modus"
 
-#: extension.js:510
+#: extension.js:514
 msgid "Clear all?"
 msgstr "Alles löschen?"
 
-#: extension.js:511
+#: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
-msgstr "Soll die Zwischenablage wirklich geleert werden?"
+msgstr "Sollen wirklich alle Elemente in der Zwischenablage gelöscht werden?"
 
-#: extension.js:512
+#: extension.js:516
 msgid "This operation cannot be undone."
 msgstr "Diese Aktion kann nicht rückgängig gemacht werden."
 
-#: extension.js:518
+#: extension.js:522
 msgid "Clear"
 msgstr "Löschen"
 
-#: extension.js:519 extension.js:873
+#: extension.js:523 extension.js:877
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: extension.js:872
+#: extension.js:876
 msgid "Copied to clipboard"
 msgstr "In Zwischenablage kopiert"
 
-#: extension.js:1204
+#: extension.js:1211
 msgid "Copied"
-msgstr ""
+msgstr "Kopiert"
 
 #: prefs.js:96
 msgid "Toggle the menu"
@@ -81,7 +81,7 @@ msgstr "Maximale Anzahl an Einträgen"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr ""
+msgstr "Fensterbreite (%)"
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
@@ -97,7 +97,7 @@ msgstr "Benachrichtigung beim Kopieren anzeigen"
 
 #: prefs.js:154
 msgid "Show confirmation on Clear History"
-msgstr "Bestätigung beim Löschen des Verlaufs anzeigen"
+msgstr "Bestätigung vor dem Löschen des Verlaufs anzeigen"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
@@ -109,7 +109,7 @@ msgstr "Tastaturkürzel"
 
 #: prefs.js:169
 msgid "Number of characters in top bar"
-msgstr "Anzahl der Zeichen in oberer Leiste"
+msgstr "Anzahl der Zeichen in der oberen Leiste"
 
 #: prefs.js:174
 msgid "What to show in top bar"
@@ -130,7 +130,7 @@ msgstr "Bei Auswahl einfügen"
 #: prefs.js:194
 #, fuzzy
 msgid "Process primary selection"
-msgstr "Bei Auswahl einfügen"
+msgstr "Primäre Auswahl bearbeiten"
 
 #: prefs.js:326
 msgid "Icon"
@@ -145,19 +145,18 @@ msgid "Both"
 msgstr "Beides"
 
 #: prefs.js:329
+#, fuzzy
 msgid "Neither"
 msgstr "Nichts"
 
 #~ msgid "Item preview size (characters)"
 #~ msgstr "Anzahl der Zeichen in der Vorschau"
 
-#, fuzzy
 #~ msgid "Previous page"
-#~ msgstr "Vorheriger Eintrag"
+#~ msgstr "Vorherige Seite"
 
-#, fuzzy
 #~ msgid "Next page"
-#~ msgstr "Nächster Eintrag"
+#~ msgstr "Nächste Seite"
 
 #~ msgid "Settings"
 #~ msgstr "Einstellungen"
@@ -169,10 +168,10 @@ msgstr "Nichts"
 #~ msgstr "Größe des Verlaufs"
 
 #~ msgid "Refresh Interval (ms)"
-#~ msgstr "Aktualisierungsintervall (ms)"
+#~ msgstr "Aktualisierungsintervall (ms)"
 
 #~ msgid "Max cache file size (kb)"
-#~ msgstr "Maximale Größe der Pufferdatei (kb)"
+#~ msgstr "Maximale Größe der Pufferdatei (kb)"
 
 #~ msgid "Cache only favorites"
 #~ msgstr "Nur Favoriten zwischenspeichern"
