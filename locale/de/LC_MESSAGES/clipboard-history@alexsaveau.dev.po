@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the gnome-shell-extension-clipboard-indicator package.
 # Jens Lody <openweather@jenslody.de>, 2015.
 # Onno Giesmann <nutzer3105@gmail.com, 2019-2022.
+# Philipp Kiemle <philipp.kiemle@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
@@ -11,7 +12,7 @@ msgstr ""
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
 "PO-Revision-Date: 2022-03-30 14:43+0200\n"
 "Last-Translator: Onno Giesmann <nutzer3105@gmail.com>\n"
-"Language-Team: Deutsch <openweather@jenslody.de>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgstr "Alles löschen?"
 
 #: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
-msgstr "Soll die Zwischenablage wirklich geleert werden?"
+msgstr "Sollen wirklich alle Elemente in der Zwischenablage gelöscht werden?"
 
 #: extension.js:516
 msgid "This operation cannot be undone."
@@ -129,7 +130,7 @@ msgstr "Bei Auswahl einfügen"
 
 #: prefs.js:194
 msgid "Process primary selection"
-msgstr "Erste Auswahl verarbeiten"
+msgstr "Primäre Auswahl bearbeiten"
 
 #: prefs.js:326
 msgid "Icon"
@@ -150,13 +151,11 @@ msgstr "Nichts"
 #~ msgid "Item preview size (characters)"
 #~ msgstr "Anzahl der Zeichen in der Vorschau"
 
-#, fuzzy
 #~ msgid "Previous page"
-#~ msgstr "Vorheriger Eintrag"
+#~ msgstr "Vorherige Seite"
 
-#, fuzzy
 #~ msgid "Next page"
-#~ msgstr "Nächster Eintrag"
+#~ msgstr "Nächste Seite"
 
 #~ msgid "Settings"
 #~ msgstr "Einstellungen"
