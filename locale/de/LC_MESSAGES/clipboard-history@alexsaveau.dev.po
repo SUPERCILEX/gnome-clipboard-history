@@ -22,7 +22,7 @@ msgstr ""
 
 #: extension.js:121
 msgid "Search clipboard history…"
-msgstr "Verlauf der Zwischenablage durchsuchen…"
+msgstr "Verlauf der Zwischenablage durchsuchen …"
 
 #: extension.js:208
 msgid "Private mode"
@@ -82,11 +82,11 @@ msgstr "Maximale Anzahl an Einträgen"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr "Fensterbreite (%)"
+msgstr "Fensterbreite (%)"
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
-msgstr "Maximale Größe des Verlaufs der Zwischenablage (MiB)"
+msgstr "Maximale Größe des Verlaufs der Zwischenablage (MiB)"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
@@ -167,10 +167,10 @@ msgstr "Nichts"
 #~ msgstr "Größe des Verlaufs"
 
 #~ msgid "Refresh Interval (ms)"
-#~ msgstr "Aktualisierungsintervall (ms)"
+#~ msgstr "Aktualisierungsintervall (ms)"
 
 #~ msgid "Max cache file size (kb)"
-#~ msgstr "Maximale Größe der Pufferdatei (kb)"
+#~ msgstr "Maximale Größe der Pufferdatei (kb)"
 
 #~ msgid "Cache only favorites"
 #~ msgstr "Nur Favoriten zwischenspeichern"
