@@ -23,38 +23,38 @@ msgstr ""
 
 #: extension.js:121
 #, fuzzy
-msgid "Type here to search…"
-msgstr "在此输入以搜索…"
+msgid "Search clipboard history…"
+msgstr "剪贴板已清空"
 
 #: extension.js:208
 msgid "Private mode"
 msgstr "隐私模式"
 
-#: extension.js:510
+#: extension.js:514
 msgid "Clear all?"
 msgstr "清除所有记录吗？"
 
-#: extension.js:511
+#: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "确定要删除所有剪贴板条目吗？"
 
-#: extension.js:512
+#: extension.js:516
 msgid "This operation cannot be undone."
 msgstr "此操作不可撤销。"
 
-#: extension.js:518
+#: extension.js:522
 msgid "Clear"
 msgstr "清除"
 
-#: extension.js:519 extension.js:873
+#: extension.js:523 extension.js:877
 msgid "Cancel"
 msgstr "取消"
 
-#: extension.js:872
+#: extension.js:876
 msgid "Copied to clipboard"
 msgstr "已复制到剪贴板"
 
-#: extension.js:1204
+#: extension.js:1211
 msgid "Copied"
 msgstr ""
 
@@ -102,7 +102,7 @@ msgstr "复制时显示通知"
 
 #: prefs.js:154
 #, fuzzy
-msgid "Show confirmation on Clear History"
+msgid "Ask for confirmation before clearing history"
 msgstr "复制时显示通知"
 
 #: prefs.js:159
@@ -114,15 +114,18 @@ msgid "Keyboard shortcuts"
 msgstr "键盘快捷键"
 
 #: prefs.js:169
-msgid "Number of characters in top bar"
+#, fuzzy
+msgid "Number of characters in status bar"
 msgstr "顶栏显示的字符数量"
 
 #: prefs.js:174
-msgid "What to show in top bar"
+#, fuzzy
+msgid "What to show in status bar"
 msgstr "在顶栏中的显示方式"
 
 #: prefs.js:179
-msgid "Remove down arrow in top bar"
+#, fuzzy
+msgid "Remove down arrow in status bar"
 msgstr "移除顶栏中的下拉箭头"
 
 #: prefs.js:184
@@ -142,7 +145,8 @@ msgid "Icon"
 msgstr "图标"
 
 #: prefs.js:327
-msgid "Clipboard Content"
+#, fuzzy
+msgid "Clipboard contents"
 msgstr "剪贴板内容"
 
 #: prefs.js:328
@@ -152,6 +156,10 @@ msgstr "全部"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Type here to search…"
+#~ msgstr "在此输入以搜索…"
 
 #, fuzzy
 #~ msgid "Item preview size (characters)"

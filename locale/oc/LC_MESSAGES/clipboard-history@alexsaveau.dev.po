@@ -19,38 +19,38 @@ msgstr ""
 
 #: extension.js:121
 #, fuzzy
-msgid "Type here to search…"
-msgstr "Picatz aquí per recercar..."
+msgid "Search clipboard history…"
+msgstr "Istoric del quichapapièrs escafat"
 
 #: extension.js:208
 msgid "Private mode"
 msgstr "Mòde privat"
 
-#: extension.js:510
+#: extension.js:514
 msgid "Clear all?"
 msgstr "Tot escafar ?"
 
-#: extension.js:511
+#: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Volètz vertadièrament suprimir totes los elements del quichapapièr ?"
 
-#: extension.js:512
+#: extension.js:516
 msgid "This operation cannot be undone."
 msgstr "Aquò pòt pas èsser anullat."
 
-#: extension.js:518
+#: extension.js:522
 msgid "Clear"
 msgstr "Escafar"
 
-#: extension.js:519 extension.js:873
+#: extension.js:523 extension.js:877
 msgid "Cancel"
 msgstr "Anullar"
 
-#: extension.js:872
+#: extension.js:876
 msgid "Copied to clipboard"
 msgstr "Copiat dins lo quichapapièrs"
 
-#: extension.js:1204
+#: extension.js:1211
 msgid "Copied"
 msgstr ""
 
@@ -98,7 +98,7 @@ msgstr "Afichar una notificacion en copiant"
 
 #: prefs.js:154
 #, fuzzy
-msgid "Show confirmation on Clear History"
+msgid "Ask for confirmation before clearing history"
 msgstr "Afichar una notificacion en copiant"
 
 #: prefs.js:159
@@ -110,15 +110,18 @@ msgid "Keyboard shortcuts"
 msgstr "Acorchis de clavièr"
 
 #: prefs.js:169
-msgid "Number of characters in top bar"
+#, fuzzy
+msgid "Number of characters in status bar"
 msgstr "Nombre de caractèrs a la barra d’ennaut"
 
 #: prefs.js:174
-msgid "What to show in top bar"
+#, fuzzy
+msgid "What to show in status bar"
 msgstr "Qué veire a la barra d’ennaut"
 
 #: prefs.js:179
-msgid "Remove down arrow in top bar"
+#, fuzzy
+msgid "Remove down arrow in status bar"
 msgstr "Suprimir la sageta bassa de la barra d’ennaut"
 
 #: prefs.js:184
@@ -138,7 +141,8 @@ msgid "Icon"
 msgstr "Icòna"
 
 #: prefs.js:327
-msgid "Clipboard Content"
+#, fuzzy
+msgid "Clipboard contents"
 msgstr "Contengut del quichapapièrs"
 
 #: prefs.js:328
@@ -148,6 +152,10 @@ msgstr "Los dos"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Type here to search…"
+#~ msgstr "Picatz aquí per recercar..."
 
 #, fuzzy
 #~ msgid "Item preview size (characters)"

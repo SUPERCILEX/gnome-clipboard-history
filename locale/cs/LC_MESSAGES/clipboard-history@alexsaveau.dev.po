@@ -17,38 +17,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: extension.js:121
-msgid "Type here to search…"
-msgstr "Vyhledávejte psaním…"
+#, fuzzy
+msgid "Search clipboard history…"
+msgstr "Maximální velikost historie (MiB)"
 
 #: extension.js:208
 msgid "Private mode"
 msgstr "Stop (proti úniku citlivých údajů)"
 
-#: extension.js:510
+#: extension.js:514
 msgid "Clear all?"
 msgstr "Vyčistit vše?"
 
-#: extension.js:511
+#: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Opravdu chcete smazat všechny položky schránky?"
 
-#: extension.js:512
+#: extension.js:516
 msgid "This operation cannot be undone."
 msgstr "Tato operace nejde vrátit."
 
-#: extension.js:518
+#: extension.js:522
 msgid "Clear"
 msgstr "Vyčistit"
 
-#: extension.js:519 extension.js:873
+#: extension.js:523 extension.js:877
 msgid "Cancel"
 msgstr "Storno"
 
-#: extension.js:872
+#: extension.js:876
 msgid "Copied to clipboard"
 msgstr "Zkopírováno do schránky"
 
-#: extension.js:1204
+#: extension.js:1211
 msgid "Copied"
 msgstr "Zkopírováno"
 
@@ -93,7 +94,8 @@ msgid "Show notification on copy"
 msgstr "Při zkopírování zobrazit oznámení"
 
 #: prefs.js:154
-msgid "Show confirmation on Clear History"
+#, fuzzy
+msgid "Ask for confirmation before clearing history"
 msgstr "Zobrazit potvrzení při mazání historie"
 
 #: prefs.js:159
@@ -105,15 +107,18 @@ msgid "Keyboard shortcuts"
 msgstr "Klávesové zkratky"
 
 #: prefs.js:169
-msgid "Number of characters in top bar"
+#, fuzzy
+msgid "Number of characters in status bar"
 msgstr "Počet znaků v horní liště"
 
 #: prefs.js:174
-msgid "What to show in top bar"
+#, fuzzy
+msgid "What to show in status bar"
 msgstr "Co zobrazovat v horní liště"
 
 #: prefs.js:179
-msgid "Remove down arrow in top bar"
+#, fuzzy
+msgid "Remove down arrow in status bar"
 msgstr "Nezobrazovat šipku dolů v horní liště"
 
 #: prefs.js:184
@@ -133,7 +138,8 @@ msgid "Icon"
 msgstr "Ikonu"
 
 #: prefs.js:327
-msgid "Clipboard Content"
+#, fuzzy
+msgid "Clipboard contents"
 msgstr "Obsah schránky"
 
 #: prefs.js:328
@@ -143,6 +149,9 @@ msgstr "Obojí"
 #: prefs.js:329
 msgid "Neither"
 msgstr "Ani jedno"
+
+#~ msgid "Type here to search…"
+#~ msgstr "Vyhledávejte psaním…"
 
 #, fuzzy
 #~ msgid "Item preview size (characters)"
