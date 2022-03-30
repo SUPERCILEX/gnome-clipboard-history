@@ -20,38 +20,38 @@ msgstr ""
 
 #: extension.js:121
 #, fuzzy
-msgid "Type here to search…"
-msgstr "Digita qui per cercare…"
+msgid "Search clipboard history…"
+msgstr "Cronologia cancellata"
 
 #: extension.js:208
 msgid "Private mode"
 msgstr "Modalità privata"
 
-#: extension.js:510
+#: extension.js:514
 msgid "Clear all?"
 msgstr "Cancellare tutto?"
 
-#: extension.js:511
+#: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Si è certi di voler eliminare tutti gli appunti nella cronologia?"
 
-#: extension.js:512
+#: extension.js:516
 msgid "This operation cannot be undone."
 msgstr "Questa operazione non può essere annullata."
 
-#: extension.js:518
+#: extension.js:522
 msgid "Clear"
 msgstr "Elimina"
 
-#: extension.js:519 extension.js:873
+#: extension.js:523 extension.js:877
 msgid "Cancel"
 msgstr "Annulla"
 
-#: extension.js:872
+#: extension.js:876
 msgid "Copied to clipboard"
 msgstr "Copiato negli appunti"
 
-#: extension.js:1204
+#: extension.js:1211
 msgid "Copied"
 msgstr ""
 
@@ -99,7 +99,7 @@ msgstr "Mostra una notifica quando copi"
 
 #: prefs.js:154
 #, fuzzy
-msgid "Show confirmation on Clear History"
+msgid "Ask for confirmation before clearing history"
 msgstr "Mostra una notifica quando copi"
 
 #: prefs.js:159
@@ -111,16 +111,18 @@ msgid "Keyboard shortcuts"
 msgstr "Scorciatoie da tastiera"
 
 #: prefs.js:169
-msgid "Number of characters in top bar"
+#, fuzzy
+msgid "Number of characters in status bar"
 msgstr "Numero di caratteri sul pannello"
 
 #: prefs.js:174
-msgid "What to show in top bar"
+#, fuzzy
+msgid "What to show in status bar"
 msgstr "Cosa mostrare sul pannello"
 
 #: prefs.js:179
 #, fuzzy
-msgid "Remove down arrow in top bar"
+msgid "Remove down arrow in status bar"
 msgstr "Numero di caratteri sul pannello"
 
 #: prefs.js:184
@@ -142,7 +144,8 @@ msgid "Icon"
 msgstr "Icona"
 
 #: prefs.js:327
-msgid "Clipboard Content"
+#, fuzzy
+msgid "Clipboard contents"
 msgstr "Contenuto Clipboard"
 
 #: prefs.js:328
@@ -152,6 +155,10 @@ msgstr "Entrambi"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Type here to search…"
+#~ msgstr "Digita qui per cercare…"
 
 #, fuzzy
 #~ msgid "Item preview size (characters)"

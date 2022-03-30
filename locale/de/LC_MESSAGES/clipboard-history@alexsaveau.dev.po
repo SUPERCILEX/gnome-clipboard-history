@@ -2,6 +2,7 @@
 # Copyright (C) 2014-2015, Yotam Bar-On
 # This file is distributed under the same license as the gnome-shell-extension-clipboard-indicator package.
 # Jens Lody <openweather@jenslody.de>, 2015.
+# Onno Giesmann <nutzer3105@gmail.com, 2019-2022.
 # Philipp Kiemle <philipp.kiemle@gmail.com>, 2022.
 #
 msgid ""
@@ -20,8 +21,9 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 
 #: extension.js:121
-msgid "Type here to search…"
-msgstr "Hier tippen um zu suchen …"
+#, fuzzy
+msgid "Search clipboard history…"
+msgstr "Hier tippen um zu suchen…"
 
 #: extension.js:208
 msgid "Private mode"
@@ -33,11 +35,11 @@ msgstr "Alles löschen?"
 
 #: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
-msgstr "Sollen wirklich alle Elemente in der Zwischenablage gelöscht werden?"
+msgstr "Soll die Zwischenablage wirklich geleert werden?"
 
 #: extension.js:516
 msgid "This operation cannot be undone."
-msgstr "Diese Aktion kann nicht rückgängig gemacht werden."
+msgstr "Dieser Vorgang kann nicht rückgängig gemacht werden."
 
 #: extension.js:522
 msgid "Clear"
@@ -81,7 +83,7 @@ msgstr "Maximale Anzahl an Einträgen"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr "Fensterbreite (%)"
+msgstr "Fensterbreite (%)"
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
@@ -96,8 +98,9 @@ msgid "Show notification on copy"
 msgstr "Benachrichtigung beim Kopieren anzeigen"
 
 #: prefs.js:154
-msgid "Show confirmation on Clear History"
-msgstr "Bestätigung vor dem Löschen des Verlaufs anzeigen"
+#, fuzzy
+msgid "Ask for confirmation before clearing history"
+msgstr "Bestätigung beim Löschen des Verlaufs anzeigen"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
@@ -108,16 +111,19 @@ msgid "Keyboard shortcuts"
 msgstr "Tastaturkürzel"
 
 #: prefs.js:169
-msgid "Number of characters in top bar"
+#, fuzzy
+msgid "Number of characters in status bar"
 msgstr "Anzahl der Zeichen in der oberen Leiste"
 
 #: prefs.js:174
-msgid "What to show in top bar"
-msgstr "Folgendes in oberer Leiste anzeigen"
+#, fuzzy
+msgid "What to show in status bar"
+msgstr "Folgendes in der oberen Leiste anzeigen"
 
 #: prefs.js:179
-msgid "Remove down arrow in top bar"
-msgstr "Pfeil in der oberen Leiste nicht anzeigen"
+#, fuzzy
+msgid "Remove down arrow in status bar"
+msgstr "Keinen Pfeil in der oberen Leiste anzeigen"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
@@ -128,16 +134,16 @@ msgid "Paste on selection"
 msgstr "Bei Auswahl einfügen"
 
 #: prefs.js:194
-#, fuzzy
 msgid "Process primary selection"
-msgstr "Primäre Auswahl bearbeiten"
+msgstr "Erste Auswahl verarbeiten"
 
 #: prefs.js:326
 msgid "Icon"
 msgstr "Symbol"
 
 #: prefs.js:327
-msgid "Clipboard Content"
+#, fuzzy
+msgid "Clipboard contents"
 msgstr "Inhalt der Zwischenablage"
 
 #: prefs.js:328
@@ -168,10 +174,10 @@ msgstr "Nichts"
 #~ msgstr "Größe des Verlaufs"
 
 #~ msgid "Refresh Interval (ms)"
-#~ msgstr "Aktualisierungsintervall (ms)"
+#~ msgstr "Aktualisierungsintervall (ms)"
 
 #~ msgid "Max cache file size (kb)"
-#~ msgstr "Maximale Größe der Pufferdatei (kb)"
+#~ msgstr "Maximale Größe der Pufferdatei (kb)"
 
 #~ msgid "Cache only favorites"
 #~ msgstr "Nur Favoriten zwischenspeichern"

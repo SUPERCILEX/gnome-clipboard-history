@@ -7,7 +7,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: extension.js:121
-msgid "Type here to search…"
+msgid "Search clipboard history…"
 msgstr ""
 
 #: extension.js:208
@@ -83,7 +83,7 @@ msgid "Show notification on copy"
 msgstr ""
 
 #: prefs.js:154
-msgid "Show confirmation on Clear History"
+msgid "Ask for confirmation before clearing history"
 msgstr ""
 
 #: prefs.js:159
@@ -95,15 +95,15 @@ msgid "Keyboard shortcuts"
 msgstr ""
 
 #: prefs.js:169
-msgid "Number of characters in top bar"
+msgid "Number of characters in status bar"
 msgstr ""
 
 #: prefs.js:174
-msgid "What to show in top bar"
+msgid "What to show in status bar"
 msgstr ""
 
 #: prefs.js:179
-msgid "Remove down arrow in top bar"
+msgid "Remove down arrow in status bar"
 msgstr ""
 
 #: prefs.js:184
@@ -123,7 +123,7 @@ msgid "Icon"
 msgstr ""
 
 #: prefs.js:327
-msgid "Clipboard Content"
+msgid "Clipboard contents"
 msgstr ""
 
 #: prefs.js:328

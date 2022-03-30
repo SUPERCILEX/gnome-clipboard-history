@@ -118,7 +118,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       name: 'searchEntry',
       style_class: 'search-entry',
       can_focus: true,
-      hint_text: _('Type here to search…'),
+      hint_text: _('Search clipboard history…'),
       track_hover: true,
       x_expand: true,
       y_expand: true,
