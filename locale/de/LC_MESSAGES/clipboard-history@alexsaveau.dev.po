@@ -35,7 +35,7 @@ msgstr "Alles löschen?"
 
 #: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
-msgstr "Soll die Zwischenablage wirklich geleert werden?"
+msgstr "Sollen wirklich alle Elemente in der Zwischenablage gelöscht werden?"
 
 #: extension.js:516
 msgid "This operation cannot be undone."
@@ -100,7 +100,7 @@ msgstr "Benachrichtigung beim Kopieren anzeigen"
 #: prefs.js:154
 #, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "Bestätigung beim Löschen des Verlaufs anzeigen"
+msgstr "Bestätigung vor dem Löschen des Verlaufs anzeigen"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
@@ -135,7 +135,7 @@ msgstr "Bei Auswahl einfügen"
 
 #: prefs.js:194
 msgid "Process primary selection"
-msgstr "Erste Auswahl verarbeiten"
+msgstr "Primäre Auswahl bearbeiten"
 
 #: prefs.js:326
 msgid "Icon"
