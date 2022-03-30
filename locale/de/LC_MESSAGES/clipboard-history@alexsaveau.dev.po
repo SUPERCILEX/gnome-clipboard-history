@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2022-03-29 14:43+0200\n"
+"PO-Revision-Date: 2022-03-30 14:43+0200\n"
 "Last-Translator: Onno Giesmann <nutzer3105@gmail.com>\n"
 "Language-Team: Deutsch <openweather@jenslody.de>\n"
 "Language: de\n"
@@ -20,9 +20,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
-msgstr "Maximale Größe des Verlaufs der Zwischenablage (MiB)"
+msgstr "Verlauf der Zwischenablage durchsuchen…"
 
 #: extension.js:208
 msgid "Private mode"
@@ -97,9 +96,8 @@ msgid "Show notification on copy"
 msgstr "Benachrichtigung beim Kopieren anzeigen"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "Bestätigung beim Löschen des Verlaufs anzeigen"
+msgstr "Vor dem Löschen des Verlaufs nachfragen"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
@@ -110,19 +108,16 @@ msgid "Keyboard shortcuts"
 msgstr "Tastaturkürzel"
 
 #: prefs.js:169
-#, fuzzy
 msgid "Number of characters in status bar"
-msgstr "Anzahl der Zeichen in der oberen Leiste"
+msgstr "Anzahl der Zeichen in der Statusleiste"
 
 #: prefs.js:174
-#, fuzzy
 msgid "What to show in status bar"
-msgstr "Folgendes in der oberen Leiste anzeigen"
+msgstr "Folgendes in der Statusleiste anzeigen"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
-msgstr "Keinen Pfeil in der oberen Leiste anzeigen"
+msgstr "Keinen Pfeil in der Statusleiste anzeigen"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
@@ -141,7 +136,6 @@ msgid "Icon"
 msgstr "Symbol"
 
 #: prefs.js:327
-#, fuzzy
 msgid "Clipboard contents"
 msgstr "Inhalt der Zwischenablage"
 
