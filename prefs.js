@@ -151,7 +151,7 @@ class Prefs extends GObject.Object {
       halign: Gtk.Align.START,
     });
     let confirmClearLabel = new Gtk.Label({
-      label: _('Show confirmation on Clear History'),
+      label: _('Ask for confirmation before clearing history'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
@@ -166,17 +166,17 @@ class Prefs extends GObject.Object {
       halign: Gtk.Align.START,
     });
     let topbarPreviewLabel = new Gtk.Label({
-      label: _('Number of characters in top bar'),
+      label: _('Number of characters in status bar'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
     let displayModeLabel = new Gtk.Label({
-      label: _('What to show in top bar'),
+      label: _('What to show in status bar'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
     let disableDownArrowLabel = new Gtk.Label({
-      label: _('Remove down arrow in top bar'),
+      label: _('Remove down arrow in status bar'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
@@ -324,7 +324,7 @@ class Prefs extends GObject.Object {
   _create_display_mode_options() {
     let options = [
       { name: _('Icon') },
-      { name: _('Clipboard Content') },
+      { name: _('Clipboard contents') },
       { name: _('Both') },
       { name: _('Neither') },
     ];
