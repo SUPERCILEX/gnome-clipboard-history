@@ -3,26 +3,26 @@
 # This file is distributed under the same license as the gnome-shell-extension-clipboard-indicator package.
 # Jens Lody <openweather@jenslody.de>, 2015.
 # Onno Giesmann <nutzer3105@gmail.com, 2019-2022.
+# Philipp Kiemle <philipp.kiemle@gmail.com>, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2022-03-29 14:43+0200\n"
-"Last-Translator: Onno Giesmann <nutzer3105@gmail.com>\n"
-"Language-Team: Deutsch <openweather@jenslody.de>\n"
+"POT-Creation-Date: 2022-03-29 13:45+0200\n"
+"PO-Revision-Date: 2022-03-30 10:02+0200\n"
+"Last-Translator: Philipp Kiemle <philipp.kiemle@gmail.com>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.0\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
-msgstr "Maximale Größe des Verlaufs der Zwischenablage (MiB)"
+msgstr "Verlauf durchsuchen …"
 
 #: extension.js:208
 msgid "Private mode"
@@ -34,7 +34,7 @@ msgstr "Alles löschen?"
 
 #: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
-msgstr "Soll die Zwischenablage wirklich geleert werden?"
+msgstr "Sollen wirklich alle Elemente in der Zwischenablage gelöscht werden?"
 
 #: extension.js:516
 msgid "This operation cannot be undone."
@@ -97,9 +97,8 @@ msgid "Show notification on copy"
 msgstr "Benachrichtigung beim Kopieren anzeigen"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "Bestätigung beim Löschen des Verlaufs anzeigen"
+msgstr "Bestätigung vor dem Löschen des Verlaufs anzeigen"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
@@ -110,17 +109,14 @@ msgid "Keyboard shortcuts"
 msgstr "Tastaturkürzel"
 
 #: prefs.js:169
-#, fuzzy
 msgid "Number of characters in status bar"
 msgstr "Anzahl der Zeichen in der oberen Leiste"
 
 #: prefs.js:174
-#, fuzzy
 msgid "What to show in status bar"
 msgstr "Folgendes in der oberen Leiste anzeigen"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
 msgstr "Keinen Pfeil in der oberen Leiste anzeigen"
 
@@ -134,14 +130,13 @@ msgstr "Bei Auswahl einfügen"
 
 #: prefs.js:194
 msgid "Process primary selection"
-msgstr "Erste Auswahl verarbeiten"
+msgstr "Primäre Auswahl bearbeiten"
 
 #: prefs.js:326
 msgid "Icon"
 msgstr "Symbol"
 
 #: prefs.js:327
-#, fuzzy
 msgid "Clipboard contents"
 msgstr "Inhalt der Zwischenablage"
 
@@ -156,13 +151,11 @@ msgstr "Nichts"
 #~ msgid "Item preview size (characters)"
 #~ msgstr "Anzahl der Zeichen in der Vorschau"
 
-#, fuzzy
 #~ msgid "Previous page"
-#~ msgstr "Vorheriger Eintrag"
+#~ msgstr "Vorherige Seite"
 
-#, fuzzy
 #~ msgid "Next page"
-#~ msgstr "Nächster Eintrag"
+#~ msgstr "Nächste Seite"
 
 #~ msgid "Settings"
 #~ msgstr "Einstellungen"
