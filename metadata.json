@@ -1,6 +1,6 @@
 {
   "name": "Clipboard History",
-  "version": 12,
+  "version": 13,
   "uuid": "clipboard-history@alexsaveau.dev",
   "description": "Gnome Clipboard History is a Gnome extension that saves items you've copied into an easily accessible, searchable history panel.",
   "url": "https://github.com/SUPERCILEX/gnome-clipboard-history",
