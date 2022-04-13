@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2022-03-30 14:43+0200\n"
+"PO-Revision-Date: 2022-04-13 10:07+0200\n"
 "Last-Translator: Onno Giesmann <nutzer3105@gmail.com>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: extension.js:121
 msgid "Search clipboard history…"
-msgstr "Verlauf der Zwischenablage durchsuchen …"
+msgstr "Chronik der Zwischenablage durchsuchen …"
 
 #: extension.js:208
 msgid "Private mode"
@@ -62,7 +62,7 @@ msgstr "Das Menü öffnen/schließen"
 
 #: prefs.js:102
 msgid "Clear history"
-msgstr "Verlauf löschen"
+msgstr "Chronik löschen"
 
 #: prefs.js:108
 msgid "Previous entry"
@@ -86,7 +86,7 @@ msgstr "Fensterbreite (%)"
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
-msgstr "Maximale Größe des Verlaufs der Zwischenablage (MiB)"
+msgstr "Maximale Größe der Zwischenablagechronik (MiB)"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
@@ -98,7 +98,7 @@ msgstr "Benachrichtigung beim Kopieren anzeigen"
 
 #: prefs.js:154
 msgid "Ask for confirmation before clearing history"
-msgstr "Vor dem Löschen des Verlaufs nachfragen"
+msgstr "Vor dem Löschen der Chronik nachfragen"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
