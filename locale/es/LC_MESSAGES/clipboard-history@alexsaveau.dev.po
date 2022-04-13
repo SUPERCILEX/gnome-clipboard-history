@@ -20,7 +20,7 @@ msgstr ""
 
 #: extension.js:121
 msgid "Search clipboard history…"
-msgstr "Buscar en el historial del portapapeles..."
+msgstr "Buscar en el historial del portapapeles…"
 
 #: extension.js:208
 msgid "Private mode"
