@@ -8,20 +8,19 @@ msgstr ""
 "Project-Id-Version: gnome-shell-extension-clipboard-indicator\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2018-03-10 09:43-0600\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2022-04-12 15:21-0500\n"
+"Last-Translator: Ulices <hasecilu@protonmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
-msgstr "Historial del portapapeles vaciado"
+msgstr "Buscar en el historial del portapapeles…"
 
 #: extension.js:208
 msgid "Private mode"
@@ -29,31 +28,31 @@ msgstr "Modo privado"
 
 #: extension.js:514
 msgid "Clear all?"
-msgstr ""
+msgstr "¿Limpiar todo?"
 
 #: extension.js:515
 msgid "Are you sure you want to delete all clipboard items?"
-msgstr ""
+msgstr "¿Estás seguro de querer borrar todos los elementos del portapapeles?"
 
 #: extension.js:516
 msgid "This operation cannot be undone."
-msgstr ""
+msgstr "Esta opción no se puede deshacer."
 
 #: extension.js:522
 msgid "Clear"
-msgstr ""
+msgstr "Limpiar"
 
 #: extension.js:523 extension.js:877
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: extension.js:876
 msgid "Copied to clipboard"
-msgstr "Copiado en el portapapeles"
+msgstr "Copiado al portapapeles"
 
 #: extension.js:1211
 msgid "Copied"
-msgstr ""
+msgstr "Copiado"
 
 #: prefs.js:96
 msgid "Toggle the menu"
@@ -61,7 +60,7 @@ msgstr "Alternar menú"
 
 #: prefs.js:102
 msgid "Clear history"
-msgstr "Vaciar historial"
+msgstr "Limpiar historial"
 
 #: prefs.js:108
 msgid "Previous entry"
@@ -72,77 +71,70 @@ msgid "Next entry"
 msgstr "Entrada siguiente"
 
 #: prefs.js:120
-#, fuzzy
 msgid "Toggle private mode"
-msgstr "Modo privado"
+msgstr "Alternar modo privado"
 
 #: prefs.js:129
 msgid "Max number of items"
-msgstr ""
+msgstr "Número máximo de elementos"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr ""
+msgstr "Ancho de ventana (%)"
 
 #: prefs.js:139
-#, fuzzy
 msgid "Max clipboard history size (MiB)"
-msgstr "Historial del portapapeles vaciado"
+msgstr "Tamaño máximo del historial del portapapeles (MiB)"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
-msgstr ""
+msgstr "Solo guardar favoritos al disco"
 
 #: prefs.js:149
 msgid "Show notification on copy"
 msgstr "Mostrar una notificación al copiar"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "Mostrar una notificación al copiar"
+msgstr "Solicitar confirmación antes de borrar el historial"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr ""
+msgstr "Mover los elementos copiados anteriormente a la parte superior"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "Atajos de teclado"
 
 #: prefs.js:169
-#, fuzzy
 msgid "Number of characters in status bar"
-msgstr "Número de caracteres en la barra superior"
+msgstr "Número de caracteres en la barra de estado"
 
 #: prefs.js:174
-#, fuzzy
 msgid "What to show in status bar"
-msgstr "Qué mostrar en la barra superior"
+msgstr "Qué mostrar en la barra de estado"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
-msgstr "Número de caracteres en la barra superior"
+msgstr "Número de caracteres en la barra de estado"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
-msgstr ""
+msgstr "Eliminar espacios en blanco alrededor del texto"
 
 #: prefs.js:189
 msgid "Paste on selection"
-msgstr ""
+msgstr "Pegar en la selección"
 
 #: prefs.js:194
 msgid "Process primary selection"
-msgstr ""
+msgstr "Proceso de selección primaria"
 
 #: prefs.js:326
 msgid "Icon"
 msgstr "Icono"
 
 #: prefs.js:327
-#, fuzzy
 msgid "Clipboard contents"
 msgstr "Contenido del portapapeles"
 
@@ -152,7 +144,7 @@ msgstr "Ambos"
 
 #: prefs.js:329
 msgid "Neither"
-msgstr ""
+msgstr "Ninguno"
 
 #, fuzzy
 #~ msgid "Type here to search…"
