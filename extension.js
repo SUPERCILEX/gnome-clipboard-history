@@ -379,6 +379,9 @@ class ClipboardIndicator extends PanelMenu.Button {
       'activate',
       this._onMenuItemSelectedAndMenuClose.bind(this),
     );
+    menuItem.connect('key-press-event', (_, event) =>
+      this._handleMenuItemKeyEvent(event, menuItem),
+    );
 
     this._setEntryLabel(menuItem);
 
@@ -450,6 +453,12 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
   }
 
+  _handleMenuItemKeyEvent(event, menuItem) {
+    if (event.get_key_unicode() === 'f') {
+      this._favoriteToggle(menuItem);
+    }
+  }
+
   _updateButtonText(entry) {
     if (
       !(TOPBAR_DISPLAY_MODE === 1 || TOPBAR_DISPLAY_MODE === 2) ||
@@ -486,6 +495,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     entry.favorite = !entry.favorite;
     this._addEntry(entry, wasSelected, true, 0);
     this._maybeRestoreMenuPages();
+    global.stage.set_key_focus(entry.menuItem);
 
     if (CACHE_ONLY_FAVORITES) {
       if (entry.favorite) {
