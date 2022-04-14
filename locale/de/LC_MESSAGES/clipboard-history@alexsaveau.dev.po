@@ -22,7 +22,7 @@ msgstr ""
 
 #: extension.js:121
 msgid "Search clipboard history…"
-msgstr "Chronik der Zwischenablage durchsuchen …"
+msgstr "Chronik der Zwischenablage durchsuchen …"
 
 #: extension.js:208
 msgid "Private mode"
@@ -86,7 +86,7 @@ msgstr "Fensterbreite (%)"
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
-msgstr "Maximale Größe der Zwischenablagechronik (MiB)"
+msgstr "Maximale Größe der Zwischenablagechronik (MiB)"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
