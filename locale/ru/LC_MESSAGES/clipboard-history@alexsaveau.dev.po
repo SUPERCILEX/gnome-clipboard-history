@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2022-02-22 22:19+0300\n"
+"PO-Revision-Date: 2022-04-16 15:20+0300\n"
 "Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru\n"
@@ -20,9 +20,8 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
-msgstr "Максимальный размер истории буфера обмена (Мб)"
+msgstr "Поиск в буфере обмена…"
 
 #: extension.js:208
 msgid "Private mode"
@@ -97,9 +96,8 @@ msgid "Show notification on copy"
 msgstr "Уведомление при копировании"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "Показывать подтверждение при очистке истории"
+msgstr "Спрашивать подтверждения перед очисткой истории"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
@@ -110,19 +108,16 @@ msgid "Keyboard shortcuts"
 msgstr "Горячие клавиши"
 
 #: prefs.js:169
-#, fuzzy
 msgid "Number of characters in status bar"
-msgstr "Количество символов в верхней панели"
+msgstr "Количество символов в строке состояния"
 
 #: prefs.js:174
-#, fuzzy
 msgid "What to show in status bar"
-msgstr "Что показывать в верхней панели"
+msgstr "Что показывать в строке состояния"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
-msgstr "Убрать стрелку вниз в верхней панели"
+msgstr "Убрать стрелку вниз в строке состояния"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
@@ -141,7 +136,6 @@ msgid "Icon"
 msgstr "Значок"
 
 #: prefs.js:327
-#, fuzzy
 msgid "Clipboard contents"
 msgstr "Содержимое буфера обмена"
 
