@@ -86,7 +86,7 @@
 
     <key name="process-primary-selection" type="b">
       <default>false</default>
-      <summary>Process the primary clipboard selection</summary>
+      <summary>Also add the current selection ("PRIMARY" clipboard) to the history</summary>
     </key>
 
     <key name="move-item-first" type="b">
