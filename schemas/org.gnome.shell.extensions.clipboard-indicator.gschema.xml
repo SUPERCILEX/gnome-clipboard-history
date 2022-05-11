@@ -86,7 +86,11 @@
 
     <key name="process-primary-selection" type="b">
       <default>false</default>
-      <summary>Also add the current selection ("PRIMARY" clipboard) to the history</summary>
+      <summary>Also save the currently selected text to the clipboard history?</summary>
+      <description>
+        If true, both the contents from the "CLIPBOARD" clipboard and the "PRIMARY" clipboard are added to the history.
+        For more info, see https://www.freedesktop.org/wiki/Specifications/ClipboardsWiki
+      </description>
     </key>
 
     <key name="move-item-first" type="b">
