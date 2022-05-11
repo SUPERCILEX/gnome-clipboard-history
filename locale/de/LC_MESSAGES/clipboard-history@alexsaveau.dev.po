@@ -148,6 +148,9 @@ msgstr "Beides"
 msgid "Neither"
 msgstr "Nichts"
 
+#~ msgid "Process primary selection"
+#~ msgstr "Primäre Auswahl bearbeiten"
+
 #~ msgid "Item preview size (characters)"
 #~ msgstr "Anzahl der Zeichen in der Vorschau"
 
