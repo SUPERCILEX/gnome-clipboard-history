@@ -27,31 +27,31 @@ msgstr "Max. omvang van klembordgeschiedenis (in MiB)"
 msgid "Private mode"
 msgstr "Privémodus"
 
-#: extension.js:514
+#: extension.js:524
 msgid "Clear all?"
 msgstr "Alles wissen?"
 
-#: extension.js:515
+#: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Weet u zeker dat u alle klemborditems wilt wissen?"
 
-#: extension.js:516
+#: extension.js:526
 msgid "This operation cannot be undone."
 msgstr "Dit kan niet ongedaan worden gemaakt."
 
-#: extension.js:522
+#: extension.js:532
 msgid "Clear"
 msgstr "Wissen"
 
-#: extension.js:523 extension.js:877
+#: extension.js:533 extension.js:887
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: extension.js:876
+#: extension.js:886
 msgid "Copied to clipboard"
 msgstr "Gekopieerd naar het klembord"
 
-#: extension.js:1211
+#: extension.js:1221
 msgid "Copied"
 msgstr "Gekopieerd"
 
@@ -132,9 +132,8 @@ msgid "Paste on selection"
 msgstr "Plakken na selecteren"
 
 #: prefs.js:194
-#, fuzzy
-msgid "Process primary selection"
-msgstr "Plakken na selecteren"
+msgid "Save selected text to history"
+msgstr ""
 
 #: prefs.js:326
 msgid "Icon"
@@ -152,6 +151,10 @@ msgstr "Beide"
 #: prefs.js:329
 msgid "Neither"
 msgstr "Niets"
+
+#, fuzzy
+#~ msgid "Process primary selection"
+#~ msgstr "Plakken na selecteren"
 
 #, fuzzy
 #~ msgid "Type here to search…"

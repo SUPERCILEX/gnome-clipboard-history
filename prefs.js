@@ -191,7 +191,7 @@ class Prefs extends GObject.Object {
       halign: Gtk.Align.START,
     });
     let processPrimarySelection = new Gtk.Label({
-      label: _('Process primary selection'),
+      label: _('Save selected text to history'),
       hexpand: true,
       halign: Gtk.Align.START,
     });

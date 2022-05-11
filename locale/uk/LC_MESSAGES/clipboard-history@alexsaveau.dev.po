@@ -28,31 +28,31 @@ msgstr "Історія буферу обміну очищено"
 msgid "Private mode"
 msgstr "Приватний режим"
 
-#: extension.js:514
+#: extension.js:524
 msgid "Clear all?"
 msgstr "Очистити все?"
 
-#: extension.js:515
+#: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Видалити всі елементи з буферу обміну?"
 
-#: extension.js:516
+#: extension.js:526
 msgid "This operation cannot be undone."
 msgstr "Цю операцію неможливо відмінити."
 
-#: extension.js:522
+#: extension.js:532
 msgid "Clear"
 msgstr "Очистити"
 
-#: extension.js:523 extension.js:877
+#: extension.js:533 extension.js:887
 msgid "Cancel"
 msgstr "Відмінити"
 
-#: extension.js:876
+#: extension.js:886
 msgid "Copied to clipboard"
 msgstr "Скопійовано до буферу обміну"
 
-#: extension.js:1211
+#: extension.js:1221
 msgid "Copied"
 msgstr ""
 
@@ -135,7 +135,7 @@ msgid "Paste on selection"
 msgstr ""
 
 #: prefs.js:194
-msgid "Process primary selection"
+msgid "Save selected text to history"
 msgstr ""
 
 #: prefs.js:326

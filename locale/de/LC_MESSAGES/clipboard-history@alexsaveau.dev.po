@@ -28,31 +28,31 @@ msgstr "Chronik der Zwischenablage durchsuchen …"
 msgid "Private mode"
 msgstr "Privater Modus"
 
-#: extension.js:514
+#: extension.js:524
 msgid "Clear all?"
 msgstr "Alles löschen?"
 
-#: extension.js:515
+#: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Sollen wirklich alle Elemente in der Zwischenablage gelöscht werden?"
 
-#: extension.js:516
+#: extension.js:526
 msgid "This operation cannot be undone."
 msgstr "Dieser Vorgang kann nicht rückgängig gemacht werden."
 
-#: extension.js:522
+#: extension.js:532
 msgid "Clear"
 msgstr "Löschen"
 
-#: extension.js:523 extension.js:877
+#: extension.js:533 extension.js:887
 msgid "Cancel"
 msgstr "Abbrechen"
 
-#: extension.js:876
+#: extension.js:886
 msgid "Copied to clipboard"
 msgstr "In Zwischenablage kopiert"
 
-#: extension.js:1211
+#: extension.js:1221
 msgid "Copied"
 msgstr "Kopiert"
 
@@ -129,8 +129,8 @@ msgid "Paste on selection"
 msgstr "Bei Auswahl einfügen"
 
 #: prefs.js:194
-msgid "Process primary selection"
-msgstr "Primäre Auswahl bearbeiten"
+msgid "Save selected text to history"
+msgstr ""
 
 #: prefs.js:326
 msgid "Icon"
@@ -147,6 +147,9 @@ msgstr "Beides"
 #: prefs.js:329
 msgid "Neither"
 msgstr "Nichts"
+
+#~ msgid "Process primary selection"
+#~ msgstr "Primäre Auswahl bearbeiten"
 
 #~ msgid "Item preview size (characters)"
 #~ msgstr "Anzahl der Zeichen in der Vorschau"

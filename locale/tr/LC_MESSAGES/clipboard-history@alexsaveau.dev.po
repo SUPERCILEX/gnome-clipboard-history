@@ -27,31 +27,31 @@ msgstr "Pano geçmişi temizlendi"
 msgid "Private mode"
 msgstr "Gizli kip"
 
-#: extension.js:514
+#: extension.js:524
 msgid "Clear all?"
 msgstr "Hepsi temizlensin mi?"
 
-#: extension.js:515
+#: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Tüm pano öğelerini silmek istediğinizden emin misiniz?"
 
-#: extension.js:516
+#: extension.js:526
 msgid "This operation cannot be undone."
 msgstr "Bu işlem geri alınamaz."
 
-#: extension.js:522
+#: extension.js:532
 msgid "Clear"
 msgstr "Temizle"
 
-#: extension.js:523 extension.js:877
+#: extension.js:533 extension.js:887
 msgid "Cancel"
 msgstr "İptal"
 
-#: extension.js:876
+#: extension.js:886
 msgid "Copied to clipboard"
 msgstr "Panoya kopyalandı"
 
-#: extension.js:1211
+#: extension.js:1221
 msgid "Copied"
 msgstr ""
 
@@ -134,7 +134,7 @@ msgid "Paste on selection"
 msgstr ""
 
 #: prefs.js:194
-msgid "Process primary selection"
+msgid "Save selected text to history"
 msgstr ""
 
 #: prefs.js:326

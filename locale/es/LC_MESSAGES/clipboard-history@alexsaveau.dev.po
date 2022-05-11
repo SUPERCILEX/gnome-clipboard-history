@@ -26,31 +26,31 @@ msgstr "Buscar en el historial del portapapeles…"
 msgid "Private mode"
 msgstr "Modo privado"
 
-#: extension.js:514
+#: extension.js:524
 msgid "Clear all?"
 msgstr "¿Limpiar todo?"
 
-#: extension.js:515
+#: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "¿Estás seguro de querer borrar todos los elementos del portapapeles?"
 
-#: extension.js:516
+#: extension.js:526
 msgid "This operation cannot be undone."
 msgstr "Esta opción no se puede deshacer."
 
-#: extension.js:522
+#: extension.js:532
 msgid "Clear"
 msgstr "Limpiar"
 
-#: extension.js:523 extension.js:877
+#: extension.js:533 extension.js:887
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: extension.js:876
+#: extension.js:886
 msgid "Copied to clipboard"
 msgstr "Copiado al portapapeles"
 
-#: extension.js:1211
+#: extension.js:1221
 msgid "Copied"
 msgstr "Copiado"
 
@@ -127,8 +127,8 @@ msgid "Paste on selection"
 msgstr "Pegar en la selección"
 
 #: prefs.js:194
-msgid "Process primary selection"
-msgstr "Proceso de selección primaria"
+msgid "Save selected text to history"
+msgstr ""
 
 #: prefs.js:326
 msgid "Icon"
@@ -145,6 +145,9 @@ msgstr "Ambos"
 #: prefs.js:329
 msgid "Neither"
 msgstr "Ninguno"
+
+#~ msgid "Process primary selection"
+#~ msgstr "Proceso de selección primaria"
 
 #, fuzzy
 #~ msgid "Type here to search…"

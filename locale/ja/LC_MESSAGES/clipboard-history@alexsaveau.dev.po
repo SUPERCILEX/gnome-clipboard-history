@@ -31,31 +31,31 @@ msgstr "保存するデータ量 (MiB)"
 msgid "Private mode"
 msgstr "プライベートモード"
 
-#: extension.js:514
+#: extension.js:524
 msgid "Clear all?"
 msgstr "すべて消去しますか？"
 
-#: extension.js:515
+#: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "クリップボードの履歴を全て削除してよろしいですか？"
 
-#: extension.js:516
+#: extension.js:526
 msgid "This operation cannot be undone."
 msgstr "この操作を元に戻すことはできません。"
 
-#: extension.js:522
+#: extension.js:532
 msgid "Clear"
 msgstr "削除"
 
-#: extension.js:523 extension.js:877
+#: extension.js:533 extension.js:887
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: extension.js:876
+#: extension.js:886
 msgid "Copied to clipboard"
 msgstr "クリップボードにコピーしました"
 
-#: extension.js:1211
+#: extension.js:1221
 msgid "Copied"
 msgstr "コピーしました"
 
@@ -136,7 +136,7 @@ msgid "Paste on selection"
 msgstr "履歴を選択したときに貼り付ける"
 
 #: prefs.js:194
-msgid "Process primary selection"
+msgid "Save selected text to history"
 msgstr ""
 
 #: prefs.js:326

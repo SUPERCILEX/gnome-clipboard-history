@@ -30,32 +30,32 @@ msgstr "Histórico da área de transferência apagado"
 msgid "Private mode"
 msgstr "Modo privado"
 
-#: extension.js:514
+#: extension.js:524
 msgid "Clear all?"
 msgstr "Deseja limpar tudo?"
 
-#: extension.js:515
+#: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr ""
 "Tem certeza de que deseja excluir todos os itens da área de transferência?"
 
-#: extension.js:516
+#: extension.js:526
 msgid "This operation cannot be undone."
 msgstr "Esta operação não pode ser desfeita"
 
-#: extension.js:522
+#: extension.js:532
 msgid "Clear"
 msgstr "Limpar"
 
-#: extension.js:523 extension.js:877
+#: extension.js:533 extension.js:887
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: extension.js:876
+#: extension.js:886
 msgid "Copied to clipboard"
 msgstr "Copiado para a área de transferência"
 
-#: extension.js:1211
+#: extension.js:1221
 msgid "Copied"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgid "Paste on selection"
 msgstr ""
 
 #: prefs.js:194
-msgid "Process primary selection"
+msgid "Save selected text to history"
 msgstr ""
 
 #: prefs.js:326

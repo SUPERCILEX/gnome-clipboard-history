@@ -27,31 +27,31 @@ msgstr "Cronologia cancellata"
 msgid "Private mode"
 msgstr "Modalità privata"
 
-#: extension.js:514
+#: extension.js:524
 msgid "Clear all?"
 msgstr "Cancellare tutto?"
 
-#: extension.js:515
+#: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Si è certi di voler eliminare tutti gli appunti nella cronologia?"
 
-#: extension.js:516
+#: extension.js:526
 msgid "This operation cannot be undone."
 msgstr "Questa operazione non può essere annullata."
 
-#: extension.js:522
+#: extension.js:532
 msgid "Clear"
 msgstr "Elimina"
 
-#: extension.js:523 extension.js:877
+#: extension.js:533 extension.js:887
 msgid "Cancel"
 msgstr "Annulla"
 
-#: extension.js:876
+#: extension.js:886
 msgid "Copied to clipboard"
 msgstr "Copiato negli appunti"
 
-#: extension.js:1211
+#: extension.js:1221
 msgid "Copied"
 msgstr ""
 
@@ -135,9 +135,8 @@ msgid "Paste on selection"
 msgstr "Abilita cancellazione"
 
 #: prefs.js:194
-#, fuzzy
-msgid "Process primary selection"
-msgstr "Abilita cancellazione"
+msgid "Save selected text to history"
+msgstr ""
 
 #: prefs.js:326
 msgid "Icon"
@@ -155,6 +154,10 @@ msgstr "Entrambi"
 #: prefs.js:329
 msgid "Neither"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Process primary selection"
+#~ msgstr "Abilita cancellazione"
 
 #, fuzzy
 #~ msgid "Type here to search…"
