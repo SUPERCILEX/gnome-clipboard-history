@@ -130,7 +130,7 @@ msgstr "Bei Auswahl einfügen"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr ""
+msgstr "Markierten Text in die Zwischenablagechronik aufnehmen"
 
 #: prefs.js:326
 msgid "Icon"
@@ -147,9 +147,6 @@ msgstr "Beides"
 #: prefs.js:329
 msgid "Neither"
 msgstr "Nichts"
-
-#~ msgid "Process primary selection"
-#~ msgstr "Primäre Auswahl bearbeiten"
 
 #~ msgid "Item preview size (characters)"
 #~ msgstr "Anzahl der Zeichen in der Vorschau"
