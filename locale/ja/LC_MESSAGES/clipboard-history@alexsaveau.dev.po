@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-03-15 14:45+0900\n"
+"PO-Revision-Date: 2022-05-20 23:16+0900\n"
 "Last-Translator: 小山田 純 <oyamadajun@outlook.jp>\n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -23,9 +23,8 @@ msgstr ""
 "X-Poedit-SearchPath-1: extension.js\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
-msgstr "保存するデータ量 (MiB)"
+msgstr "クリップボードの履歴を検索…"
 
 #: extension.js:208
 msgid "Private mode"
@@ -33,7 +32,7 @@ msgstr "プライベートモード"
 
 #: extension.js:524
 msgid "Clear all?"
-msgstr "すべて消去しますか？"
+msgstr "すべて削除しますか？"
 
 #: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
@@ -41,7 +40,7 @@ msgstr "クリップボードの履歴を全て削除してよろしいですか
 
 #: extension.js:526
 msgid "This operation cannot be undone."
-msgstr "この操作を元に戻すことはできません。"
+msgstr "削除した履歴は元に戻せません"
 
 #: extension.js:532
 msgid "Clear"
@@ -100,36 +99,32 @@ msgid "Show notification on copy"
 msgstr "コピー時に通知を表示"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
 msgstr "すべての履歴を削除するときに警告を表示"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr "選択した履歴を一番上に表示"
+msgstr "クリックした履歴を一番上に表示"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "キーボードショートカット"
 
 #: prefs.js:169
-#, fuzzy
 msgid "Number of characters in status bar"
 msgstr "トップバーに表示するクリップボードの内容の文字数"
 
 #: prefs.js:174
-#, fuzzy
 msgid "What to show in status bar"
 msgstr "トップバーの表示内容"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
 msgstr "トップバーの下矢印を非表示"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
-msgstr "テキストの周りの空白を削除"
+msgstr "テキストの周りの余白を小さくする"
 
 #: prefs.js:189
 msgid "Paste on selection"
@@ -137,14 +132,13 @@ msgstr "履歴を選択したときに貼り付ける"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr ""
+msgstr "選択したテキスト"
 
 #: prefs.js:326
 msgid "Icon"
 msgstr "アイコン"
 
 #: prefs.js:327
-#, fuzzy
 msgid "Clipboard contents"
 msgstr "クリップボードの内容"
 
@@ -155,42 +149,3 @@ msgstr "両方"
 #: prefs.js:329
 msgid "Neither"
 msgstr "表示しない"
-
-#~ msgid "Type here to search…"
-#~ msgstr "検索ワードを入力…"
-
-#, fuzzy
-#~ msgid "Item preview size (characters)"
-#~ msgstr "プレビュー文字数"
-
-#, fuzzy
-#~ msgid "Previous page"
-#~ msgstr "前へ"
-
-#, fuzzy
-#~ msgid "Next page"
-#~ msgstr "次へ"
-
-#~ msgid "Settings"
-#~ msgstr "設定"
-
-#~ msgid "Text will be here"
-#~ msgstr "ここにテキストを入力"
-
-#~ msgid "History Size"
-#~ msgstr "保存件数"
-
-#~ msgid "Refresh Interval (ms)"
-#~ msgstr "更新間隔（ミリ秒）"
-
-#~ msgid "Max cache file size (kb)"
-#~ msgstr "最大キャッシュサイズ（KB）"
-
-#~ msgid "Cache only favorites"
-#~ msgstr "お気に入りのみをキャッシュ"
-
-#~ msgid "Move item to the top after selection"
-#~ msgstr "選択後にアイテムをトップに移動"
-
-#~ msgid "Disable cache file"
-#~ msgstr "キャッシュを無効化"
