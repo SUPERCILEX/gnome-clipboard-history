@@ -404,7 +404,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     });
 
     menuItem.actor.add_child(icofavBtn);
-    icofavBtn.connect('button-press-event', () => {
+    icofavBtn.connect('clicked', () => {
       this._favoriteToggle(menuItem);
     });
 
@@ -424,7 +424,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     });
 
     menuItem.actor.add_child(icoBtn);
-    icoBtn.connect('button-press-event', () => {
+    icoBtn.connect('clicked', () => {
       this._deleteEntryAndRestoreLatest(menuItem.entry);
     });
 
