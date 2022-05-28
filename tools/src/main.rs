@@ -73,8 +73,8 @@ fn lenient_si_number(s: &str) -> Result<usize, String> {
 }
 
 fn gen_entries(n: usize) -> CliResult<()> {
-    let mut file = dirs::home_dir().context("Failed to retrieve home dir")?;
-    file.push(".cache/clipboard-history@alexsaveau.dev/database.log");
+    let mut file = dirs::cache_dir().context("Failed to retrieve home dir")?;
+    file.push("clipboard-history@alexsaveau.dev/database.log");
     let file = File::create(file).context("Failed to open log file")?;
     let mut file = BufWriter::new(file);
 
