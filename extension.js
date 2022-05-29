@@ -101,10 +101,6 @@ class ClipboardIndicator extends PanelMenu.Button {
       Mainloop.source_remove(this._pasteHackCallbackId);
       this._pasteHackCallbackId = undefined;
     }
-    if (this._keyPressCallbackId) {
-      global.stage.disconnect(this._keyPressCallbackId);
-      this._keyPressCallbackId = undefined;
-    }
     if (this._primaryClipboardCallbackId) {
       Mainloop.source_remove(this._primaryClipboardCallbackId);
       this._primaryClipboardCallbackId = undefined;
@@ -240,9 +236,8 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (ENABLE_KEYBINDING) {
       this._bindShortcuts();
     }
-    this._keyPressCallbackId = this.menu.actor.connect(
-      'key-press-event',
-      (_, event) => this._handleGlobalKeyEvent(event),
+    this.menu.actor.connect('key-press-event', (_, event) =>
+      this._handleGlobalKeyEvent(event),
     );
 
     Store.buildClipboardStateFromLog((entries, favoriteEntries, nextId) => {
