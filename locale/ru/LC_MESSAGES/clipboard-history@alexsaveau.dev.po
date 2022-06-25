@@ -129,7 +129,7 @@ msgstr "Вставить при нажатии на запись"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr ""
+msgstr "Сохранить выделенный текст в истории"
 
 #: prefs.js:326
 msgid "Icon"
