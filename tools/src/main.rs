@@ -1,21 +1,22 @@
 #![feature(string_remove_matches)]
 
-use std::{
-    fs::File,
-    io::{BufWriter, Write},
-    slice,
-};
-
-use anyhow::Context;
-use clap::{Args, Parser, Subcommand};
+use anyhow::{anyhow, Context};
+use clap::{Args, Parser, Subcommand, ValueHint};
 use clap_num::si_number;
-use cli_errors::CliResult;
+use cli_errors::{CliExitAnyhowWrapper, CliResult};
+use memmap2::Mmap;
 use rand::{
     distributions::{Distribution, Uniform},
     SeedableRng,
 };
 use rand_distr::LogNormal;
 use rand_xoshiro::Xoshiro256PlusPlus;
+use std::{
+    fs::File,
+    io::{BufWriter, Write},
+    path::PathBuf,
+    slice,
+};
 
 #[derive(Parser, Debug)]
 #[clap(infer_subcommands = true)]
@@ -28,6 +29,7 @@ struct Tools {
 #[derive(Subcommand, Debug)]
 enum Cmd {
     Generate(Generate),
+    Dump(Dump),
 }
 
 #[derive(Args, Debug)]
@@ -38,12 +40,19 @@ struct Generate {
     num_entries: usize,
 }
 
+#[derive(Args, Debug)]
+struct Dump {
+    #[clap(value_hint = ValueHint::FilePath)]
+    database: Option<PathBuf>,
+}
+
 #[cli_errors::main]
 fn main() -> CliResult<()> {
     let args = Tools::parse();
 
     match args.cmd {
         Cmd::Generate(options) => gen_entries(options.num_entries),
+        Cmd::Dump(options) => dump(options.database),
     }
 }
 
@@ -64,8 +73,8 @@ fn lenient_si_number(s: &str) -> Result<usize, String> {
 }
 
 fn gen_entries(n: usize) -> CliResult<()> {
-    let mut file = dirs::home_dir().context("Failed to retrieve home dir")?;
-    file.push(".cache/clipboard-history@alexsaveau.dev/database.log");
+    let mut file = dirs::cache_dir().context("Failed to retrieve home dir")?;
+    file.push("clipboard-history@alexsaveau.dev/database.log");
     let file = File::create(file).context("Failed to open log file")?;
     let mut file = BufWriter::new(file);
 
@@ -90,6 +99,73 @@ fn gen_entries(n: usize) -> CliResult<()> {
 
     file.flush().context("Failed to write to log file")?;
     println!("Wrote {} bytes.", total);
+
+    Ok(())
+}
+
+fn dump(database: Option<PathBuf>) -> CliResult<()> {
+    let database = database
+        .or_else(|| {
+            dirs::cache_dir().map(|mut f| {
+                f.push("clipboard-history@alexsaveau.dev/database.log");
+                f
+            })
+        })
+        .context("Failed to find database file")?;
+
+    let file = File::open(&database).with_context(|| format!("Failed to open {database:?}"))?;
+    let bytes = unsafe { Mmap::map(&file) }.context("Failed to open mmap")?;
+
+    const OP_TYPE_SAVE_TEXT: u8 = 1;
+    const OP_TYPE_DELETE_TEXT: u8 = 2;
+    const OP_TYPE_FAVORITE_ITEM: u8 = 3;
+    const OP_TYPE_UNFAVORITE_ITEM: u8 = 4;
+    const OP_TYPE_MOVE_ITEM_TO_END: u8 = 5;
+
+    let mut save_count = 1;
+    let mut i = 0;
+    while i < bytes.len() {
+        let op = bytes[i];
+        i += 1;
+        match op {
+            OP_TYPE_SAVE_TEXT => {
+                let length =
+                    1 + memchr::memchr(0, &bytes[i..]).context("Data was not NUL terminated")?;
+                println!("SAVE_TEXT@{i}\nLength: {length}\nId: {save_count}\n");
+                i += length;
+                save_count += 1;
+            }
+            OP_TYPE_DELETE_TEXT => {
+                println!(
+                    "DELETE_TEXT@{i}\nId: {}\n",
+                    u32::from_le_bytes(bytes[i..i + 4].try_into().unwrap())
+                );
+                i += 4;
+            }
+            OP_TYPE_FAVORITE_ITEM => {
+                println!(
+                    "FAVORITE_ITEM@{i}\nId: {}\n",
+                    u32::from_le_bytes(bytes[i..i + 4].try_into().unwrap())
+                );
+                i += 4;
+            }
+            OP_TYPE_UNFAVORITE_ITEM => {
+                println!(
+                    "UNFAVORITE_ITEM@{i}\nId: {}\n",
+                    u32::from_le_bytes(bytes[i..i + 4].try_into().unwrap())
+                );
+                i += 4;
+            }
+            OP_TYPE_MOVE_ITEM_TO_END => {
+                println!(
+                    "MOVE_ITEM_TO_END@{i}\nId: {}\n",
+                    u32::from_le_bytes(bytes[i..i + 4].try_into().unwrap())
+                );
+                i += 4;
+            }
+            _ => return Err(anyhow!("Invalid op: {}", bytes[i])).with_code(exitcode::DATAERR),
+        }
+    }
 
     Ok(())
 }
