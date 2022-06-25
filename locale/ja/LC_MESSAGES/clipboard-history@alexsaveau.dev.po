@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-05-20 23:16+0900\n"
+"PO-Revision-Date: 2022-06-25 12:15+0900\n"
 "Last-Translator: 小山田 純 <oyamadajun@outlook.jp>\n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-SearchPath-0: prefs.js\n"
 "X-Poedit-SearchPath-1: extension.js\n"
@@ -40,7 +40,7 @@ msgstr "クリップボードの履歴を全て削除してよろしいですか
 
 #: extension.js:526
 msgid "This operation cannot be undone."
-msgstr "削除した履歴は元に戻せません"
+msgstr "削除した履歴は復元できません"
 
 #: extension.js:532
 msgid "Clear"
@@ -84,7 +84,7 @@ msgstr "保存する履歴の数"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr "ウィンドウの幅(%)"
+msgstr "ウィンドウの横幅(%)"
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
@@ -128,11 +128,11 @@ msgstr "テキストの周りの余白を小さくする"
 
 #: prefs.js:189
 msgid "Paste on selection"
-msgstr "履歴を選択したときに貼り付ける"
+msgstr "履歴をクリックしたときに貼り付ける"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr "選択したテキスト"
+msgstr "マウスでドラックするなどして選択した文字も保存"
 
 #: prefs.js:326
 msgid "Icon"
