@@ -764,13 +764,19 @@ class ClipboardIndicator extends PanelMenu.Button {
       forward = true;
     }
 
-    const searchExp = new RegExp(query, 'i');
+    let searchExp;
+    try {
+      searchExp = new RegExp(query, 'i');
+    } catch {}
     const start = forward ? this.searchEntryFront : this.searchEntryBack;
     let entry = start;
 
     while (this.activeHistoryMenuItems < PAGE_SIZE) {
       if (entry.type === DS.TYPE_TEXT) {
-        const match = entry.text.search(searchExp);
+        let match = entry.text.indexOf(query);
+        if (searchExp && match < 0) {
+          match = entry.text.search(searchExp);
+        }
         if (match >= 0) {
           this._addEntry(
             entry,
