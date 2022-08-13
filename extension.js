@@ -361,7 +361,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    const menuItem = new PopupMenu.PopupMenuItem('');
+    const menuItem = new PopupMenu.PopupMenuItem('', { hover: false });
 
     menuItem.entry = entry;
     entry.menuItem = menuItem;
