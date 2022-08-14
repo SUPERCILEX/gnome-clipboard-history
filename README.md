@@ -34,9 +34,9 @@ Install the extension from here: https://extensions.gnome.org/extension/4839/cli
 
 ## Install from source
 
-Clone this repo into `~/.local/share/gnome-shell/extensions/` and then run:
-
 ```shell
-$ make
-$ gnome-extensions enable clipboard-history@alexsaveau.dev
+cd ~/.local/share/gnome-shell/extensions/ && \
+  git clone git@github.com:SUPERCILEX/gnome-clipboard-history.git clipboard-history@alexsaveau.dev && \
+  cd clipboard-history@alexsaveau.dev && \
+  make && gnome-extensions enable clipboard-history@alexsaveau.dev
 ```
