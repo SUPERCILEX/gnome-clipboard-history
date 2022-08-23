@@ -19,3 +19,7 @@
 .ci-history-menu-section {
   max-height: 450px;
 }
+
+.ci-history-actions-section .popup-menu-ornament {
+  width: auto !important;
+}
