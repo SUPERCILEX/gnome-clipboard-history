@@ -20,6 +20,11 @@
   max-height: 450px;
 }
 
+.ci-history-search-section {
+    padding-top: 0;
+}
+
+.ci-history-search-section .popup-menu-ornament,
 .ci-history-actions-section .popup-menu-ornament {
   width: auto;
 }
