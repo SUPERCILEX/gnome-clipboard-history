@@ -121,6 +121,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     });
 
     const entryItem = new PopupMenu.PopupBaseMenuItem({
+      style_class: 'ci-history-search-section',
       reactive: false,
       can_focus: false,
     });
@@ -172,6 +173,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     const actionsSection = new PopupMenu.PopupMenuSection();
     const actionsBox = new St.BoxLayout({
+      style_class: 'ci-history-actions-section',
       vertical: false,
     });
 
