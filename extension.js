@@ -121,7 +121,6 @@ class ClipboardIndicator extends PanelMenu.Button {
     });
 
     const entryItem = new PopupMenu.PopupBaseMenuItem({
-      style_class: 'ci-history-search-section',
       reactive: false,
       can_focus: false,
     });
