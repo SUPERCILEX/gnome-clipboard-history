@@ -128,7 +128,7 @@ msgstr "Pegar en la selección"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr ""
+msgstr "Guardar la selección en el historial"
 
 #: prefs.js:326
 msgid "Icon"
