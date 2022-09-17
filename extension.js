@@ -101,10 +101,6 @@ class ClipboardIndicator extends PanelMenu.Button {
       Mainloop.source_remove(this._pasteHackCallbackId);
       this._pasteHackCallbackId = undefined;
     }
-    if (this._primaryClipboardCallbackId) {
-      Mainloop.source_remove(this._primaryClipboardCallbackId);
-      this._primaryClipboardCallbackId = undefined;
-    }
 
     super.destroy();
   }
@@ -828,15 +824,17 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    if (this._primaryClipboardCallbackId) {
-      Mainloop.source_remove(this._primaryClipboardCallbackId);
-    }
-    this._primaryClipboardCallbackId = Mainloop.timeout_add(100, () => {
-      Clipboard.get_text(St.ClipboardType.PRIMARY, (_, text) => {
-        this._processClipboardContent(text);
-        this._primaryClipboardCallbackId = undefined;
-        return false;
-      });
+    Clipboard.get_text(St.ClipboardType.PRIMARY, (_, text) => {
+      const last = this.entries.last();
+      this._processClipboardContent(text);
+      if (
+        last &&
+        text &&
+        text.length > last.text.length &&
+        (text.endsWith(last.text) || text.startsWith(last.text))
+      ) {
+        this._removeEntry(last, true);
+      }
     });
   }
 
