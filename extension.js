@@ -830,8 +830,11 @@ class ClipboardIndicator extends PanelMenu.Button {
       if (
         last &&
         text &&
-        text.length > last.text.length &&
-        (text.endsWith(last.text) || text.startsWith(last.text))
+        text.length !== last.text.length &&
+        (text.endsWith(last.text) ||
+          text.startsWith(last.text) ||
+          last.text.endsWith(text) ||
+          last.text.startsWith(text))
       ) {
         this._removeEntry(last, true);
       }
