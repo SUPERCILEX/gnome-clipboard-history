@@ -826,7 +826,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     Clipboard.get_text(St.ClipboardType.PRIMARY, (_, text) => {
       const last = this.entries.last();
-      this._processClipboardContent(text);
+      text = this._processClipboardContent(text);
       if (
         last &&
         text &&
@@ -889,6 +889,8 @@ class ClipboardIndicator extends PanelMenu.Button {
         );
       });
     }
+
+    return text;
   }
 
   _moveEntryFirst(entry) {
