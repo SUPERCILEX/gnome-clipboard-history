@@ -102,7 +102,7 @@ msgstr "Vor dem Löschen der Chronik nachfragen"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr "Kürzlich kopierte Einträge oben anzeigen"
+msgstr "Zuletzt kopierte Einträge nach oben verschieben"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
