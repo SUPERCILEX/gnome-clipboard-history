@@ -446,6 +446,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (event.get_key_unicode() === 'f') {
       this._favoriteToggle(menuItem);
     }
+    if (event.get_key_code() === 119) {
+      this._deleteEntryAndRestoreLatest(menuItem.entry);
+    }
   }
 
   _updateButtonText(entry) {
