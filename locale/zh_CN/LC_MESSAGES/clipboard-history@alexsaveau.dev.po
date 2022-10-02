@@ -1,30 +1,31 @@
 # Chinese translations for PACKAGE package.
-# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) 2015-2022 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # 绿色圣光 <lishaohui.qd@163.com>, 2015, 2017.
 # Zhang WenChao <zhangwenchao001@gmail.com>, 2018
+# Dingzhong Chen <wsxy162@gmail.com>, 2022.
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2021-04-18 14:22+0800\n"
-"Last-Translator: WhiredPlanck\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2022-10-02 11:15+0800\n"
+"Last-Translator: Dingzhong Chen <wsxy162@gmail.com>\n"
+"Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.1\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 42.0\n"
 "X-Poedit-Basepath: .\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Poedit-SearchPath-0: prefs.js\n"
 "X-Poedit-SearchPath-1: extension.js\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
-msgstr "剪贴板已清空"
+msgstr "搜索剪贴板历史…"
 
 #: extension.js:208
 msgid "Private mode"
@@ -40,7 +41,7 @@ msgstr "确定要删除所有剪贴板条目吗？"
 
 #: extension.js:526
 msgid "This operation cannot be undone."
-msgstr "此操作不可撤销。"
+msgstr "此操作不可撤消。"
 
 #: extension.js:532
 msgid "Clear"
@@ -56,11 +57,11 @@ msgstr "已复制到剪贴板"
 
 #: extension.js:1221
 msgid "Copied"
-msgstr ""
+msgstr "已复制"
 
 #: prefs.js:96
 msgid "Toggle the menu"
-msgstr "切换菜单"
+msgstr "开关菜单"
 
 #: prefs.js:102
 msgid "Clear history"
@@ -75,77 +76,70 @@ msgid "Next entry"
 msgstr "下一条"
 
 #: prefs.js:120
-#, fuzzy
 msgid "Toggle private mode"
-msgstr "隐私模式"
+msgstr "切换隐私模式"
 
 #: prefs.js:129
 msgid "Max number of items"
-msgstr ""
+msgstr "条目最大数量"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr ""
+msgstr "窗口宽度（%）"
 
 #: prefs.js:139
-#, fuzzy
 msgid "Max clipboard history size (MiB)"
-msgstr "剪贴板已清空"
+msgstr "剪贴板历史最大大小（MiB）"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
-msgstr ""
+msgstr "只保存收藏项到磁盘"
 
 #: prefs.js:149
 msgid "Show notification on copy"
 msgstr "复制时显示通知"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "复制时显示通知"
+msgstr "清空历史前要求确认"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr ""
+msgstr "将上一条复制项移至顶部"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
-msgstr "键盘快捷键"
+msgstr "快捷键"
 
 #: prefs.js:169
-#, fuzzy
 msgid "Number of characters in status bar"
-msgstr "顶栏显示的字符数量"
+msgstr "状态栏显示的字符数量"
 
 #: prefs.js:174
-#, fuzzy
 msgid "What to show in status bar"
-msgstr "在顶栏中的显示方式"
+msgstr "在状态栏中的显示方式"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
-msgstr "移除顶栏中的下拉箭头"
+msgstr "移除状态栏中的下拉箭头"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
-msgstr "移除文字周围的空白字符"
+msgstr "移除文本两边的空白字符"
 
 #: prefs.js:189
 msgid "Paste on selection"
-msgstr ""
+msgstr "粘贴在选择内容上"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr ""
+msgstr "保存所选文本到历史"
 
 #: prefs.js:326
 msgid "Icon"
 msgstr "图标"
 
 #: prefs.js:327
-#, fuzzy
 msgid "Clipboard contents"
 msgstr "剪贴板内容"
 
@@ -155,7 +149,7 @@ msgstr "全部"
 
 #: prefs.js:329
 msgid "Neither"
-msgstr ""
+msgstr "全不"
 
 #, fuzzy
 #~ msgid "Type here to search…"
