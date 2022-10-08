@@ -492,18 +492,21 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._maybeRestoreMenuPages();
     global.stage.set_key_focus(entry.menuItem);
 
-    if (CACHE_ONLY_FAVORITES) {
-      if (entry.favorite) {
-        entry.diskId = this.nextDiskId++;
-
-        Store.storeTextEntry(entry.text);
-        Store.updateFavoriteStatus(entry.diskId, true);
-      } else {
+    if (CACHE_ONLY_FAVORITES && !entry.favorite) {
+      if (entry.diskId) {
         Store.deleteTextEntry(entry.diskId, true);
         delete entry.diskId;
       }
-    } else {
+      return;
+    }
+
+    if (entry.diskId) {
       Store.updateFavoriteStatus(entry.diskId, entry.favorite);
+    } else {
+      entry.diskId = this.nextDiskId++;
+
+      Store.storeTextEntry(entry.text);
+      Store.updateFavoriteStatus(entry.diskId, true);
     }
   }
 
