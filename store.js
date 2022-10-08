@@ -180,14 +180,59 @@ function _consumeStream(stream, state, callback) {
   }
 
   parseAvailableAware = (minBytes, parse) => {
+    const safeParse = (cont) => {
+      try {
+        parse();
+        cont();
+      } catch (e) {
+        log(Me.uuid, 'Parsing error');
+        logError(e);
+
+        const entries = new DS.LinkedList();
+        let nextId = 1;
+        const addEntry = (text) => {
+          const node = new DS.LLNode();
+          node.id = nextId++;
+          node.type = DS.TYPE_TEXT;
+          node.text = text;
+          node.favorite = false;
+          entries.prepend(node);
+        };
+
+        addEntry('Your clipboard data has been corrupted and was moved to:');
+        addEntry('~/.cache/clipboard-history@alexsaveau.dev/corrupted.log');
+        addEntry('Please file a bug report at:');
+        addEntry(
+          'https://github.com/SUPERCILEX/gnome-clipboard-history/issues/new?assignees=&labels=bug&template=1-bug.md',
+        );
+
+        try {
+          if (
+            !Gio.File.new_for_path(DATABASE_FILE).move(
+              Gio.File.new_for_path(
+                GLib.build_filenamev([CACHE_DIR, 'corrupted.log']),
+              ),
+              Gio.FileCopyFlags.OVERWRITE,
+              null,
+              null,
+            )
+          ) {
+            log(Me.uuid, 'Failed to move database file');
+          }
+        } catch (e) {
+          log(Me.uuid, 'Crash moving database file');
+          logError(e);
+        }
+        callback(entries, new DS.LinkedList(), nextId, 1);
+      }
+    };
+
     if (stream.get_available() < minBytes) {
       forceFill(minBytes, () => {
-        parse();
-        loop();
+        safeParse(loop);
       });
     } else {
-      parse();
-      loop();
+      safeParse(loop);
     }
   };
 

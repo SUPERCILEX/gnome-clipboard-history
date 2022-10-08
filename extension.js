@@ -238,47 +238,50 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._handleGlobalKeyEvent(event),
     );
 
-    Store.buildClipboardStateFromLog((entries, favoriteEntries, nextId) => {
-      /**
-       * This field stores the number of items in the historySection to avoid calling _getMenuItems
-       * since that method is slow.
-       */
-      this.activeHistoryMenuItems = 0;
-      /**
-       * These two IDs are extremely important: making a mistake with either one breaks the
-       * extension. Both IDs are globally unique within compaction intervals. The normal ID is
-       * *always* present and valid -- it allows us to build an inverted index so we can find
-       * previously copied items in O(1) time. The Disk ID is only present when we cache all
-       * entries. This additional complexity is needed to know what the ID of an item is on disk as
-       * compared to in memory when we're only caching favorites.
-       */
-      this.nextDiskId = this.nextId = nextId;
-      /**
-       * DS.LinkedList is the actual clipboard history and source of truth. Never use historySection
-       * or favoritesSection as the source of truth as these may get outdated during pagination.
-       *
-       * Entries *may* have a menuItem attached, meaning they are currently visible. On the other
-       * hand, menu items must always have an entry attached.
-       */
-      this.entries = entries;
-      this.favoriteEntries = favoriteEntries;
+    Store.buildClipboardStateFromLog(
+      (entries, favoriteEntries, nextId, nextDiskId) => {
+        /**
+         * This field stores the number of items in the historySection to avoid calling _getMenuItems
+         * since that method is slow.
+         */
+        this.activeHistoryMenuItems = 0;
+        /**
+         * These two IDs are extremely important: making a mistake with either one breaks the
+         * extension. Both IDs are globally unique within compaction intervals. The normal ID is
+         * *always* present and valid -- it allows us to build an inverted index so we can find
+         * previously copied items in O(1) time. The Disk ID is only present when we cache all
+         * entries. This additional complexity is needed to know what the ID of an item is on disk as
+         * compared to in memory when we're only caching favorites.
+         */
+        this.nextId = nextId;
+        this.nextDiskId = nextDiskId || nextId;
+        /**
+         * DS.LinkedList is the actual clipboard history and source of truth. Never use historySection
+         * or favoritesSection as the source of truth as these may get outdated during pagination.
+         *
+         * Entries *may* have a menuItem attached, meaning they are currently visible. On the other
+         * hand, menu items must always have an entry attached.
+         */
+        this.entries = entries;
+        this.favoriteEntries = favoriteEntries;
 
-      this.currentlySelectedEntry = entries.last();
-      this._restoreFavoritedEntries();
-      this._maybeRestoreMenuPages();
+        this.currentlySelectedEntry = entries.last();
+        this._restoreFavoritedEntries();
+        this._maybeRestoreMenuPages();
 
-      this._settingsChangedId = Prefs.Settings.connect(
-        'changed',
-        this._onSettingsChange.bind(this),
-      );
+        this._settingsChangedId = Prefs.Settings.connect(
+          'changed',
+          this._onSettingsChange.bind(this),
+        );
 
-      this.searchEntry
-        .get_clutter_text()
-        .connect('text-changed', this._onSearchTextChanged.bind(this));
-      clearMenuItem.connect('activate', this._removeAll.bind(this));
+        this.searchEntry
+          .get_clutter_text()
+          .connect('text-changed', this._onSearchTextChanged.bind(this));
+        clearMenuItem.connect('activate', this._removeAll.bind(this));
 
-      this._setupSelectionChangeListener();
-    });
+        this._setupSelectionChangeListener();
+      },
+    );
   }
 
   _setMenuWidth() {
