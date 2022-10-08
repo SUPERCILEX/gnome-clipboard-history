@@ -1,9 +1,8 @@
 #![feature(string_remove_matches)]
 
-use anyhow::{anyhow, Context};
-use clap::{Args, Parser, Subcommand, ValueHint};
+use clap::{ArgAction, Args, Parser, Subcommand, ValueHint};
 use clap_num::si_number;
-use cli_errors::{CliExitAnyhowWrapper, CliResult};
+use error_stack::{IntoReport, ResultExt};
 use memmap2::Mmap;
 use rand::{
     distributions::{Distribution, Uniform},
@@ -13,17 +12,26 @@ use rand_distr::LogNormal;
 use rand_xoshiro::Xoshiro256PlusPlus;
 use std::{
     fs::File,
+    io,
     io::{BufWriter, Write},
     path::PathBuf,
     slice,
 };
 
 #[derive(Parser, Debug)]
-#[clap(infer_subcommands = true)]
+#[clap(version, author = "Alex Saveau (@SUPERCILEX)")]
+#[clap(infer_subcommands = true, infer_long_args = true)]
+#[clap(next_display_order = None)]
+#[clap(max_term_width = 100)]
+#[command(disable_help_flag = true)]
 #[cfg_attr(test, clap(help_expected = true))]
 struct Tools {
     #[clap(subcommand)]
     cmd: Cmd,
+    #[arg(short, long, short_alias = '?', global = true)]
+    #[arg(action = ArgAction::Help, help = "Print help information (use `--help` for more detail)")]
+    #[arg(long_help = "Print help information (use `-h` for a summary)")]
+    help: Option<bool>,
 }
 
 #[derive(Subcommand, Debug)]
@@ -35,7 +43,7 @@ enum Cmd {
 #[derive(Args, Debug)]
 struct Generate {
     #[clap(short = 'n', long = "entries", alias = "num-entries")]
-    #[clap(parse(try_from_str = num_entries_parser))]
+    #[clap(value_parser = num_entries_parser)]
     #[clap(default_value = "10000")]
     num_entries: usize,
 }
@@ -46,8 +54,7 @@ struct Dump {
     database: Option<PathBuf>,
 }
 
-#[cli_errors::main]
-fn main() -> CliResult<()> {
+fn main() -> error_stack::Result<(), io::Error> {
     let args = Tools::parse();
 
     match args.cmd {
@@ -72,10 +79,15 @@ fn lenient_si_number(s: &str) -> Result<usize, String> {
     si_number(&s)
 }
 
-fn gen_entries(n: usize) -> CliResult<()> {
-    let mut file = dirs::cache_dir().context("Failed to retrieve home dir")?;
+fn gen_entries(n: usize) -> error_stack::Result<(), io::Error> {
+    let mut file = dirs::cache_dir()
+        .ok_or_else(|| io::Error::from(io::ErrorKind::NotFound))
+        .into_report()
+        .attach_printable("Failed to retrieve home dir")?;
     file.push("clipboard-history@alexsaveau.dev/database.log");
-    let file = File::create(file).context("Failed to open log file")?;
+    let file = File::create(file)
+        .into_report()
+        .attach_printable("Failed to open log file")?;
     let mut file = BufWriter::new(file);
 
     let mut rng = Xoshiro256PlusPlus::seed_from_u64(n as u64);
@@ -87,23 +99,28 @@ fn gen_entries(n: usize) -> CliResult<()> {
         let bytes = distr.sample(&mut rng).round().max(1.) as usize;
         total += bytes;
 
-        file.write_all(slice::from_ref(&1)) // Add op ID
-            .context("Failed to write to log file")?;
+        file.write_all(slice::from_ref(&1))
+            .into_report() // Add op ID
+            .attach_printable("Failed to write to log file")?;
         for b in valid_byte_range.sample_iter(&mut rng).take(bytes) {
             file.write_all(slice::from_ref(&b))
-                .context("Failed to write to log file")?;
+                .into_report()
+                .attach_printable("Failed to write to log file")?;
         }
-        file.write_all(slice::from_ref(&0)) // NUL terminator
-            .context("Failed to write to log file")?;
+        file.write_all(slice::from_ref(&0))
+            .into_report() // NUL terminator
+            .attach_printable("Failed to write to log file")?;
     }
 
-    file.flush().context("Failed to write to log file")?;
+    file.flush()
+        .into_report()
+        .attach_printable("Failed to write to log file")?;
     println!("Wrote {} bytes.", total);
 
     Ok(())
 }
 
-fn dump(database: Option<PathBuf>) -> CliResult<()> {
+fn dump(database: Option<PathBuf>) -> error_stack::Result<(), io::Error> {
     let database = database
         .or_else(|| {
             dirs::cache_dir().map(|mut f| {
@@ -111,10 +128,16 @@ fn dump(database: Option<PathBuf>) -> CliResult<()> {
                 f
             })
         })
-        .context("Failed to find database file")?;
+        .ok_or_else(|| io::Error::from(io::ErrorKind::NotFound))
+        .into_report()
+        .attach_printable("Failed to find database file")?;
 
-    let file = File::open(&database).with_context(|| format!("Failed to open {database:?}"))?;
-    let bytes = unsafe { Mmap::map(&file) }.context("Failed to open mmap")?;
+    let file = File::open(&database)
+        .into_report()
+        .attach_printable_lazy(|| format!("Failed to open file {database:?}"))?;
+    let bytes = unsafe { Mmap::map(&file) }
+        .into_report()
+        .attach_printable("Failed to mmap file")?;
 
     const OP_TYPE_SAVE_TEXT: u8 = 1;
     const OP_TYPE_DELETE_TEXT: u8 = 2;
@@ -129,8 +152,10 @@ fn dump(database: Option<PathBuf>) -> CliResult<()> {
         i += 1;
         match op {
             OP_TYPE_SAVE_TEXT => {
-                let length =
-                    1 + memchr::memchr(0, &bytes[i..]).context("Data was not NUL terminated")?;
+                let length = 1 + memchr::memchr(0, &bytes[i..])
+                    .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidData))
+                    .into_report()
+                    .attach_printable("Data was not NUL terminated")?;
                 println!("SAVE_TEXT@{i}\nLength: {length}\nId: {save_count}\n");
                 i += length;
                 save_count += 1;
@@ -163,7 +188,11 @@ fn dump(database: Option<PathBuf>) -> CliResult<()> {
                 );
                 i += 4;
             }
-            _ => return Err(anyhow!("Invalid op: {}", bytes[i])).with_code(exitcode::DATAERR),
+            _ => {
+                return Err(io::Error::from(io::ErrorKind::InvalidData))
+                    .into_report()
+                    .attach_printable_lazy(|| format!("Invalid op: {}", bytes[i]));
+            }
         }
     }
 

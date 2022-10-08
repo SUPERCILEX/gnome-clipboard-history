@@ -4,14 +4,12 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow = "1.0.57"
-clap = { version = "3.1.18", features = ["derive", "wrap_help"] }
-clap-num = "1.0.0"
-cli-errors = "0.3.0"
+clap = { version = "4.0.10", features = ["derive", "wrap_help"] }
+clap-num = "1.0.2"
 dirs = "4.0.0"
-exitcode = "1.1.2"
+error-stack = "0.2.2"
 memchr = "2.5.0"
-memmap2 = "0.5.3"
+memmap2 = "0.5.7"
 rand = { version = "0.8.5", default-features = false }
 rand_distr = "0.4.3"
 rand_xoshiro = "0.6.0"
