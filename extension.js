@@ -824,7 +824,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     Clipboard.get_text(St.ClipboardType.CLIPBOARD, (_, text) => {
-      this._processClipboardContent(text);
+      this._processClipboardContent(text, true);
     });
   }
 
@@ -835,7 +835,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     Clipboard.get_text(St.ClipboardType.PRIMARY, (_, text) => {
       const last = this.entries.last();
-      text = this._processClipboardContent(text);
+      text = this._processClipboardContent(text, false);
       if (
         last &&
         text &&
@@ -850,7 +850,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     });
   }
 
-  _processClipboardContent(text) {
+  _processClipboardContent(text, selectEntry) {
     if (this._debouncing > 0) {
       this._debouncing--;
       return;
@@ -872,7 +872,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       if (!isFirst) {
         this._moveEntryFirst(entry);
       }
-      if (!isFirst || entry !== this.currentlySelectedEntry) {
+      if (selectEntry && (!isFirst || entry !== this.currentlySelectedEntry)) {
         this._selectEntry(entry, false);
       }
     } else {
@@ -883,7 +883,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       entry.text = text;
       entry.favorite = false;
       this.entries.append(entry);
-      this._addEntry(entry, true, false, 0);
+      this._addEntry(entry, selectEntry, false, 0);
 
       if (!CACHE_ONLY_FAVORITES) {
         Store.storeTextEntry(text);
