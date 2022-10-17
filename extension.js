@@ -488,7 +488,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     (entry.favorite ? this.entries : this.favoriteEntries).append(entry);
     this._removeEntry(entry);
     entry.favorite = !entry.favorite;
-    this._addEntry(entry, wasSelected, true, 0);
+    this._addEntry(entry, wasSelected, false, 0);
     this._maybeRestoreMenuPages();
     global.stage.set_key_focus(entry.menuItem);
 
@@ -537,7 +537,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
   _clearHistory() {
     if (this.currentlySelectedEntry && !this.currentlySelectedEntry.favorite) {
-      this._resetSelectedMenuItem();
+      this._resetSelectedMenuItem(true);
     }
 
     // Favorites aren't touched when clearing history
@@ -547,7 +547,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     Store.resetDatabase(this._currentStateBuilder.bind(this));
   }
 
-  _removeEntry(entry, fullyDelete) {
+  _removeEntry(entry, fullyDelete, humanGenerated) {
     if (fullyDelete) {
       entry.detach();
 
@@ -557,7 +557,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     if (entry.id === this.currentlySelectedEntry?.id) {
-      this._resetSelectedMenuItem();
+      this._resetSelectedMenuItem(humanGenerated);
     }
     entry.menuItem?.destroy();
     if (fullyDelete) {
@@ -646,10 +646,12 @@ class ClipboardIndicator extends PanelMenu.Button {
     this.menu.close();
   }
 
-  _resetSelectedMenuItem() {
+  _resetSelectedMenuItem(resetClipboard) {
     this.currentlySelectedEntry = undefined;
     this._updateButtonText();
-    this._setClipboardText('');
+    if (resetClipboard) {
+      this._setClipboardText('');
+    }
   }
 
   _restoreFavoritedEntries() {
@@ -979,7 +981,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _deleteEntryAndRestoreLatest(entry) {
-    this._removeEntry(entry, true);
+    this._removeEntry(entry, true, true);
 
     if (!this.currentlySelectedEntry) {
       const nextEntry = this.entries.last();
@@ -1038,7 +1040,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       if (this.currentlySelectedEntry) {
         this._selectEntry(this.currentlySelectedEntry, true);
       } else {
-        this._resetSelectedMenuItem();
+        this._resetSelectedMenuItem(true);
       }
     }
   }
