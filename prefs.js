@@ -15,6 +15,8 @@ var Fields = {
   CACHE_ONLY_FAVORITES: 'cache-only-favorites',
   NOTIFY_ON_COPY: 'notify-on-copy',
   CONFIRM_ON_CLEAR: 'confirm-clear',
+  CONFIRM_REMOVE_FAVORITE: 'confirm-remove-favorite',
+  CONFIRM_REMOVE_NON_FAVORITE: 'confirm-remove-non-favorite',
   MOVE_ITEM_FIRST: 'move-item-first',
   ENABLE_KEYBINDING: 'enable-keybindings',
   TOPBAR_PREVIEW_SIZE: 'topbar-preview-size',
@@ -84,6 +86,8 @@ class Prefs extends GObject.Object {
     this.field_cache_disable = new Gtk.Switch();
     this.field_notification_toggle = new Gtk.Switch();
     this.field_confirm_clear_toggle = new Gtk.Switch();
+    this.field_confirm_remove_favorite_toggle = new Gtk.Switch();
+    this.field_confirm_remove_non_favorite_toggle = new Gtk.Switch();
     this.field_strip_text = new Gtk.Switch();
     this.field_paste_on_selection = new Gtk.Switch();
     this.field_process_primary_selection = new Gtk.Switch();
@@ -152,6 +156,16 @@ class Prefs extends GObject.Object {
     });
     let confirmClearLabel = new Gtk.Label({
       label: _('Ask for confirmation before clearing history'),
+      hexpand: true,
+      halign: Gtk.Align.START,
+    });
+    let confirmRemoveFavoriteLabel = new Gtk.Label({
+      label: _('Ask for confirmation before removing favorite entry'),
+      hexpand: true,
+      halign: Gtk.Align.START,
+    });
+    let confirmRemoveNonFavoriteLabel = new Gtk.Label({
+      label: _('Ask for confirmation before removing non-favorite entry'),
       hexpand: true,
       halign: Gtk.Align.START,
     });
@@ -232,6 +246,8 @@ class Prefs extends GObject.Object {
     addRow(topbarPreviewLabel, this.field_topbar_preview_size);
     addRow(notificationLabel, this.field_notification_toggle);
     addRow(confirmClearLabel, this.field_confirm_clear_toggle);
+    addRow(confirmRemoveFavoriteLabel, this.field_confirm_remove_favorite_toggle);
+    addRow(confirmRemoveNonFavoriteLabel, this.field_confirm_remove_non_favorite_toggle);
     addRow(keybindingLabel, this.field_keybinding_activation);
     addRow(null, this.field_keybinding);
 
@@ -268,6 +284,18 @@ class Prefs extends GObject.Object {
     Settings.bind(
       Fields.CONFIRM_ON_CLEAR,
       this.field_confirm_clear_toggle,
+      'active',
+      Gio.SettingsBindFlags.DEFAULT,
+    );
+    Settings.bind(
+      Fields.CONFIRM_REMOVE_FAVORITE,
+      this.field_confirm_remove_favorite_toggle,
+      'active',
+      Gio.SettingsBindFlags.DEFAULT,
+    );
+    Settings.bind(
+      Fields.CONFIRM_REMOVE_NON_FAVORITE,
+      this.field_confirm_remove_non_favorite_toggle,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
