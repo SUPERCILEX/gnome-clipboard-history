@@ -488,7 +488,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     // Move to front (end of list)
     (entry.favorite ? this.entries : this.favoriteEntries).append(entry);
-    this._confirmRemoveEntry(entry);
+    this._removeEntry(entry);
     entry.favorite = !entry.favorite;
     this._addEntry(entry, wasSelected, false, 0);
     this._maybeRestoreMenuPages();
