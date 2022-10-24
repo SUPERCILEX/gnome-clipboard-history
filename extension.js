@@ -570,8 +570,8 @@ class ClipboardIndicator extends PanelMenu.Button {
   _confirmRemoveEntry(entry, fullyDelete, humanGenerated) {
     if ((entry.favorite && CONFIRM_REMOVE_FAVORITE ) || (!entry.favorite && CONFIRM_REMOVE_NON_FAVORITE)) {
       const title = _('Delete Entry?');
-      const message = _('Are you sure you want to delete this entry "'+this._truncated(entry.text, MAX_VISIBLE_CHARS)+'"?');
-      const sub_message = _('This operation cannot be undone.');
+      const message = _('Are you sure you want to delete this entry?');
+      const sub_message = _('\n'+this._truncated(entry.text, MAX_VISIBLE_CHARS)+'\n\nThis operation cannot be undone.');
 
       ConfirmDialog.openConfirmDialog(
         title,
