@@ -1,5 +1,13 @@
 #![feature(string_remove_matches)]
 
+use std::{
+    fs::File,
+    io,
+    io::{BufWriter, Write},
+    path::PathBuf,
+    slice,
+};
+
 use clap::{ArgAction, Args, Parser, Subcommand, ValueHint};
 use clap_num::si_number;
 use error_stack::{IntoReport, ResultExt};
@@ -10,13 +18,6 @@ use rand::{
 };
 use rand_distr::LogNormal;
 use rand_xoshiro::Xoshiro256PlusPlus;
-use std::{
-    fs::File,
-    io,
-    io::{BufWriter, Write},
-    path::PathBuf,
-    slice,
-};
 
 #[derive(Parser, Debug)]
 #[clap(version, author = "Alex Saveau (@SUPERCILEX)")]
@@ -58,8 +59,8 @@ fn main() -> error_stack::Result<(), io::Error> {
     let args = Tools::parse();
 
     match args.cmd {
-        Cmd::Generate(options) => gen_entries(options.num_entries),
-        Cmd::Dump(options) => dump(options.database),
+        Cmd::Generate(Generate { num_entries }) => gen_entries(num_entries),
+        Cmd::Dump(Dump { database }) => dump(database),
     }
 }
 
@@ -115,7 +116,7 @@ fn gen_entries(n: usize) -> error_stack::Result<(), io::Error> {
     file.flush()
         .into_report()
         .attach_printable("Failed to write to log file")?;
-    println!("Wrote {} bytes.", total);
+    println!("Wrote {total} bytes.");
 
     Ok(())
 }
