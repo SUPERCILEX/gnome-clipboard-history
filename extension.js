@@ -782,7 +782,7 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     while (this.activeHistoryMenuItems < PAGE_SIZE) {
       if (entry.type === DS.TYPE_TEXT) {
-        let match = entry.text.indexOf(query);
+        let match = entry.text.toLowerCase().indexOf(query);
         if (searchExp && match < 0) {
           match = entry.text.search(searchExp);
         }
