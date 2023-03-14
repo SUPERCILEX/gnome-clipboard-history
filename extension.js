@@ -773,6 +773,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       forward = true;
     }
 
+    query = query.toLowerCase();
     let searchExp;
     try {
       searchExp = new RegExp(query, 'i');
