@@ -7,14 +7,14 @@ compile-settings:
 	glib-compile-schemas --strict --targetdir=schemas/ schemas
 
 compile-locales:
-	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.mo), \
+	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.po), \
 		msgfmt $(file) -o $(subst .po,.mo,$(file));)
 
 update-pot:
 	xgettext -L Python --from-code=UTF-8 -k_ -kN_ -o clipboard-history.pot *.js
 
 update-po-files:
-	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.po), \
+	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.mo), \
 		msgmerge $(file) clipboard-history.pot -o $(file);)
 
 install: all
