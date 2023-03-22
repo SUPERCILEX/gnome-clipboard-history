@@ -1,4 +1,4 @@
-MODULES = metadata.json extension.js store.js dataStructures.js confirmDialog.js prefs.js stylesheet.css LICENSE README.md locale/*/*/*.mo schemas/
+MODULES = metadata.json extension.js store.js dataStructures.js confirmDialog.js prefs.js stylesheet.css LICENSE README.md schemas/
 INSTALLPATH = ~/.local/share/gnome-shell/extensions/clipboard-history@alexsaveau.dev/
 
 all: compile-locales compile-settings
@@ -22,5 +22,8 @@ install: all
 	mkdir -p $(INSTALLPATH)
 	cp -r $(MODULES) $(INSTALLPATH)
 
+	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.po), \
+		install -D "$(file)" $(INSTALLPATH)$(file);)
+
 bundle: all
-	zip -r bundle.zip $(MODULES)
+	zip -r bundle.zip $(MODULES) locale/*/*/*.mo
