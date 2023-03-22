@@ -7,7 +7,7 @@ compile-settings:
 	glib-compile-schemas --strict --targetdir=schemas/ schemas
 
 compile-locales:
-	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.po), \
+	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.mo), \
 		msgfmt $(file) -o $(subst .po,.mo,$(file));)
 
 update-pot:
