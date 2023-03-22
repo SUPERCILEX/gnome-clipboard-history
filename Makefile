@@ -14,7 +14,7 @@ update-pot:
 	xgettext -L Python --from-code=UTF-8 -k_ -kN_ -o clipboard-history.pot *.js
 
 update-po-files:
-	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.mo), \
+	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.po), \
 		msgmerge $(file) clipboard-history.pot -o $(file);)
 
 install: all
@@ -22,7 +22,7 @@ install: all
 	mkdir -p $(INSTALLPATH)
 	cp -r $(MODULES) $(INSTALLPATH)
 
-	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.po), \
+	$(foreach file, $(wildcard locale/*/LC_MESSAGES/*.mo), \
 		install -D "$(file)" $(INSTALLPATH)$(file);)
 
 bundle: all
