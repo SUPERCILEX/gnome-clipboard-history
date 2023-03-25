@@ -450,6 +450,10 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._favoriteToggle(menuItem);
     }
     if (event.get_key_code() === 119) {
+      const next = menuItem.entry.prev || menuItem.entry.next;
+      if (next?.menuItem) {
+        global.stage.set_key_focus(next.menuItem);
+      }
       this._deleteEntryAndRestoreLatest(menuItem.entry);
     }
   }
