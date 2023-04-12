@@ -8,22 +8,22 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-21 21:45+0100\n"
-"PO-Revision-Date: 2022-03-21 21:22+0100\n"
-"Last-Translator: Radek Šťastný <dedkus@gmail.com>\n"
+"PO-Revision-Date: 2023-04-12 17:22+0200\n"
+"Last-Translator: Kryštof Černý <cleerline1mc@gmail.com>\n"
 "Language-Team: \n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
-msgstr "Maximální velikost historie (MiB)"
+msgstr "Hledat v historii schránky…"
 
 #: extension.js:208
 msgid "Private mode"
-msgstr "Stop (proti úniku citlivých údajů)"
+msgstr "Anonymní režim"
 
 #: extension.js:524
 msgid "Clear all?"
@@ -71,7 +71,7 @@ msgstr "Následující položka"
 
 #: prefs.js:120
 msgid "Toggle private mode"
-msgstr "Přepnout soukromý režim"
+msgstr "Přepnout anonymní režim"
 
 #: prefs.js:129
 msgid "Max number of items"
@@ -94,9 +94,8 @@ msgid "Show notification on copy"
 msgstr "Při zkopírování zobrazit oznámení"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "Zobrazit potvrzení při mazání historie"
+msgstr "Zobrazit potvrzení před smazáním historie"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
@@ -107,19 +106,16 @@ msgid "Keyboard shortcuts"
 msgstr "Klávesové zkratky"
 
 #: prefs.js:169
-#, fuzzy
 msgid "Number of characters in status bar"
 msgstr "Počet znaků v horní liště"
 
 #: prefs.js:174
-#, fuzzy
 msgid "What to show in status bar"
-msgstr "Co zobrazovat v horní liště"
+msgstr "Zobrazit v horní liště"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
-msgstr "Nezobrazovat šipku dolů v horní liště"
+msgstr "Odebrat šipku dolů v horní liště"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
@@ -131,14 +127,13 @@ msgstr "Vkládat při výběru"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr ""
+msgstr "Uložit vybraný text do historie"
 
 #: prefs.js:326
 msgid "Icon"
-msgstr "Ikonu"
+msgstr "Ikona"
 
 #: prefs.js:327
-#, fuzzy
 msgid "Clipboard contents"
 msgstr "Obsah schránky"
 
