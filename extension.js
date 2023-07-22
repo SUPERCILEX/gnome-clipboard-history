@@ -1011,8 +1011,10 @@ class ClipboardIndicator extends PanelMenu.Button {
   _showNotification(title, message, transformFn) {
     this._initNotifSource();
 
+    let DO_NOT_DISTURB_MODE = (!Main.panel.statusArea.dateMenu._indicator._settings.get_boolean('show-banners'));
+
     let notification;
-    if (this._notifSource.count === 0) {
+    if (this._notifSource.count === 0 && !PRIVATE_MODE && !DO_NOT_DISTURB_MODE) {
       notification = new MessageTray.Notification(
         this._notifSource,
         title,
