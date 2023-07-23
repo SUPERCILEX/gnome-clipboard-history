@@ -2,14 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Stanisław Zadorozhnyi <zadorozhniy123@icloud.com>, 2021.
+# Yevhen Popok <xalt7x.service@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2021-11-06 11:09+0100\n"
-"Last-Translator: Stanisław Zadorozhnyi <zadorozhniy123@icloud.com>\n"
+"PO-Revision-Date: 2023-07-23 11:11+0300\n"
+"Last-Translator: Yevhen Popok <xalt7x.service@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
@@ -17,12 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 3.3.1\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
-msgstr "Історія буферу обміну очищено"
+msgstr "Пошук в історії буфера обміну…"
 
 #: extension.js:208
 msgid "Private mode"
@@ -38,7 +38,7 @@ msgstr "Видалити всі елементи з буферу обміну?"
 
 #: extension.js:526
 msgid "This operation cannot be undone."
-msgstr "Цю операцію неможливо відмінити."
+msgstr "Цю операцію неможливо скасувати."
 
 #: extension.js:532
 msgid "Clear"
@@ -46,19 +46,19 @@ msgstr "Очистити"
 
 #: extension.js:533 extension.js:887
 msgid "Cancel"
-msgstr "Відмінити"
+msgstr "Скасувати"
 
 #: extension.js:886
 msgid "Copied to clipboard"
-msgstr "Скопійовано до буферу обміну"
+msgstr "Скопійовано до буфера обміну"
 
 #: extension.js:1221
 msgid "Copied"
-msgstr ""
+msgstr "Скопійовано"
 
 #: prefs.js:96
 msgid "Toggle the menu"
-msgstr "Включити меню"
+msgstr "Викликати меню"
 
 #: prefs.js:102
 msgid "Clear history"
@@ -73,58 +73,52 @@ msgid "Next entry"
 msgstr "Наступний запис"
 
 #: prefs.js:120
-#, fuzzy
 msgid "Toggle private mode"
 msgstr "Приватний режим"
 
 #: prefs.js:129
 msgid "Max number of items"
-msgstr ""
+msgstr "Максимальна кількість записів"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr ""
+msgstr "Ширина вікна (%)"
 
 #: prefs.js:139
-#, fuzzy
 msgid "Max clipboard history size (MiB)"
-msgstr "Історія буферу обміну очищено"
+msgstr "Історію буфера обміну очищено"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
-msgstr ""
+msgstr "Зберігати на диску лише обране"
 
 #: prefs.js:149
 msgid "Show notification on copy"
 msgstr "Показувати сповіщення при копіюванні"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "Показувати сповіщення при копіюванні"
+msgstr "Підтверджувати очищення історії"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr ""
+msgstr "Перемістити скопійоване раніше догори"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
 #: prefs.js:169
-#, fuzzy
 msgid "Number of characters in status bar"
-msgstr "Кількість символів у верхній секції"
+msgstr "Кількість символів на панелі"
 
 #: prefs.js:174
-#, fuzzy
 msgid "What to show in status bar"
-msgstr "Що показувати у верхній секції"
+msgstr "Що показувати на панелі"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
-msgstr "Вилучити стрілку вниз з верхньої секції"
+msgstr "Вилучити стрілку вниз на панелі"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
@@ -132,20 +126,19 @@ msgstr "Вилучити проміжки довкола тексту"
 
 #: prefs.js:189
 msgid "Paste on selection"
-msgstr ""
+msgstr "Вставляти після вибору"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr ""
+msgstr "Зберегти виділений текст в історії"
 
 #: prefs.js:326
 msgid "Icon"
-msgstr "Піктограма"
+msgstr "Піктограму"
 
 #: prefs.js:327
-#, fuzzy
 msgid "Clipboard contents"
-msgstr "Вміст буферу обміну"
+msgstr "Вміст буфера обміну"
 
 #: prefs.js:328
 msgid "Both"
@@ -153,7 +146,7 @@ msgstr "Обидва"
 
 #: prefs.js:329
 msgid "Neither"
-msgstr ""
+msgstr "Нічого"
 
 #, fuzzy
 #~ msgid "Type here to search…"
