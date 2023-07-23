@@ -1011,7 +1011,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   _showNotification(title, message, transformFn) {
     const dndOn = () =>
       !Main.panel.statusArea.dateMenu._indicator._settings.get_boolean(
-        "show-banners",
+        'show-banners',
       );
     if (PRIVATE_MODE || dndOn()) {
       return;
