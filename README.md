@@ -1,4 +1,5 @@
 # Gnome Clipboard History
+[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/master/get-it-on-ego.svg?sanitize=true" alt="Get it on GNOME Extensions" height="100" align="middle">][gextension]
 
 [Gnome Clipboard History](https://extensions.gnome.org/extension/4839/clipboard-history/) is a Gnome
 extension that saves what you've copied into an easily
@@ -52,3 +53,6 @@ cd ~/.local/share/gnome-shell/extensions/ && \
 ```shell
 gnome-extensions enable clipboard-history@alexsaveau.dev
 ```
+
+
+[gextension]: https://extensions.gnome.org/extension/4839/clipboard-history/
