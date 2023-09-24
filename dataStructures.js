@@ -1,10 +1,10 @@
 // Derived from
 // https://github.com/wooorm/linked-list/blob/d2390fe1cab9f780cfd34fa31c8fa8ede4ad674d/index.js
 
-var TYPE_TEXT = 'text';
+export const TYPE_TEXT = 'text';
 
 // Creates a new `Iterator` for looping over the `List`.
-export class Iterator {
+class Iterator {
   constructor(item) {
     this.item = item;
   }
@@ -21,7 +21,7 @@ export class Iterator {
 // Creates a new `Item`:
 // An item is a bit like DOM node: It knows only about its "parent" (`list`),
 // the item before it (`prev`), and the item after it (`next`).
-export var LLNode = class Item {
+export class LLNode {
   // Prepends the given item *before* the item operated on.
   prepend(item) {
     const list = this.list;
@@ -225,7 +225,7 @@ export var LLNode = class Item {
       return null;
     }
   }
-};
+}
 
 LLNode.prototype.next = LLNode.prototype.prev = LLNode.prototype.list = null;
 
@@ -234,7 +234,7 @@ LLNode.prototype.next = LLNode.prototype.prev = LLNode.prototype.list = null;
 // last (`tail`) items.
 // Each item (e.g. `head`, `tail`, &c.) knows which item comes before or after
 // it (its more like the implementation of the DOM in JavaScript).
-export var LinkedList = class List {
+export class LinkedList {
   // Creates a new list from the arguments (each a list item) passed in.
   static of(...items) {
     return appendAll(new this(), items);
@@ -359,7 +359,7 @@ export var LinkedList = class List {
   [Symbol.iterator]() {
     return new Iterator(this.head);
   }
-};
+}
 
 LinkedList.prototype.length = 0;
 LinkedList.prototype.tail = LinkedList.prototype.head = null;
