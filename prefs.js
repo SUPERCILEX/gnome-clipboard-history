@@ -1,40 +1,24 @@
-'use strict';
+import GObject from 'gi://GObject';
+import Gtk from 'gi://Gtk';
+import Gio from 'gi://Gio';
+import Adw from 'gi://Adw';
 
-const { GObject, Gtk, Gio } = imports.gi;
+import {
+  ExtensionPreferences,
+  gettext as _,
+} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
+import Fields from './settingsFields.js';
 
-const Gettext = imports.gettext;
-const _ = Gettext.domain(Me.uuid).gettext;
+export default class Prefs extends ExtensionPreferences {
+  // fillPreferencesWindow() is passed a Adw.PreferencesWindow,
+  // we need to wrap our widget in a Adw.PreferencesPage and Adw.PreferencesGroup
+  // ourselves.
+  // It would be great to port the preferences to standard Adw widgets.
+  // https://gjs.guide/extensions/development/preferences.html#prefs-js
+  fillPreferencesWindow(window) {
+    this.settings = this.getSettings();
 
-var Fields = {
-  HISTORY_SIZE: 'history-size',
-  WINDOW_WIDTH_PERCENTAGE: 'window-width-percentage',
-  CACHE_FILE_SIZE: 'cache-size',
-  CACHE_ONLY_FAVORITES: 'cache-only-favorites',
-  NOTIFY_ON_COPY: 'notify-on-copy',
-  CONFIRM_ON_CLEAR: 'confirm-clear',
-  MOVE_ITEM_FIRST: 'move-item-first',
-  ENABLE_KEYBINDING: 'enable-keybindings',
-  TOPBAR_PREVIEW_SIZE: 'topbar-preview-size',
-  TOPBAR_DISPLAY_MODE_ID: 'display-mode',
-  DISABLE_DOWN_ARROW: 'disable-down-arrow',
-  STRIP_TEXT: 'strip-text',
-  PRIVATE_MODE: 'private-mode',
-  PASTE_ON_SELECTION: 'paste-on-selection',
-  PROCESS_PRIMARY_SELECTION: 'process-primary-selection',
-};
-
-const SCHEMA_NAME = 'org.gnome.shell.extensions.clipboard-history';
-var Settings = ExtensionUtils.getSettings(SCHEMA_NAME);
-
-function init() {
-  ExtensionUtils.initTranslations(Me.uuid);
-}
-
-class Prefs extends GObject.Object {
-  _init() {
     this.main = new Gtk.Grid({
       margin_top: 10,
       margin_bottom: 10,
@@ -88,34 +72,34 @@ class Prefs extends GObject.Object {
     this.field_paste_on_selection = new Gtk.Switch();
     this.field_process_primary_selection = new Gtk.Switch();
     this.field_move_item_first = new Gtk.Switch();
-    this.field_keybinding = createKeybindingWidget(Settings);
+    this.field_keybinding = createKeybindingWidget(this.settings);
     addKeybinding(
       this.field_keybinding.model,
-      Settings,
+      this.settings,
       'toggle-menu',
       _('Toggle the menu'),
     );
     addKeybinding(
       this.field_keybinding.model,
-      Settings,
+      this.settings,
       'clear-history',
       _('Clear history'),
     );
     addKeybinding(
       this.field_keybinding.model,
-      Settings,
+      this.settings,
       'prev-entry',
       _('Previous entry'),
     );
     addKeybinding(
       this.field_keybinding.model,
-      Settings,
+      this.settings,
       'next-entry',
       _('Next entry'),
     );
     addKeybinding(
       this.field_keybinding.model,
-      Settings,
+      this.settings,
       'toggle-private-mode',
       _('Toggle private mode'),
     );
@@ -235,90 +219,98 @@ class Prefs extends GObject.Object {
     addRow(keybindingLabel, this.field_keybinding_activation);
     addRow(null, this.field_keybinding);
 
-    Settings.bind(
+    this.settings.bind(
       Fields.HISTORY_SIZE,
       this.field_size,
       'value',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.WINDOW_WIDTH_PERCENTAGE,
       this.window_width_percentage,
       'value',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.CACHE_FILE_SIZE,
       this.field_cache_size,
       'value',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.CACHE_ONLY_FAVORITES,
       this.field_cache_disable,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.NOTIFY_ON_COPY,
       this.field_notification_toggle,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.CONFIRM_ON_CLEAR,
       this.field_confirm_clear_toggle,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.MOVE_ITEM_FIRST,
       this.field_move_item_first,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.TOPBAR_DISPLAY_MODE_ID,
       this.field_display_mode,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.DISABLE_DOWN_ARROW,
       this.field_disable_down_arrow,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.TOPBAR_PREVIEW_SIZE,
       this.field_topbar_preview_size,
       'value',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.STRIP_TEXT,
       this.field_strip_text,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.PASTE_ON_SELECTION,
       this.field_paste_on_selection,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.PROCESS_PRIMARY_SELECTION,
       this.field_process_primary_selection,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
-    Settings.bind(
+    this.settings.bind(
       Fields.ENABLE_KEYBINDING,
       this.field_keybinding_activation,
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
+
+    const group = new Adw.PreferencesGroup();
+    group.add(this.main);
+
+    const page = new Adw.PreferencesPage();
+    page.add(group);
+
+    window.add(page);
   }
 
   _create_display_mode_options() {
@@ -337,13 +329,6 @@ class Prefs extends GObject.Object {
     }
     return liststore;
   }
-}
-
-const PrefsObj = new GObject.registerClass(Prefs);
-
-function buildPrefsWidget() {
-  let widget = new PrefsObj();
-  return widget.main;
 }
 
 //binding widgets

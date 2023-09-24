@@ -1,4 +1,4 @@
-MODULES = metadata.json extension.js store.js dataStructures.js confirmDialog.js prefs.js stylesheet.css LICENSE README.md schemas/
+MODULES = metadata.json extension.js store.js dataStructures.js confirmDialog.js prefs.js settingsFields.js stylesheet.css LICENSE README.md schemas/
 INSTALLPATH = ~/.local/share/gnome-shell/extensions/clipboard-history@alexsaveau.dev/
 
 all: compile-locales compile-settings

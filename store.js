@@ -1,12 +1,9 @@
-'use strict';
+import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
+import * as DS from './dataStructures.js';
 
-const { GLib, Gio } = imports.gi;
-
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const DS = Me.imports.dataStructures;
-
-const CACHE_DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), Me.uuid]);
+let EXTENSION_UUID;
+let CACHE_DIR;
 const OLD_REGISTRY_FILE = GLib.build_filenamev([
   GLib.get_user_cache_dir(),
   'clipboard-indicator@tudmotu.com',
@@ -22,7 +19,7 @@ const OLD_REGISTRY_FILE = GLib.build_filenamev([
  * - An add op never moves (until compaction), allowing us to derive globally unique entry IDs based
  *   on the order in which these add ops are discovered.
  */
-const DATABASE_FILE = GLib.build_filenamev([CACHE_DIR, 'database.log']);
+let DATABASE_FILE;
 const BYTE_ORDER = Gio.DataStreamByteOrder.LITTLE_ENDIAN;
 
 // Don't use zero b/c DataInputStream uses 0 as its error value
@@ -39,17 +36,21 @@ let opQueue = new DS.LinkedList();
 let opInProgress = false;
 let writeStream;
 
-function init() {
+export function init(uuid) {
+  EXTENSION_UUID = uuid;
+  CACHE_DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), EXTENSION_UUID]);
+  DATABASE_FILE = GLib.build_filenamev([CACHE_DIR, 'database.log']);
+
   if (GLib.mkdir_with_parents(CACHE_DIR, 0o775) !== 0) {
     log(
-      Me.uuid,
+      EXTENSION_UUID,
       "Failed to create cache dir, extension likely won't work",
       CACHE_DIR,
     );
   }
 }
 
-function destroy() {
+export function destroy() {
   _pushToOpQueue((resolve) => {
     if (writeStream) {
       writeStream.close_async(0, null, (src, res) => {
@@ -63,7 +64,7 @@ function destroy() {
   });
 }
 
-function buildClipboardStateFromLog(callback) {
+export function buildClipboardStateFromLog(callback) {
   if (typeof callback !== 'function') {
     throw TypeError('`callback` must be a function');
   }
@@ -174,7 +175,7 @@ function _consumeStream(stream, state, callback) {
         }
       });
     } else {
-      log(Me.uuid, 'Unknown op type, aborting load.', opType);
+      log(EXTENSION_UUID, 'Unknown op type, aborting load.', opType);
       finish();
     }
   }
@@ -185,7 +186,7 @@ function _consumeStream(stream, state, callback) {
         parse();
         cont();
       } catch (e) {
-        log(Me.uuid, 'Parsing error');
+        log(EXTENSION_UUID, 'Parsing error');
         logError(e);
 
         const entries = new DS.LinkedList();
@@ -217,10 +218,10 @@ function _consumeStream(stream, state, callback) {
               null,
             )
           ) {
-            log(Me.uuid, 'Failed to move database file');
+            log(EXTENSION_UUID, 'Failed to move database file');
           }
         } catch (e) {
-          log(Me.uuid, 'Crash moving database file');
+          log(EXTENSION_UUID, 'Crash moving database file');
           logError(e);
         }
         callback(entries, new DS.LinkedList(), nextId, 1);
@@ -261,7 +262,7 @@ function _readAndConsumeOldFormat(callback) {
 
       let registry = [];
       try {
-        registry = JSON.parse(imports.byteArray.toString(contents));
+        registry = JSON.parse(GLib.ByteArray.toString(contents));
       } catch (e) {
         logError(e);
       }
@@ -300,7 +301,7 @@ function _readAndConsumeOldFormat(callback) {
   );
 }
 
-function maybePerformLogCompaction(currentStateBuilder) {
+export function maybePerformLogCompaction(currentStateBuilder) {
   if (uselessOpCount >= MAX_WASTED_OPS) {
     resetDatabase(currentStateBuilder);
   }
@@ -363,7 +364,7 @@ function resetDatabase(currentStateBuilder) {
   });
 }
 
-function storeTextEntry(text) {
+export function storeTextEntry(text) {
   _appendBytesToLog(_storeTextOp(text), -5);
 }
 
@@ -376,7 +377,7 @@ function _storeTextOp(text) {
   };
 }
 
-function deleteTextEntry(id, isFavorite) {
+export function deleteTextEntry(id, isFavorite) {
   _appendBytesToLog(_deleteTextOp(id), 5);
   uselessOpCount += 2;
   if (isFavorite) {
@@ -392,7 +393,7 @@ function _deleteTextOp(id) {
   };
 }
 
-function updateFavoriteStatus(id, favorite) {
+export function updateFavoriteStatus(id, favorite) {
   _appendBytesToLog(_updateFavoriteStatusOp(id, favorite));
 
   if (!favorite) {
@@ -411,7 +412,7 @@ function _updateFavoriteStatusOp(id, favorite) {
   };
 }
 
-function moveEntryToEnd(id) {
+export function moveEntryToEnd(id) {
   _appendBytesToLog(_moveToEndOp(id));
   uselessOpCount++;
 }
