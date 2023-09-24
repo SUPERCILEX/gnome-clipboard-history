@@ -1,6 +1,6 @@
 {
   "name": "Clipboard History",
-  "version": 28,
+  "version": 29,
   "uuid": "clipboard-history@alexsaveau.dev",
   "gettext-domain": "clipboard-history@alexsaveau.dev",
   "settings-schema": "org.gnome.shell.extensions.clipboard-history",
