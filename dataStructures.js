@@ -4,7 +4,7 @@
 var TYPE_TEXT = 'text';
 
 // Creates a new `Iterator` for looping over the `List`.
-class Iterator {
+export class Iterator {
   constructor(item) {
     this.item = item;
   }
@@ -21,7 +21,7 @@ class Iterator {
 // Creates a new `Item`:
 // An item is a bit like DOM node: It knows only about its "parent" (`list`),
 // the item before it (`prev`), and the item after it (`next`).
-var LLNode = class Item {
+export var LLNode = class Item {
   // Prepends the given item *before* the item operated on.
   prepend(item) {
     const list = this.list;
@@ -234,7 +234,7 @@ LLNode.prototype.next = LLNode.prototype.prev = LLNode.prototype.list = null;
 // last (`tail`) items.
 // Each item (e.g. `head`, `tail`, &c.) knows which item comes before or after
 // it (its more like the implementation of the DOM in JavaScript).
-var LinkedList = class List {
+export var LinkedList = class List {
   // Creates a new list from the arguments (each a list item) passed in.
   static of(...items) {
     return appendAll(new this(), items);
@@ -365,7 +365,7 @@ LinkedList.prototype.length = 0;
 LinkedList.prototype.tail = LinkedList.prototype.head = null;
 
 // Creates a new list from the items passed in.
-function appendAll(list, items) {
+export function appendAll(list, items) {
   let index;
   let item;
   let iterator;
