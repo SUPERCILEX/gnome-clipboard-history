@@ -10,7 +10,7 @@ import {
 
 import Fields from './settingsFields.js';
 
-export default class Prefs extends ExtensionPreferences {
+export default class ClipboardHistoryPrefs extends ExtensionPreferences {
   // fillPreferencesWindow() is passed a Adw.PreferencesWindow,
   // we need to wrap our widget in a Adw.PreferencesPage and Adw.PreferencesGroup
   // ourselves.
