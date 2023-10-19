@@ -112,7 +112,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   _buildMenu() {
     this.searchEntry = new St.Entry({
       name: 'searchEntry',
-      style_class: 'search-entry',
+      style_class: 'search-entry ci-history-search-entry',
       can_focus: true,
       hint_text: _('Search clipboard history…'),
       track_hover: true,

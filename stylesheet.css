@@ -28,3 +28,7 @@
 .ci-history-actions-section .popup-menu-ornament {
   width: auto;
 }
+
+.ci-history-search-entry {
+  width: 5em;
+}
