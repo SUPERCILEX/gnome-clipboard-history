@@ -10,7 +10,7 @@ use std::{
 
 use clap::{ArgAction, Args, Parser, Subcommand, ValueHint};
 use clap_num::si_number;
-use error_stack::{IntoReport, ResultExt};
+use error_stack::ResultExt;
 use memmap2::Mmap;
 use rand::{
     distributions::{Distribution, Uniform},
@@ -83,12 +83,9 @@ fn lenient_si_number(s: &str) -> Result<usize, String> {
 fn gen_entries(n: usize) -> error_stack::Result<(), io::Error> {
     let mut file = dirs::cache_dir()
         .ok_or_else(|| io::Error::from(io::ErrorKind::NotFound))
-        .into_report()
         .attach_printable("Failed to retrieve home dir")?;
     file.push("clipboard-history@alexsaveau.dev/database.log");
-    let file = File::create(file)
-        .into_report()
-        .attach_printable("Failed to open log file")?;
+    let file = File::create(file).attach_printable("Failed to open log file")?;
     let mut file = BufWriter::new(file);
 
     let mut rng = Xoshiro256PlusPlus::seed_from_u64(n as u64);
@@ -101,20 +98,16 @@ fn gen_entries(n: usize) -> error_stack::Result<(), io::Error> {
         total += bytes;
 
         file.write_all(slice::from_ref(&1))
-            .into_report() // Add op ID
             .attach_printable("Failed to write to log file")?;
         for b in valid_byte_range.sample_iter(&mut rng).take(bytes) {
             file.write_all(slice::from_ref(&b))
-                .into_report()
                 .attach_printable("Failed to write to log file")?;
         }
         file.write_all(slice::from_ref(&0))
-            .into_report() // NUL terminator
             .attach_printable("Failed to write to log file")?;
     }
 
     file.flush()
-        .into_report()
         .attach_printable("Failed to write to log file")?;
     println!("Wrote {total} bytes.");
 
@@ -130,15 +123,11 @@ fn dump(database: Option<PathBuf>) -> error_stack::Result<(), io::Error> {
             })
         })
         .ok_or_else(|| io::Error::from(io::ErrorKind::NotFound))
-        .into_report()
         .attach_printable("Failed to find database file")?;
 
     let file = File::open(&database)
-        .into_report()
         .attach_printable_lazy(|| format!("Failed to open file {database:?}"))?;
-    let bytes = unsafe { Mmap::map(&file) }
-        .into_report()
-        .attach_printable("Failed to mmap file")?;
+    let bytes = unsafe { Mmap::map(&file) }.attach_printable("Failed to mmap file")?;
 
     const OP_TYPE_SAVE_TEXT: u8 = 1;
     const OP_TYPE_DELETE_TEXT: u8 = 2;
@@ -155,7 +144,6 @@ fn dump(database: Option<PathBuf>) -> error_stack::Result<(), io::Error> {
             OP_TYPE_SAVE_TEXT => {
                 let length = 1 + memchr::memchr(0, &bytes[i..])
                     .ok_or_else(|| io::Error::from(io::ErrorKind::InvalidData))
-                    .into_report()
                     .attach_printable("Data was not NUL terminated")?;
                 println!("SAVE_TEXT@{i}\nLength: {length}\nId: {save_count}\n");
                 i += length;
@@ -191,7 +179,6 @@ fn dump(database: Option<PathBuf>) -> error_stack::Result<(), io::Error> {
             }
             _ => {
                 return Err(io::Error::from(io::ErrorKind::InvalidData))
-                    .into_report()
                     .attach_printable_lazy(|| format!("Invalid op: {}", bytes[i]));
             }
         }
