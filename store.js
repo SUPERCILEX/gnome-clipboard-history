@@ -307,7 +307,7 @@ export function maybePerformLogCompaction(currentStateBuilder) {
   }
 }
 
-function resetDatabase(currentStateBuilder) {
+export function resetDatabase(currentStateBuilder) {
   uselessOpCount = 0;
 
   const state = currentStateBuilder();
