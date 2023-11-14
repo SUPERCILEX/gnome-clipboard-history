@@ -371,6 +371,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     const menuItem = new PopupMenu.PopupMenuItem('', { hover: false });
+    menuItem.setOrnament(PopupMenu.Ornament.NONE);
 
     menuItem.entry = entry;
     entry.menuItem = menuItem;
