@@ -1,6 +1,6 @@
 # Gnome Clipboard History
 
-[Gnome Clipboard History](https://extensions.gnome.org/extension/4839/clipboard-history/) is a Gnome
+[Gnome Clipboard History](https://extensions.gnome.org/extension/4839/clipboard-history/) is a GNOME
 extension that saves what you've copied into an easily
 accessible, searchable history panel.
 
@@ -33,6 +33,11 @@ The extension is a rewrite of
 - Search uses case-insensitive [regex](https://regex101.com/?flavor=javascript).
 
 ## Install from source
+
+A note on versioning:
+
+- The `master` branch and `1.4.x` tags support GNOME 45.
+- The `pre-45` branch and `1.3.x` (or earlier) tags support GNOME 40-44.
 
 ### Build
 
