@@ -1,4 +1,3 @@
-#![feature(string_remove_matches)]
 #![feature(debug_closure_helpers)]
 
 use std::{
@@ -52,7 +51,7 @@ enum Cmd {
 #[derive(Args, Debug)]
 struct Generate {
     #[clap(short = 'n', long = "entries", alias = "num-entries")]
-    #[clap(value_parser = num_entries_parser)]
+    #[clap(value_parser = si_number::<usize>)]
     #[clap(default_value = "10000")]
     num_entries: usize,
 }
@@ -73,22 +72,6 @@ fn main() -> error_stack::Result<(), io::Error> {
             args.verbose.log_level_filter() > LevelFilter::Info,
         ),
     }
-}
-
-fn num_entries_parser(s: &str) -> Result<usize, String> {
-    let files = lenient_si_number(s)?;
-    if files > 0 {
-        Ok(files)
-    } else {
-        Err(String::from("At least one entry must be generated."))
-    }
-}
-
-fn lenient_si_number(s: &str) -> Result<usize, String> {
-    let mut s = s.replace('K', "k");
-    s.remove_matches(",");
-    s.remove_matches("_");
-    si_number(&s)
 }
 
 fn gen_entries(n: usize) -> error_stack::Result<(), io::Error> {
