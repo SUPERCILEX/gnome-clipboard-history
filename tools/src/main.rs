@@ -12,7 +12,6 @@ use std::{
 use clap::{ArgAction, Args, Parser, Subcommand, ValueHint};
 use clap_num::si_number;
 use clap_verbosity_flag::{LevelFilter, Verbosity};
-use clap_verbosity_flag2 as clap_verbosity_flag;
 use error_stack::ResultExt;
 use memmap2::Mmap;
 use rand::{
@@ -190,7 +189,7 @@ fn dump(database: Option<PathBuf>, verbose: bool) -> error_stack::Result<(), io:
     }
 
     if verbose {
-        println!("-------------------------------------------\n")
+        println!("-------------------------------------------\n");
     }
     println!("Stats: {stats:#}");
 
