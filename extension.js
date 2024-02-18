@@ -626,25 +626,28 @@ class ClipboardIndicator extends PanelMenu.Button {
       GLib.PRIORITY_DEFAULT,
       1, // Just post to the end of the event loop
       () => {
+        const SHIFT_L = 42;
+        const INSERT = 110;
+
         const eventTime = Clutter.get_current_event_time() * 1000;
-        VirtualKeyboard().notify_keyval(
+        VirtualKeyboard().notify_key(
           eventTime,
-          Clutter.KEY_Shift_L,
+          SHIFT_L,
           Clutter.KeyState.PRESSED,
         );
-        VirtualKeyboard().notify_keyval(
+        VirtualKeyboard().notify_key(
           eventTime,
-          Clutter.KEY_Insert,
+          INSERT,
           Clutter.KeyState.PRESSED,
         );
-        VirtualKeyboard().notify_keyval(
+        VirtualKeyboard().notify_key(
           eventTime,
-          Clutter.KEY_Insert,
+          INSERT,
           Clutter.KeyState.RELEASED,
         );
-        VirtualKeyboard().notify_keyval(
+        VirtualKeyboard().notify_key(
           eventTime,
-          Clutter.KEY_Shift_L,
+          SHIFT_L,
           Clutter.KeyState.RELEASED,
         );
 
