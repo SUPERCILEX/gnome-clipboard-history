@@ -20,7 +20,6 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
 msgstr "Wyszukaj w schowku..."
 
@@ -86,7 +85,6 @@ msgid "Window width (%)"
 msgstr "Szerokość okna (%)"
 
 #: prefs.js:139
-#, fuzzy
 msgid "Max clipboard history size (MiB)"
 msgstr "Maks. wielkość schowka (MiB)"
 
@@ -99,7 +97,6 @@ msgid "Show notification on copy"
 msgstr "Pokaż powiadomienie po skopiowaniu"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
 msgstr "Potwierdź przed wyczyszczeniem historii"
 
@@ -122,7 +119,6 @@ msgid "What to show in status bar"
 msgstr "Pokazuj na panelu"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
 msgstr "Usuń dolną strzałkę z panelu
 
@@ -163,11 +159,9 @@ msgstr "Żaden"
 #~ msgid "Item preview size (characters)"
 #~ msgstr "Rozmiar podglądu (znaki)"
 
-#, fuzzy
 #~ msgid "Previous page"
 #~ msgstr "Poprzednia strona"
 
-#, fuzzy
 #~ msgid "Next page"
 #~ msgstr "Następna strona"
 
@@ -186,7 +180,6 @@ msgstr "Żaden"
 #~ msgid "Disable cache file"
 #~ msgstr "Nie zapisuj do pliku pamięci podręcznej"
 
-#, fuzzy
 #~| msgid "Clipboard Content"
 #~ msgid "Icon + Clipboard Content"
 #~ msgstr "Ikona + Zawartość schowka"
