@@ -22,7 +22,7 @@ msgstr ""
 #: extension.js:121
 #, fuzzy
 msgid "Search clipboard history…"
-msgstr "Wyczyszczono historię schowka"
+msgstr "Wyszukaj w schowku..."
 
 #: extension.js:208
 msgid "Private mode"
@@ -30,23 +30,23 @@ msgstr "Tryb prywatny"
 
 #: extension.js:524
 msgid "Clear all?"
-msgstr ""
+msgstr "Wyczyścić historię?"
 
 #: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
-msgstr ""
+msgstr "Czy na pewno chcesz wyczyścić całą historię schowka?"
 
 #: extension.js:526
 msgid "This operation cannot be undone."
-msgstr ""
+msgstr "Tej operacji nie da się cofnąć."
 
 #: extension.js:532
 msgid "Clear"
-msgstr ""
+msgstr "Wyczyść"
 
 #: extension.js:533 extension.js:887
 msgid "Cancel"
-msgstr ""
+msgstr "Anuluj"
 
 #: extension.js:886
 msgid "Copied to clipboard"
@@ -54,7 +54,7 @@ msgstr "Skopiowano do schowka"
 
 #: extension.js:1221
 msgid "Copied"
-msgstr ""
+msgstr "Skopiowano"
 
 #: prefs.js:96
 msgid "Toggle the menu"
@@ -79,20 +79,20 @@ msgstr "Tryb prywatny"
 
 #: prefs.js:129
 msgid "Max number of items"
-msgstr ""
+msgstr "Maks. ilość elementów"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr ""
+msgstr "Szerokość okna (%)"
 
 #: prefs.js:139
 #, fuzzy
 msgid "Max clipboard history size (MiB)"
-msgstr "Wyczyszczono historię schowka"
+msgstr "Maks. wielkość schowka (MiB)"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
-msgstr ""
+msgstr "Zapisuj tylko ulubione na dysku"
 
 #: prefs.js:149
 msgid "Show notification on copy"
@@ -101,11 +101,11 @@ msgstr "Pokaż powiadomienie po skopiowaniu"
 #: prefs.js:154
 #, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "Pokaż powiadomienie po skopiowaniu"
+msgstr "Potwierdź przed wyczyszczeniem historii"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr ""
+msgstr "Przesuń wcześniej kopiowane elementy na górę"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
@@ -124,19 +124,19 @@ msgstr "Pokazuj na panelu"
 #: prefs.js:179
 #, fuzzy
 msgid "Remove down arrow in status bar"
-msgstr "Liczba znaków na panelu"
+msgstr "Usuń dolną strzałkę z panelu
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
-msgstr ""
+msgstr "Usuń białą przestrzeń wokół tekstu"
 
 #: prefs.js:189
 msgid "Paste on selection"
-msgstr ""
+msgstr "Wybór wklejania"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr ""
+msgstr "Zapisz zaznaczony tekst w historii"
 
 #: prefs.js:326
 msgid "Icon"
@@ -153,7 +153,7 @@ msgstr "Ikona oraz zawartość schowka"
 
 #: prefs.js:329
 msgid "Neither"
-msgstr ""
+msgstr "Żaden"
 
 #, fuzzy
 #~ msgid "Type here to search…"
@@ -165,17 +165,17 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "Previous page"
-#~ msgstr "Poprzednia pozycja"
+#~ msgstr "Poprzednia strona"
 
 #, fuzzy
 #~ msgid "Next page"
-#~ msgstr "Następna pozycja"
+#~ msgstr "Następna strona"
 
 #~ msgid "Settings"
 #~ msgstr "Ustawienia"
 
 #~ msgid "History Size"
-#~ msgstr "Rozmiar historii (liczba elementów)"
+#~ msgstr "Rozmiar historii"
 
 #~ msgid "Refresh Interval (ms)"
 #~ msgstr "Interwał odświeżania (ms)"
@@ -184,9 +184,9 @@ msgstr ""
 #~ msgstr "Maksymalny rozmiar pliku pamięci podręcznej (kB)"
 
 #~ msgid "Disable cache file"
-#~ msgstr "Nie zapisuj do pliku pamięci podręcznej "
+#~ msgstr "Nie zapisuj do pliku pamięci podręcznej"
 
 #, fuzzy
 #~| msgid "Clipboard Content"
 #~ msgid "Icon + Clipboard Content"
-#~ msgstr "Zawartość schowka"
+#~ msgstr "Ikona + Zawartość schowka"
