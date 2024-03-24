@@ -1014,14 +1014,14 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    this._notifSource = new MessageTray.Source(
-      this.extension.uuid,
-      INDICATOR_ICON,
-    );
+    this._notifSource = new MessageTray.Source({
+      title: this.extension.indicatorName,
+      iconName: INDICATOR_ICON,
+    });
     this._notifSource.connect('destroy', () => {
       this._notifSource = undefined;
     });
-    Main.messageTray.add_child(this._notifSource);
+    Main.messageTray.add(this._notifSource);
   }
 
   _showNotification(title, message, transformFn) {
@@ -1037,22 +1037,26 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     let notification;
     if (this._notifSource.count === 0) {
-      notification = new MessageTray.Notification(
-        this._notifSource,
+      notification = new MessageTray.Notification({
+        source: this._notifSource,
         title,
-        message,
-      );
+        body: message,
+        isTransient: true,
+      });
     } else {
       notification = this._notifSource.notifications[0];
-      notification.update(title, message, { clear: true });
+      notification.set({
+        title,
+        body: message,
+      });
+      notification.clearActions();
     }
 
     if (typeof transformFn === 'function') {
       transformFn(notification);
     }
 
-    notification.setTransient(true);
-    this._notifSource.showNotification(notification);
+    this._notifSource.addNotification(notification);
   }
 
   _updatePrivateModeState() {
