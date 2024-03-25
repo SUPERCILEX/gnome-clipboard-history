@@ -120,7 +120,7 @@ msgstr "Pokazuj na panelu"
 
 #: prefs.js:179
 msgid "Remove down arrow in status bar"
-msgstr "Usuń dolną strzałkę z panelu
+msgstr "Usuń dolną strzałkę z panelu"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
