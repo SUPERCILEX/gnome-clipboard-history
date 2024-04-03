@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2024-04-03 12:53+0300\n"
+"PO-Revision-Date: 2024-04-03 13:05+0300\n"
 "Last-Translator: Yevhen Popok <xalt7x.service@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -90,7 +90,7 @@ msgstr "Макс. розмір історії буфера обміну (МіБ)
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
-msgstr "Зберігати на диску лише улюблені записи"
+msgstr "Зберігати на диску лише вибрані записи"
 
 #: prefs.js:149
 msgid "Show notification on copy"
