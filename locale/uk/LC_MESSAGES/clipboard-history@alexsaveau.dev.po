@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2024-04-03 11:59+0300\n"
+"PO-Revision-Date: 2024-04-03 12:53+0300\n"
 "Last-Translator: Yevhen Popok <xalt7x.service@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -142,7 +142,7 @@ msgstr "Вміст буфера обміну"
 
 #: prefs.js:328
 msgid "Both"
-msgstr "Обидва"
+msgstr "Все"
 
 #: prefs.js:329
 msgid "Neither"
