@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2023-07-23 11:11+0300\n"
+"PO-Revision-Date: 2024-04-03 11:59+0300\n"
 "Last-Translator: Yevhen Popok <xalt7x.service@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: extension.js:121
 msgid "Search clipboard history…"
@@ -34,7 +34,7 @@ msgstr "Очистити все?"
 
 #: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
-msgstr "Видалити всі елементи з буферу обміну?"
+msgstr "Точно видалити всі записи з буфера обміну?"
 
 #: extension.js:526
 msgid "This operation cannot be undone."
@@ -86,11 +86,11 @@ msgstr "Ширина вікна (%)"
 
 #: prefs.js:139
 msgid "Max clipboard history size (MiB)"
-msgstr "Історію буфера обміну очищено"
+msgstr "Макс. розмір історії буфера обміну (МіБ)"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
-msgstr "Зберігати на диску лише обране"
+msgstr "Зберігати на диску лише улюблені записи"
 
 #: prefs.js:149
 msgid "Show notification on copy"
@@ -102,7 +102,7 @@ msgstr "Підтверджувати очищення історії"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr "Перемістити скопійоване раніше догори"
+msgstr "Переміщувати скопійоване раніше догори"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
@@ -122,7 +122,7 @@ msgstr "Вилучити стрілку вниз на панелі"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
-msgstr "Вилучити проміжки довкола тексту"
+msgstr "Вилучати проміжки навколо тексту"
 
 #: prefs.js:189
 msgid "Paste on selection"
@@ -130,7 +130,7 @@ msgstr "Вставляти після вибору"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr "Зберегти виділений текст в історії"
+msgstr "Зберігати виділений текст в історії"
 
 #: prefs.js:326
 msgid "Icon"
@@ -147,43 +147,3 @@ msgstr "Обидва"
 #: prefs.js:329
 msgid "Neither"
 msgstr "Нічого"
-
-#, fuzzy
-#~ msgid "Type here to search…"
-#~ msgstr "Пишіть тут для пошуку..."
-
-#, fuzzy
-#~ msgid "Item preview size (characters)"
-#~ msgstr "Розмір попереднього перегляду (символів)"
-
-#, fuzzy
-#~ msgid "Previous page"
-#~ msgstr "Попередній запис"
-
-#, fuzzy
-#~ msgid "Next page"
-#~ msgstr "Наступний запис"
-
-#~ msgid "Settings"
-#~ msgstr "Параметри"
-
-#~ msgid "Text will be here"
-#~ msgstr "Текст буде тут"
-
-#~ msgid "History Size"
-#~ msgstr "Розмір історії"
-
-#~ msgid "Refresh Interval (ms)"
-#~ msgstr "Інтервал оновлення (мс)"
-
-#~ msgid "Max cache file size (kb)"
-#~ msgstr "Максимальний розмір кешу (кб)"
-
-#~ msgid "Cache only favorites"
-#~ msgstr "Кешувати тільки обрані"
-
-#~ msgid "Move item to the top after selection"
-#~ msgstr "Перемістити елемент на верх після вибору"
-
-#~ msgid "Disable cache file"
-#~ msgstr "Відключити файл кешу"
