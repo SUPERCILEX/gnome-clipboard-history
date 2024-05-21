@@ -71,6 +71,7 @@ export default class ClipboardHistoryPrefs extends ExtensionPreferences {
     const field_strip_text = new Gtk.Switch();
     const field_paste_on_selection = new Gtk.Switch();
     const field_process_primary_selection = new Gtk.Switch();
+    const field_ignore_mimetype = new Gtk.Entry();
     const field_move_item_first = new Gtk.Switch();
     const field_keybinding = createKeybindingWidget(settings);
     addKeybinding(
@@ -179,6 +180,11 @@ export default class ClipboardHistoryPrefs extends ExtensionPreferences {
       hexpand: true,
       halign: Gtk.Align.START,
     });
+    const ignoreMimeType = new Gtk.Label({
+      label: _('Ignore entry marked with MIME-Type'),
+      hexpand: true,
+      halign: Gtk.Align.START,
+    })
 
     const addRow = ((main) => {
       let row = 0;
@@ -211,6 +217,7 @@ export default class ClipboardHistoryPrefs extends ExtensionPreferences {
     addRow(stripTextLabel, field_strip_text);
     addRow(pasteOnSelectionLabel, field_paste_on_selection);
     addRow(processPrimarySelection, field_process_primary_selection);
+    addRow(ignoreMimeType, field_ignore_mimetype);
     addRow(displayModeLabel, field_display_mode);
     addRow(disableDownArrowLabel, field_disable_down_arrow);
     addRow(topbarPreviewLabel, field_topbar_preview_size);
@@ -297,6 +304,12 @@ export default class ClipboardHistoryPrefs extends ExtensionPreferences {
       'active',
       Gio.SettingsBindFlags.DEFAULT,
     );
+    settings.bind(
+      Fields.IGNORE_MIMETYPE,
+      field_ignore_mimetype,
+      'text',
+      Gio.SettingsBindFlags.DEFAULT,
+    )
     settings.bind(
       Fields.ENABLE_KEYBINDING,
       field_keybinding_activation,

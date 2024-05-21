@@ -60,6 +60,7 @@ let DISABLE_DOWN_ARROW;
 let STRIP_TEXT;
 let PASTE_ON_SELECTION;
 let PROCESS_PRIMARY_SELECTION;
+let IGNORE_MIMETYPE;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init(extension) {
@@ -843,6 +844,14 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
+    var glist = Clipboard.get_mimetypes(St.Clipboard.CLIPBOARD);
+    if(IGNORE_MIMETYPE !== '' && glist.includes(IGNORE_MIMETYPE)){
+      if(NOTIFY_ON_COPY){
+        this._showNotification(_('Found evil mime type; didn\'t copy'), null, (notif) => {});
+      }
+     return;
+    }
+
     Clipboard.get_text(St.ClipboardType.CLIPBOARD, (_, text) => {
       this._processClipboardContent(text, true);
     });
@@ -851,6 +860,14 @@ class ClipboardIndicator extends PanelMenu.Button {
   _queryPrimaryClipboard() {
     if (PRIVATE_MODE) {
       return;
+    }
+
+    var glist = Clipboard.get_mimetypes(St.Clipboard.PRIMARY);
+    if(IGNORE_MIMETYPE !== '' && glist.includes(IGNORE_MIMETYPE)){
+      if(NOTIFY_ON_COPY){
+        this._showNotification(_('Found evil mime type; didn\'t copy'), null, (notif) => {});
+      }
+     return;
     }
 
     Clipboard.get_text(St.ClipboardType.PRIMARY, (_, text) => {
@@ -1112,6 +1129,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     );
     PROCESS_PRIMARY_SELECTION = this.settings.get_boolean(
       SettingsFields.PROCESS_PRIMARY_SELECTION,
+    );
+    IGNORE_MIMETYPE = this.settings.get_string(
+      SettingsFields.IGNORE_MIMETYPE,
     );
   }
 

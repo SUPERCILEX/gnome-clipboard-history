@@ -132,5 +132,9 @@
       <default><![CDATA[['<Super><Shift>P']]]></default>
       <summary>Toggle private mode</summary>
     </key>
+    <key name="ignore-mimetype" type="s">
+      <default>'your-mime-type-not-to-be-recorded'</default>
+      <summary>MIME-Type not to be recorded</summary>
+    </key>
   </schema>
 </schemalist>
