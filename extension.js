@@ -60,7 +60,7 @@ let DISABLE_DOWN_ARROW;
 let STRIP_TEXT;
 let PASTE_ON_SELECTION;
 let PROCESS_PRIMARY_SELECTION;
-let IGNORE_MIMETYPE;
+let DISCARD_PASSWORD_MIMES;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init(extension) {
@@ -839,17 +839,48 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
   }
 
-  _queryClipboard() {
+  async _queryClipboard() {
     if (PRIVATE_MODE) {
       return;
     }
 
-    var glist = Clipboard.get_mimetypes(St.Clipboard.CLIPBOARD);
-    if(IGNORE_MIMETYPE !== '' && glist.includes(IGNORE_MIMETYPE)){
-      if(NOTIFY_ON_COPY){
-        this._showNotification(_('Found evil mime type; didn\'t copy'), null, (notif) => {});
+    if(DISCARD_PASSWORD_MIMES){
+      const glist = Clipboard.get_mimetypes(St.Clipboard.CLIPBOARD);
+
+      var discardCurrent = false;
+
+      const mimetype = "x-kde-passwordManagerHint";
+      const mimecontent = "secret";
+
+      if(glist.includes(mimetype)){
+          var res = await new Promise((resolve, reject) => {
+            Clipboard.get_content(St.Clipboard.CLIPBOARD,mimetype, (a, text) => {
+
+              const data = text.get_data();
+              const encodedString = new TextEncoder("utf-8").encode(mimecontent);
+
+              let matches = true;
+              if (data.length === encodedString.length){
+                for (let i = 0; i < data.length; i++) {
+                  if (data[i] !== encodedString[i]) {
+                      matches =  false;
+                  }
+                }
+              }
+              else {
+                matches = false;
+              }
+              resolve(matches);
+            });
+          });
+          discardCurrentCurrent = res;
       }
-     return;
+      if (discardCurrent){
+        return;
+      }
+      else {
+        console.error("Dont ignore");
+      }
     }
 
     Clipboard.get_text(St.ClipboardType.CLIPBOARD, (_, text) => {
@@ -863,7 +894,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     var glist = Clipboard.get_mimetypes(St.Clipboard.PRIMARY);
-    if(IGNORE_MIMETYPE !== '' && glist.includes(IGNORE_MIMETYPE)){
+    if(DISCARD_MIMETYPE !== '' && glist.includes(DISCARD_MIMETYPE)){
       if(NOTIFY_ON_COPY){
         this._showNotification(_('Found evil mime type; didn\'t copy'), null, (notif) => {});
       }
@@ -1130,8 +1161,8 @@ class ClipboardIndicator extends PanelMenu.Button {
     PROCESS_PRIMARY_SELECTION = this.settings.get_boolean(
       SettingsFields.PROCESS_PRIMARY_SELECTION,
     );
-    IGNORE_MIMETYPE = this.settings.get_string(
-      SettingsFields.IGNORE_MIMETYPE,
+    DISCARD_PASSWORD_MIMES = this.settings.get_boolean(
+      SettingsFields.DISCARD_PASSWORD_MIMES,
     );
   }
 
