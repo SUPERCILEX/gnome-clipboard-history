@@ -853,33 +853,36 @@ class ClipboardIndicator extends PanelMenu.Button {
       const mimecontent = "secret";
 
       if(glist.includes(mimetype)){
-          var res = await new Promise((resolve, reject) => {
-            Clipboard.get_content(St.Clipboard.CLIPBOARD,mimetype, (a, text) => {
-
+          await new Promise((resolve, reject) => {
+            Clipboard.get_content(St.Clipboard.CLIPBOARD,mimetype, (clipboardType, text) => {
               const data = text.get_data();
               const encodedString = new TextEncoder("utf-8").encode(mimecontent);
-
-              let matches = true;
+      
               if (data.length === encodedString.length){
-                for (let i = 0; i < data.length; i++) {
-                  if (data[i] !== encodedString[i]) {
-                      matches =  false;
-                  }
-                }
+                resolve(data.every((e, i) => {
+                  return e === encodedString[i];
+                }));
               }
               else {
-                matches = false;
-              }
-              resolve(matches);
+                resolve(false);
+              }       
             });
-          });
-          discardCurrentCurrent = res;
+            // Reject automatically if nothing was returned after 5 seconds;
+            setTimeout(() => {reject("Nothing returned from the clipboard");}, 5000);
+          }).then(
+            (resolvevalue) => {discardCurrent = resolvevalue;},
+            (rejectval) => {console.error(rejectval);}
+          );
       }
+
       if (discardCurrent){
+        //PRIVATE_MODE = true;
+        //this._updatePrivateModeState();
         return;
       }
       else {
-        console.error("Dont ignore");
+        //PRIVATE_MODE = false;
+        //this._updatePrivateModeState();
       }
     }
 
