@@ -132,5 +132,9 @@
       <default><![CDATA[['<Super><Shift>P']]]></default>
       <summary>Toggle private mode</summary>
     </key>
+    <key name="discard-password-mimes" type="b">
+      <default>true</default>
+      <summary>Filter password-managers</summary>
+    </key>
   </schema>
 </schemalist>
