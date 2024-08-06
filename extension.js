@@ -60,7 +60,7 @@ let DISABLE_DOWN_ARROW;
 let STRIP_TEXT;
 let PASTE_ON_SELECTION;
 let PROCESS_PRIMARY_SELECTION;
-let DISCARD_PASSWORD_MIMES;
+let IGNORE_PASSWORD_MIMES;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init(extension) {
@@ -839,51 +839,18 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
   }
 
-  async _queryClipboard() {
+  _queryClipboard() {
     if (PRIVATE_MODE) {
       return;
     }
 
-    if(DISCARD_PASSWORD_MIMES){
-      const glist = Clipboard.get_mimetypes(St.Clipboard.CLIPBOARD);
-
-      var discardCurrent = false;
-
-      const mimetype = "x-kde-passwordManagerHint";
-      const mimecontent = "secret";
-
-      if(glist.includes(mimetype)){
-          await new Promise((resolve, reject) => {
-            Clipboard.get_content(St.Clipboard.CLIPBOARD,mimetype, (clipboardType, text) => {
-              const data = text.get_data();
-              const encodedString = new TextEncoder("utf-8").encode(mimecontent);
-      
-              if (data.length === encodedString.length){
-                resolve(data.every((e, i) => {
-                  return e === encodedString[i];
-                }));
-              }
-              else {
-                resolve(false);
-              }       
-            });
-            // Reject automatically if nothing was returned after 5 seconds;
-            setTimeout(() => {reject("Nothing returned from the clipboard");}, 5000);
-          }).then(
-            (resolvevalue) => {discardCurrent = resolvevalue;},
-            (rejectval) => {console.error(rejectval);}
-          );
-      }
-
-      if (discardCurrent){
-        //PRIVATE_MODE = true;
-        //this._updatePrivateModeState();
-        return;
-      }
-      else {
-        //PRIVATE_MODE = false;
-        //this._updatePrivateModeState();
-      }
+    if (
+      IGNORE_PASSWORD_MIMES &&
+      Clipboard.get_mimetypes(St.Clipboard.CLIPBOARD).includes(
+        'x-kde-passwordManagerHint',
+      )
+    ) {
+      return;
     }
 
     Clipboard.get_text(St.ClipboardType.CLIPBOARD, (_, text) => {
@@ -896,12 +863,13 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
-    var glist = Clipboard.get_mimetypes(St.Clipboard.PRIMARY);
-    if(DISCARD_MIMETYPE !== '' && glist.includes(DISCARD_MIMETYPE)){
-      if(NOTIFY_ON_COPY){
-        this._showNotification(_('Found evil mime type; didn\'t copy'), null, (notif) => {});
-      }
-     return;
+    if (
+      IGNORE_PASSWORD_MIMES &&
+      Clipboard.get_mimetypes(St.Clipboard.PRIMARY).includes(
+        'x-kde-passwordManagerHint',
+      )
+    ) {
+      return;
     }
 
     Clipboard.get_text(St.ClipboardType.PRIMARY, (_, text) => {
@@ -1164,8 +1132,8 @@ class ClipboardIndicator extends PanelMenu.Button {
     PROCESS_PRIMARY_SELECTION = this.settings.get_boolean(
       SettingsFields.PROCESS_PRIMARY_SELECTION,
     );
-    DISCARD_PASSWORD_MIMES = this.settings.get_boolean(
-      SettingsFields.DISCARD_PASSWORD_MIMES,
+    IGNORE_PASSWORD_MIMES = this.settings.get_boolean(
+      SettingsFields.IGNORE_PASSWORD_MIMES,
     );
   }
 
