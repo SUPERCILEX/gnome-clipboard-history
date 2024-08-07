@@ -11,6 +11,13 @@ vastly improved performance, new features, and
 
 A technical overview is available at https://alexsaveau.dev/blog/gch.
 
+## Project status: replaced by Ringboard
+
+Gnome Clipboard History is now in maintenance mode as it is being replaced by
+[Ringboard](https://github.com/SUPERCILEX/clipboard-history). I'm still accepting PRs for small
+improvements and bug fixes (such as supporting the latest Gnome version), but no new development
+will take place.
+
 ## Download
 
 [<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/eb9af9a1c6f04eb060cb01de6aeb5c84232cd8c0/get-it-on-ego.svg?sanitize=true" alt="Get it on GNOME Extensions" height="100" align="middle">](https://extensions.gnome.org/extension/4839/clipboard-history/)
