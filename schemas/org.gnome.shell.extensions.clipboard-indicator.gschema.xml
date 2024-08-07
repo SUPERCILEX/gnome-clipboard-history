@@ -132,5 +132,9 @@
       <default><![CDATA[['<Super><Shift>P']]]></default>
       <summary>Toggle private mode</summary>
     </key>
+    <key name="ignore-password-mimes" type="b">
+      <default>true</default>
+      <summary>Ignore selections containing the x-kde-passwordManagerHint mime type.</summary>
+    </key>
   </schema>
 </schemalist>

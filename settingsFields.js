@@ -14,5 +14,6 @@ const SettingsFields = {
   PRIVATE_MODE: 'private-mode',
   PASTE_ON_SELECTION: 'paste-on-selection',
   PROCESS_PRIMARY_SELECTION: 'process-primary-selection',
+  IGNORE_PASSWORD_MIMES: 'ignore-password-mimes',
 };
 export default SettingsFields;

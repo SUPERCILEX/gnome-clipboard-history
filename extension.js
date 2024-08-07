@@ -60,6 +60,7 @@ let DISABLE_DOWN_ARROW;
 let STRIP_TEXT;
 let PASTE_ON_SELECTION;
 let PROCESS_PRIMARY_SELECTION;
+let IGNORE_PASSWORD_MIMES;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init(extension) {
@@ -843,6 +844,16 @@ class ClipboardIndicator extends PanelMenu.Button {
       return;
     }
 
+    if (
+      IGNORE_PASSWORD_MIMES &&
+      Clipboard.get_mimetypes(St.Clipboard.CLIPBOARD).includes(
+        'x-kde-passwordManagerHint',
+      )
+    ) {
+      log(this.uuid, 'Ignoring password entry.');
+      return;
+    }
+
     Clipboard.get_text(St.ClipboardType.CLIPBOARD, (_, text) => {
       this._processClipboardContent(text, true);
     });
@@ -850,6 +861,16 @@ class ClipboardIndicator extends PanelMenu.Button {
 
   _queryPrimaryClipboard() {
     if (PRIVATE_MODE) {
+      return;
+    }
+
+    if (
+      IGNORE_PASSWORD_MIMES &&
+      Clipboard.get_mimetypes(St.Clipboard.PRIMARY).includes(
+        'x-kde-passwordManagerHint',
+      )
+    ) {
+      log(this.uuid, 'Ignoring password entry.');
       return;
     }
 
@@ -1112,6 +1133,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     );
     PROCESS_PRIMARY_SELECTION = this.settings.get_boolean(
       SettingsFields.PROCESS_PRIMARY_SELECTION,
+    );
+    IGNORE_PASSWORD_MIMES = this.settings.get_boolean(
+      SettingsFields.IGNORE_PASSWORD_MIMES,
     );
   }
 
