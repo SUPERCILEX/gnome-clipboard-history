@@ -60,6 +60,7 @@ let DISABLE_DOWN_ARROW;
 let STRIP_TEXT;
 let PASTE_ON_SELECTION;
 let PROCESS_PRIMARY_SELECTION;
+let IGNORE_PASSWORD_MIMES;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init(extension) {
@@ -838,8 +839,28 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
   }
 
-  _queryClipboard() {
+  _shouldAbortClipboardQuery(kind) {
     if (PRIVATE_MODE) {
+      return true;
+    }
+
+    if (
+      IGNORE_PASSWORD_MIMES &&
+      Clipboard.get_mimetypes(kind).includes(
+        // Note that we should check for the value "secret" but there don't appear to be any other
+        // values so it's not worth the trouble right now.
+        'x-kde-passwordManagerHint',
+      )
+    ) {
+      log(this.uuid, 'Ignoring password entry.');
+      return true;
+    }
+
+    return false;
+  }
+
+  _queryClipboard() {
+    if (this._shouldAbortClipboardQuery(St.Clipboard.CLIPBOARD)) {
       return;
     }
 
@@ -849,7 +870,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _queryPrimaryClipboard() {
-    if (PRIVATE_MODE) {
+    if (this._shouldAbortClipboardQuery(St.Clipboard.PRIMARY)) {
       return;
     }
 
@@ -1112,6 +1133,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     );
     PROCESS_PRIMARY_SELECTION = this.settings.get_boolean(
       SettingsFields.PROCESS_PRIMARY_SELECTION,
+    );
+    IGNORE_PASSWORD_MIMES = this.settings.get_boolean(
+      SettingsFields.IGNORE_PASSWORD_MIMES,
     );
   }
 
