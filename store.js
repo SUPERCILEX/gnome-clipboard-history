@@ -42,7 +42,7 @@ export function init(uuid) {
   DATABASE_FILE = GLib.build_filenamev([CACHE_DIR, 'database.log']);
 
   if (GLib.mkdir_with_parents(CACHE_DIR, 0o775) !== 0) {
-    log(
+    console.log(
       EXTENSION_UUID,
       "Failed to create cache dir, extension likely won't work",
       CACHE_DIR,
@@ -175,7 +175,7 @@ function _consumeStream(stream, state, callback) {
         }
       });
     } else {
-      log(EXTENSION_UUID, 'Unknown op type, aborting load.', opType);
+      console.log(EXTENSION_UUID, 'Unknown op type, aborting load.', opType);
       finish();
     }
   }
@@ -186,8 +186,8 @@ function _consumeStream(stream, state, callback) {
         parse();
         cont();
       } catch (e) {
-        log(EXTENSION_UUID, 'Parsing error');
-        logError(e);
+        console.log(EXTENSION_UUID, 'Parsing error');
+        console.error(e);
 
         const entries = new DS.LinkedList();
         let nextId = 1;
@@ -218,11 +218,11 @@ function _consumeStream(stream, state, callback) {
               null,
             )
           ) {
-            log(EXTENSION_UUID, 'Failed to move database file');
+            console.log(EXTENSION_UUID, 'Failed to move database file');
           }
         } catch (e) {
-          log(EXTENSION_UUID, 'Crash moving database file');
-          logError(e);
+          console.log(EXTENSION_UUID, 'Crash moving database file');
+          console.error(e);
         }
         callback(entries, new DS.LinkedList(), nextId, 1);
       }
@@ -264,7 +264,7 @@ function _readAndConsumeOldFormat(callback) {
       try {
         registry = JSON.parse(GLib.ByteArray.toString(contents));
       } catch (e) {
-        logError(e);
+        console.error(e);
       }
 
       for (const entry of registry) {

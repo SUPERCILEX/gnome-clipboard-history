@@ -852,7 +852,7 @@ class ClipboardIndicator extends PanelMenu.Button {
         'x-kde-passwordManagerHint',
       )
     ) {
-      log(this.uuid, 'Ignoring password entry.');
+      console.log(this.uuid, 'Ignoring password entry.');
       return true;
     }
 
