@@ -839,18 +839,28 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
   }
 
-  _queryClipboard() {
+  _shouldAbortClipboardQuery(kind) {
     if (PRIVATE_MODE) {
-      return;
+      return true;
     }
 
     if (
       IGNORE_PASSWORD_MIMES &&
-      Clipboard.get_mimetypes(St.Clipboard.CLIPBOARD).includes(
+      Clipboard.get_mimetypes(kind).includes(
+        // Note that we should check for the value "secret" but there don't appear to be any other
+        // values so it's not worth the trouble right now.
         'x-kde-passwordManagerHint',
       )
     ) {
       log(this.uuid, 'Ignoring password entry.');
+      return true;
+    }
+
+    return false;
+  }
+
+  _queryClipboard() {
+    if (this._shouldAbortClipboardQuery(St.Clipboard.CLIPBOARD)) {
       return;
     }
 
@@ -860,17 +870,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _queryPrimaryClipboard() {
-    if (PRIVATE_MODE) {
-      return;
-    }
-
-    if (
-      IGNORE_PASSWORD_MIMES &&
-      Clipboard.get_mimetypes(St.Clipboard.PRIMARY).includes(
-        'x-kde-passwordManagerHint',
-      )
-    ) {
-      log(this.uuid, 'Ignoring password entry.');
+    if (this._shouldAbortClipboardQuery(St.Clipboard.PRIMARY)) {
       return;
     }
 
