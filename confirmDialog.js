@@ -1,11 +1,12 @@
-'use strict';
+import Clutter from 'gi://Clutter';
+import St from 'gi://St';
+import GObject from 'gi://GObject';
 
-const { St, GObject, Clutter } = imports.gi;
-const ModalDialog = imports.ui.modalDialog;
+import * as ModalDialog from 'resource:///org/gnome/shell/ui/modalDialog.js';
 
 let _openDialog;
 
-function openConfirmDialog(
+export function openConfirmDialog(
   title,
   message,
   sub_message,

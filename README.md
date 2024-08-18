@@ -1,17 +1,26 @@
 # Gnome Clipboard History
 
-[Gnome Clipboard History](https://extensions.gnome.org/extension/4839/clipboard-history/) is a Gnome
-extension that saves what you've copied into an easily
-accessible, searchable history panel.
+[Gnome Clipboard History](https://extensions.gnome.org/extension/4839/clipboard-history/) is a
+clipboard manager GNOME extension that saves what you've copied into an easily accessible,
+searchable history panel.
 
 The extension is a rewrite of
 [Clipboard Indicator](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator) with
 vastly improved performance, new features, and
 [bug fixes](https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator/pull/338).
 
+A technical overview is available at https://alexsaveau.dev/blog/gch.
+
+## Project status: replaced by Ringboard
+
+Gnome Clipboard History is now in maintenance mode as it is being replaced by
+[Ringboard](https://github.com/SUPERCILEX/clipboard-history). I'm still accepting PRs for small
+improvements and bug fixes (such as supporting the latest Gnome version), but no new development
+will take place.
+
 ## Download
 
-Install the extension from here: https://extensions.gnome.org/extension/4839/clipboard-history/.
+[<img src="https://raw.githubusercontent.com/andyholmes/gnome-shell-extensions-badge/eb9af9a1c6f04eb060cb01de6aeb5c84232cd8c0/get-it-on-ego.svg?sanitize=true" alt="Get it on GNOME Extensions" height="100" align="middle">](https://extensions.gnome.org/extension/4839/clipboard-history/)
 
 ## Tips
 
@@ -34,9 +43,26 @@ Install the extension from here: https://extensions.gnome.org/extension/4839/cli
 
 ## Install from source
 
+A note on versioning:
+
+- The `master` branch and `1.4.x` tags support GNOME 45.
+- The `pre-45` branch and `1.3.x` (or earlier) tags support GNOME 40-44.
+
+### Build
+
 ```shell
 cd ~/.local/share/gnome-shell/extensions/ && \
-  git clone git@github.com:SUPERCILEX/gnome-clipboard-history.git clipboard-history@alexsaveau.dev && \
+  git clone https://github.com/SUPERCILEX/gnome-clipboard-history.git clipboard-history@alexsaveau.dev && \
   cd clipboard-history@alexsaveau.dev && \
-  make && gnome-extensions enable clipboard-history@alexsaveau.dev
+  make
+```
+
+### Restart GNOME
+
+<kbd>Alt</kbd> + <kbd>F2</kbd> then type `r`.
+
+### Install
+
+```shell
+gnome-extensions enable clipboard-history@alexsaveau.dev
 ```

@@ -2,29 +2,29 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Diego R Lima <contact@diegoribeiro.net>, 2017.
+# Perry Werneck <perry.werneck@gmail.com>, 2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: \n"
+"Project-Id-Version: unnamed project\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2017-11-09 03:01-0300\n"
-"Last-Translator: Diego R Lima <contact@diegoribeiro.net>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2023-04-04 02:29-0300\n"
+"Last-Translator: Perry Werneck <perry.werneck@gmail.com>\n"
+"Language-Team: Brazilian Portuguese <perry.werneck@gmail.com>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 40.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: prefs.js\n"
 "X-Poedit-SearchPath-1: extension.js\n"
 
 #: extension.js:121
-#, fuzzy
 msgid "Search clipboard history…"
-msgstr "Histórico da área de transferência apagado"
+msgstr "Pesquisar no histórico da área de transferência"
 
 #: extension.js:208
 msgid "Private mode"
@@ -32,7 +32,7 @@ msgstr "Modo privado"
 
 #: extension.js:524
 msgid "Clear all?"
-msgstr "Deseja limpar tudo?"
+msgstr "Limpar tudo?"
 
 #: extension.js:525
 msgid "Are you sure you want to delete all clipboard items?"
@@ -57,7 +57,7 @@ msgstr "Copiado para a área de transferência"
 
 #: extension.js:1221
 msgid "Copied"
-msgstr ""
+msgstr "Copiado"
 
 #: prefs.js:96
 msgid "Toggle the menu"
@@ -76,58 +76,52 @@ msgid "Next entry"
 msgstr "Próxima entrada"
 
 #: prefs.js:120
-#, fuzzy
 msgid "Toggle private mode"
 msgstr "Modo privado"
 
 #: prefs.js:129
 msgid "Max number of items"
-msgstr ""
+msgstr "Número máximo de ítens"
 
 #: prefs.js:134
 msgid "Window width (%)"
-msgstr ""
+msgstr "Largura da janela (%)"
 
 #: prefs.js:139
-#, fuzzy
 msgid "Max clipboard history size (MiB)"
-msgstr "Histórico da área de transferência apagado"
+msgstr "Tamanho máximo do histórico (MiB)"
 
 #: prefs.js:144
 msgid "Only save favorites to disk"
-msgstr ""
+msgstr "Salvar apenas os favoritos no disco"
 
 #: prefs.js:149
 msgid "Show notification on copy"
 msgstr "Mostrar notificação sobre cópia"
 
 #: prefs.js:154
-#, fuzzy
 msgid "Ask for confirmation before clearing history"
-msgstr "Mostrar notificação sobre cópia"
+msgstr "Perguntar antes de limpar o histórico"
 
 #: prefs.js:159
 msgid "Move previously copied items to the top"
-msgstr ""
+msgstr "Move ítens copiados para o topo"
 
 #: prefs.js:164
 msgid "Keyboard shortcuts"
 msgstr "Atalhos do teclado"
 
 #: prefs.js:169
-#, fuzzy
 msgid "Number of characters in status bar"
 msgstr "Número de caracteres na barra superior"
 
 #: prefs.js:174
-#, fuzzy
 msgid "What to show in status bar"
 msgstr "O que mostrar na barra superior"
 
 #: prefs.js:179
-#, fuzzy
 msgid "Remove down arrow in status bar"
-msgstr "Número de caracteres na barra superior"
+msgstr "Remove seta pra baixo na barra de status"
 
 #: prefs.js:184
 msgid "Remove whitespace around text"
@@ -135,18 +129,17 @@ msgstr "Remover os espaços em branco ao redor do texto"
 
 #: prefs.js:189
 msgid "Paste on selection"
-msgstr ""
+msgstr "Colar quando selecionado"
 
 #: prefs.js:194
 msgid "Save selected text to history"
-msgstr ""
+msgstr "Salvar o texto selecionado no histórico"
 
 #: prefs.js:326
 msgid "Icon"
 msgstr "Ícone"
 
 #: prefs.js:327
-#, fuzzy
 msgid "Clipboard contents"
 msgstr "Conteúdo da área de transferência"
 
@@ -156,7 +149,7 @@ msgstr "Ambos"
 
 #: prefs.js:329
 msgid "Neither"
-msgstr ""
+msgstr "Nada"
 
 #, fuzzy
 #~ msgid "Type here to search…"
