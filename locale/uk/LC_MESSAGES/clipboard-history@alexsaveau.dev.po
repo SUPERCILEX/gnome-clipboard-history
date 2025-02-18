@@ -2,14 +2,14 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Stanisław Zadorozhnyi <zadorozhniy123@icloud.com>, 2021.
-# Yevhen Popok <xalt7x.service@gmail.com>, 2023.
+# Yevhen Popok <xalt7x.service@gmail.com>, 2023-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2024-04-03 13:05+0300\n"
+"POT-Creation-Date: 2025-02-18 23:53+0200\n"
+"PO-Revision-Date: 2025-02-18 23:59+0200\n"
 "Last-Translator: Yevhen Popok <xalt7x.service@gmail.com>\n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -18,132 +18,136 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
-#: extension.js:121
+#: extension.js:118
 msgid "Search clipboard history…"
 msgstr "Пошук в історії буфера обміну…"
 
-#: extension.js:208
+#: extension.js:211
 msgid "Private mode"
 msgstr "Приватний режим"
 
-#: extension.js:524
+#: extension.js:536
 msgid "Clear all?"
 msgstr "Очистити все?"
 
-#: extension.js:525
+#: extension.js:537
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Точно видалити всі записи з буфера обміну?"
 
-#: extension.js:526
+#: extension.js:538
 msgid "This operation cannot be undone."
 msgstr "Цю операцію неможливо скасувати."
 
-#: extension.js:532
+#: extension.js:544
 msgid "Clear"
 msgstr "Очистити"
 
-#: extension.js:533 extension.js:887
+#: extension.js:545 extension.js:937
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: extension.js:886
+#: extension.js:936
 msgid "Copied to clipboard"
 msgstr "Скопійовано до буфера обміну"
 
-#: extension.js:1221
+#: extension.js:1291
 msgid "Copied"
 msgstr "Скопійовано"
 
-#: prefs.js:96
+#: prefs.js:81
 msgid "Toggle the menu"
 msgstr "Викликати меню"
 
-#: prefs.js:102
+#: prefs.js:87
 msgid "Clear history"
 msgstr "Очистити історію"
 
-#: prefs.js:108
+#: prefs.js:93
 msgid "Previous entry"
 msgstr "Попередній запис"
 
-#: prefs.js:114
+#: prefs.js:99
 msgid "Next entry"
 msgstr "Наступний запис"
 
-#: prefs.js:120
+#: prefs.js:105
 msgid "Toggle private mode"
 msgstr "Приватний режим"
 
-#: prefs.js:129
+#: prefs.js:114
 msgid "Max number of items"
 msgstr "Максимальна кількість записів"
 
-#: prefs.js:134
+#: prefs.js:119
 msgid "Window width (%)"
 msgstr "Ширина вікна (%)"
 
-#: prefs.js:139
+#: prefs.js:124
 msgid "Max clipboard history size (MiB)"
 msgstr "Макс. розмір історії буфера обміну (МіБ)"
 
-#: prefs.js:144
+#: prefs.js:129
 msgid "Only save favorites to disk"
-msgstr "Зберігати на диску лише вибрані записи"
+msgstr "Зберігати на диску лише улюблені записи"
 
-#: prefs.js:149
+#: prefs.js:134
 msgid "Show notification on copy"
 msgstr "Показувати сповіщення при копіюванні"
 
-#: prefs.js:154
+#: prefs.js:139
 msgid "Ask for confirmation before clearing history"
 msgstr "Підтверджувати очищення історії"
 
-#: prefs.js:159
+#: prefs.js:144
 msgid "Move previously copied items to the top"
-msgstr "Переміщувати скопійоване раніше догори"
+msgstr "Переміщувати скопійоване раніше вгору"
 
-#: prefs.js:164
+#: prefs.js:149
 msgid "Keyboard shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: prefs.js:169
+#: prefs.js:154
 msgid "Number of characters in status bar"
 msgstr "Кількість символів на панелі"
 
-#: prefs.js:174
+#: prefs.js:159
 msgid "What to show in status bar"
 msgstr "Що показувати на панелі"
 
-#: prefs.js:179
+#: prefs.js:164
 msgid "Remove down arrow in status bar"
 msgstr "Вилучити стрілку вниз на панелі"
 
-#: prefs.js:184
+#: prefs.js:169
 msgid "Remove whitespace around text"
 msgstr "Вилучати проміжки навколо тексту"
 
-#: prefs.js:189
+#: prefs.js:174
 msgid "Paste on selection"
 msgstr "Вставляти після вибору"
 
-#: prefs.js:194
+#: prefs.js:179
 msgid "Save selected text to history"
 msgstr "Зберігати виділений текст в історії"
 
-#: prefs.js:326
+#: prefs.js:184
+msgid "Try to avoid copying passwords (known potentially buggy)"
+msgstr "Спробувати запобігати копіювання паролів (можливі вади)"
+
+#: prefs.js:331
 msgid "Icon"
 msgstr "Піктограму"
 
-#: prefs.js:327
+#: prefs.js:332
 msgid "Clipboard contents"
 msgstr "Вміст буфера обміну"
 
-#: prefs.js:328
+#: prefs.js:333
 msgid "Both"
 msgstr "Все"
 
-#: prefs.js:329
+#: prefs.js:334
 msgid "Neither"
 msgstr "Нічого"
