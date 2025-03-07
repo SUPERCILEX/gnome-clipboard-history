@@ -7,145 +7,286 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-23 12:15-0800\n"
-"PO-Revision-Date: 2017-12-02 09:23+0100\n"
+"POT-Creation-Date: 2025-03-07 18:28+0100\n"
+"PO-Revision-Date: 2025-03-07 18:37+0100\n"
 "Last-Translator: Piotr Komur <pkomur@gmail.com>\n"
 "Language-Team: \n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.4\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.4.4\n"
 
-#: extension.js:121
+#: extension.js:118
 msgid "Search clipboard history…"
 msgstr "Wyszukaj w schowku..."
 
-#: extension.js:208
+#: extension.js:211
 msgid "Private mode"
 msgstr "Tryb prywatny"
 
-#: extension.js:524
+#: extension.js:536
 msgid "Clear all?"
 msgstr "Wyczyścić historię?"
 
-#: extension.js:525
+#: extension.js:537
 msgid "Are you sure you want to delete all clipboard items?"
 msgstr "Czy na pewno chcesz wyczyścić całą historię schowka?"
 
-#: extension.js:526
+#: extension.js:538
 msgid "This operation cannot be undone."
 msgstr "Tej operacji nie da się cofnąć."
 
-#: extension.js:532
+#: extension.js:544
 msgid "Clear"
 msgstr "Wyczyść"
 
-#: extension.js:533 extension.js:887
+#: extension.js:545 extension.js:937
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: extension.js:886
+#: extension.js:936
 msgid "Copied to clipboard"
 msgstr "Skopiowano do schowka"
 
-#: extension.js:1221
+#: extension.js:1291
 msgid "Copied"
 msgstr "Skopiowano"
 
-#: prefs.js:96
+#: prefs.js:81
 msgid "Toggle the menu"
 msgstr "Przełącz menu"
 
-#: prefs.js:102
+#: prefs.js:87
 msgid "Clear history"
 msgstr "Wyczyść historię"
 
-#: prefs.js:108
+#: prefs.js:93
 msgid "Previous entry"
 msgstr "Poprzednia pozycja"
 
-#: prefs.js:114
+#: prefs.js:99
 msgid "Next entry"
 msgstr "Następna pozycja"
 
-#: prefs.js:120
+#: prefs.js:105
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:133
 msgid "Toggle private mode"
 msgstr "Tryb prywatny"
 
-#: prefs.js:129
+#: prefs.js:114
 msgid "Max number of items"
 msgstr "Maks. ilość elementów"
 
-#: prefs.js:134
+#: prefs.js:119
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:25
 msgid "Window width (%)"
 msgstr "Szerokość okna (%)"
 
-#: prefs.js:139
+#: prefs.js:124
 msgid "Max clipboard history size (MiB)"
 msgstr "Maks. wielkość schowka (MiB)"
 
-#: prefs.js:144
+#: prefs.js:129
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:54
 msgid "Only save favorites to disk"
 msgstr "Zapisuj tylko ulubione na dysku"
 
-#: prefs.js:149
+#: prefs.js:134
 msgid "Show notification on copy"
 msgstr "Pokaż powiadomienie po skopiowaniu"
 
-#: prefs.js:154
+#: prefs.js:139
 msgid "Ask for confirmation before clearing history"
 msgstr "Potwierdź przed wyczyszczeniem historii"
 
-#: prefs.js:159
+#: prefs.js:144
 msgid "Move previously copied items to the top"
 msgstr "Przesuń wcześniej kopiowane elementy na górę"
 
-#: prefs.js:164
+#: prefs.js:149
 msgid "Keyboard shortcuts"
 msgstr "Skróty klawiszowe"
 
-#: prefs.js:169
+#: prefs.js:154
 msgid "Number of characters in status bar"
 msgstr "Liczba znaków na panelu"
 
-#: prefs.js:174
+#: prefs.js:159
 msgid "What to show in status bar"
 msgstr "Pokazuj na panelu"
 
-#: prefs.js:179
+#: prefs.js:164
 msgid "Remove down arrow in status bar"
 msgstr "Usuń dolną strzałkę z panelu"
 
-#: prefs.js:184
+#: prefs.js:169
 msgid "Remove whitespace around text"
 msgstr "Usuń białą przestrzeń wokół tekstu"
 
-#: prefs.js:189
+#: prefs.js:174
 msgid "Paste on selection"
 msgstr "Wybór wklejania"
 
-#: prefs.js:194
+#: prefs.js:179
 msgid "Save selected text to history"
 msgstr "Zapisz zaznaczony tekst w historii"
 
-#: prefs.js:326
+#: prefs.js:184
+msgid "Try to avoid copying passwords (known potentially buggy)"
+msgstr "Próbuj unikać kopiowania haseł (może powodować błędy)"
+
+#: prefs.js:331
 msgid "Icon"
 msgstr "Ikona"
 
-#: prefs.js:327
+#: prefs.js:332
 msgid "Clipboard contents"
 msgstr "Zawartość schowka"
 
-#: prefs.js:328
+#: prefs.js:333
 msgid "Both"
 msgstr "Ikona oraz zawartość schowka"
 
-#: prefs.js:329
+#: prefs.js:334
 msgid "Neither"
 msgstr "Żaden"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:8
+msgid "The maximum number of items to remember"
+msgstr "Maksymalna ilość elementów w pamięci"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:14
+msgid "What to display in top bar"
+msgstr "Pokazywanie na panelu"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:20
+msgid "Remove down arrow in top bar"
+msgstr "Usuń strzałkę w dół z panelu"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:26
+msgid "The width of the clipboard panel as a percentage of screen width."
+msgstr "Szerokość schowka w procentach do szerokości ekranu."
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:34
+msgid "Number of visible characters in top bar"
+msgstr "Liczba widocznych znaków na górnym pasku"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:35
+msgid ""
+"The number of characters to display for the current clipboard item in the "
+"top bar."
+msgstr ""
+"Liczba znaków wyświetlanych dla bieżącego elementu schowka na górnym pasku."
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:43
+msgid "The maximum clipboard history size (MiB)"
+msgstr "Maksymalny rozmiar historii schowka (MiB)"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:44
+msgid ""
+"Note that this is the maximum number of clipboard item bytes to store, not "
+"the maximum file size on disk. The clipboard history on disk may be larger "
+"than this limit due to storage inefficiencies."
+msgstr ""
+"Należy pamiętać, że jest to maksymalna liczba bajtów elementów schowka do "
+"przechowywania, a nie maksymalny rozmiar pliku na dysku. Historia schowka na "
+"dysku może być większa niż ten limit z powodu nieefektywności przechowywania."
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:55
+msgid ""
+"Non-favorite items will still be saved, but only in-memory. Restarting the "
+"Gnome Shell will result in the loss of those items."
+msgstr ""
+"Elementy, które nie są ulubionymi, nadal będą zapisywane, ale tylko w "
+"pamięci. Ponowne uruchomienie powłoki GNOME spowoduje utratę tych elementów."
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:63
+msgid "Show a notification on copy"
+msgstr "Pokaż powiadomienie po skopiowaniu"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:64
+msgid ""
+"If true, a notification is shown when content is copied to clipboard with an "
+"undo button."
+msgstr ""
+"Jeżeli opcja jest włączona, po skopiowaniu zawartości do schowka i wybraniu "
+"przycisku Cofnij wyświetlane jest powiadomienie."
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:71
+msgid "Show confirmation dialog on Clear History"
+msgstr "Pokaż okno dialogowe potwierdzenia podczas czyszczenia historii"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:72
+msgid ""
+"If true, a confirmation dialog is shown when attempting to Clear History."
+msgstr ""
+"Jeśli opcja jest prawdziwa, podczas próby wyczyszczenia historii zostanie "
+"wyświetlone okno dialogowe celem potwierdzenia."
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:79
+msgid "Remove whitespace around copied plaintext items"
+msgstr "Usuń odstępy wokół skopiowanych elementów zwykłego tekstu"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:84
+msgid "Paste selected items into the previously active window"
+msgstr "Wklej wybrane elementy do poprzednio aktywnego okna"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:89
+msgid "Save the currently selected text to the clipboard history"
+msgstr "Zapisz aktualnie zaznaczony tekst w historii schowka"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:90
+msgid ""
+"If true, both the contents from the \"CLIPBOARD\" clipboard and the "
+"\"PRIMARY\" clipboard are added to the history. For more info, see https://"
+"wiki.archlinux.org/title/clipboard#Selections."
+msgstr ""
+"Jeśli włączono, zarówno zawartość schowka „CLIPBOARD”, jak i schowka "
+"„PRIMARY” są dodawane do historii. Aby uzyskać więcej informacji, zobacz "
+"https://wiki.archlinux.org/title/clipboard#Selections."
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:98
+msgid "Move previously copied items to the top of the list"
+msgstr "Przenieś wcześniej skopiowane elementy na górę listy"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:103
+msgid "Enable private mode"
+msgstr "Tryb prywatny"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:104
+msgid ""
+"If true, copied items are not saved in the clipboard history (be that in "
+"memory or on disk)."
+msgstr ""
+"Jeżeli opcja jest włączona, skopiowane elementy nie są zapisywane w historii "
+"schowka (ani w pamięci, ani na dysku)."
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:111
+msgid "Enable keyboard shortcuts"
+msgstr "Skróty klawiszowe"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:115
+msgid "Shortcut to clear history"
+msgstr "Skrót do czyszczenia historii"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:119
+msgid "Shortcut to cycle to the previous clipboard entry"
+msgstr "Skrót umożliwiający przejście do poprzedniego wpisu w schowku"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:125
+msgid "Shortcut to cycle to the next clipboard entry"
+msgstr "Skrót umożliwiający przejście do następnego wpisu w schowku"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:129
+msgid "Shortcut to open the clipboard history"
+msgstr "Skrót do otwierania historii schowka"
+
+#: schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml:137
+msgid "Ignore selections containing the x-kde-passwordManagerHint mime type."
+msgstr "Zignoruj ​​zaznaczenia zawierające typ MIME x-kde-passwordManagerHint."
 
 #, fuzzy
 #~ msgid "Type here to search…"
