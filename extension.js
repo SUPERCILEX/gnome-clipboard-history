@@ -94,6 +94,8 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   destroy() {
+    this._isDestroying = true;
+    
     this._disconnectSettings();
     this._unbindShortcuts();
     this._disconnectSelectionListener();
@@ -246,9 +248,25 @@ class ClipboardIndicator extends PanelMenu.Button {
     this.menu.actor.connect('key-press-event', (_, event) =>
       this._handleGlobalKeyEvent(event),
     );
+    
+    this._settingsChangedId = this.settings.connect(
+      'changed',
+      this._onSettingsChange.bind(this),
+    );
+
+    this.searchEntry
+      .get_clutter_text()
+      .connect('text-changed', this._onSearchTextChanged.bind(this));
+    clearMenuItem.connect('activate', this._removeAll.bind(this));
+
+    this._setupSelectionChangeListener();
 
     Store.buildClipboardStateFromLog(
       (entries, favoriteEntries, nextId, nextDiskId) => {
+        if (this._isDestroying) {
+          return;
+        }
+        
         /**
          * This field stores the number of items in the historySection to avoid calling _getMenuItems
          * since that method is slow.
@@ -277,18 +295,6 @@ class ClipboardIndicator extends PanelMenu.Button {
         this.currentlySelectedEntry = entries.last();
         this._restoreFavoritedEntries();
         this._maybeRestoreMenuPages();
-
-        this._settingsChangedId = this.settings.connect(
-          'changed',
-          this._onSettingsChange.bind(this),
-        );
-
-        this.searchEntry
-          .get_clutter_text()
-          .connect('text-changed', this._onSearchTextChanged.bind(this));
-        clearMenuItem.connect('activate', this._removeAll.bind(this));
-
-        this._setupSelectionChangeListener();
       },
     );
   }
