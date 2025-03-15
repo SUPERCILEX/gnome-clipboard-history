@@ -54,6 +54,8 @@ let ENABLE_KEYBINDING;
 let PRIVATE_MODE;
 let NOTIFY_ON_COPY;
 let CONFIRM_ON_CLEAR;
+let CONFIRM_REMOVE_FAVORITE;
+let CONFIRM_REMOVE_NON_FAVORITE;
 let MAX_TOPBAR_LENGTH;
 let TOPBAR_DISPLAY_MODE; // 0 - only icon, 1 - only clipboard content, 2 - both, 3 - none
 let DISABLE_DOWN_ARROW;
@@ -579,6 +581,34 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
   }
 
+  _confirmRemoveEntry(entry, fullyDelete, humanGenerated) {
+    if (
+      (entry.favorite && CONFIRM_REMOVE_FAVORITE) ||
+      (!entry.favorite && CONFIRM_REMOVE_NON_FAVORITE)
+    ) {
+      const title = _('Delete Entry?');
+      const message = _('Are you sure you want to delete this entry?');
+      const sub_message = _(
+        '\n' +
+          this._truncated(entry.text, MAX_VISIBLE_CHARS) +
+          '\n\nThis operation cannot be undone.',
+      );
+
+      ConfirmDialog.openConfirmDialog(
+        title,
+        message,
+        sub_message,
+        _('Delete'),
+        _('Cancel'),
+        () => {
+          this._removeEntry(entry, fullyDelete, humanGenerated);
+        },
+      );
+    } else {
+      this._removeEntry(entry, fullyDelete, humanGenerated);
+    }
+  }
+
   _pruneOldestEntries() {
     let entry = this.entries.head;
     while (
@@ -587,7 +617,7 @@ class ClipboardIndicator extends PanelMenu.Button {
         this.entries.bytes > MAX_BYTES)
     ) {
       const next = entry.next;
-      this._removeEntry(entry, true);
+      this._confirmRemoveEntry(entry, true);
       entry = next;
     }
 
@@ -886,7 +916,7 @@ class ClipboardIndicator extends PanelMenu.Button {
           last.text.endsWith(text) ||
           last.text.startsWith(text))
       ) {
-        this._removeEntry(last, true);
+        this._confirmRemoveEntry(last, true);
       }
     });
   }
@@ -1020,7 +1050,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _deleteEntryAndRestoreLatest(entry) {
-    this._removeEntry(entry, true, true);
+    this._confirmRemoveEntry(entry, true, true);
 
     if (!this.currentlySelectedEntry) {
       const nextEntry = this.entries.last();
