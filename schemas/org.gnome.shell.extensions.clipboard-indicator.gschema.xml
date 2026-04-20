@@ -136,5 +136,13 @@
       <default>true</default>
       <summary>Ignore selections containing the x-kde-passwordManagerHint mime type.</summary>
     </key>
+
+    <key name="enable-typeahead-search" type="b">
+      <default>false</default>
+      <summary>Enable type-ahead search in the menu</summary>
+      <description>
+        If true, typing in the open menu focuses the search entry and appends typed characters.
+      </description>
+    </key>
   </schema>
 </schemalist>

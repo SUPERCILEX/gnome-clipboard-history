@@ -61,6 +61,7 @@ let STRIP_TEXT;
 let PASTE_ON_SELECTION;
 let PROCESS_PRIMARY_SELECTION;
 let IGNORE_PASSWORD_MIMES;
+let ENABLE_TYPEAHEAD_SEARCH;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init(extension) {
@@ -369,6 +370,10 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _handleSearchTypeAheadKeyEvent(event) {
+    if (!ENABLE_TYPEAHEAD_SEARCH) {
+      return false;
+    }
+
     if (global.stage.get_key_focus() === this.searchEntry) {
       return false;
     }
@@ -1186,6 +1191,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     );
     IGNORE_PASSWORD_MIMES = this.settings.get_boolean(
       SettingsFields.IGNORE_PASSWORD_MIMES,
+    );
+    ENABLE_TYPEAHEAD_SEARCH = this.settings.get_boolean(
+      SettingsFields.ENABLE_TYPEAHEAD_SEARCH,
     );
   }
 
