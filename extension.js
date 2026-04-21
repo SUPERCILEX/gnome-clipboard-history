@@ -61,6 +61,7 @@ let STRIP_TEXT;
 let PASTE_ON_SELECTION;
 let PROCESS_PRIMARY_SELECTION;
 let IGNORE_PASSWORD_MIMES;
+let ENABLE_TYPEAHEAD_SEARCH;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init(extension) {
@@ -303,10 +304,13 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _handleGlobalKeyEvent(event) {
-    this._handleCtrlSelectKeyEvent(event);
-    this._handleSettingsKeyEvent(event);
-    this._handleNavigationKeyEvent(event);
-    this._handleFocusSearchKeyEvent(event);
+    return (
+      this._handleCtrlSelectKeyEvent(event) ||
+      this._handleSettingsKeyEvent(event) ||
+      this._handleNavigationKeyEvent(event) ||
+      this._handleFocusSearchKeyEvent(event) ||
+      this._handleSearchTypeAheadKeyEvent(event)
+    );
   }
 
   _handleCtrlSelectKeyEvent(event) {
@@ -328,6 +332,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     this._onMenuItemSelectedAndMenuClose(items[index - 1]);
+    return true;
   }
 
   _handleSettingsKeyEvent(event) {
@@ -336,6 +341,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     this._openSettings();
+    return true;
   }
 
   _handleNavigationKeyEvent(event) {
@@ -347,7 +353,11 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._navigateNextPage();
     } else if (event.get_key_unicode() === 'p') {
       this._navigatePrevPage();
+    } else {
+      return;
     }
+
+    return true;
   }
 
   _handleFocusSearchKeyEvent(event) {
@@ -356,6 +366,51 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     global.stage.set_key_focus(this.searchEntry);
+    return true;
+  }
+
+  _handleSearchTypeAheadKeyEvent(event) {
+    if (!ENABLE_TYPEAHEAD_SEARCH) {
+      return false;
+    }
+
+    if (global.stage.get_key_focus() === this.searchEntry) {
+      return false;
+    }
+
+    if (
+      event.has_control_modifier() ||
+      event.has_alt_modifier?.() ||
+      event.has_super_modifier?.()
+    ) {
+      return false;
+    }
+
+    const keySymbol = event.get_key_symbol();
+    if (keySymbol === Clutter.KEY_BackSpace) {
+      const currentText = this.searchEntry.get_text();
+      if (!currentText) {
+        return false;
+      }
+
+      global.stage.set_key_focus(this.searchEntry);
+      this.searchEntry.set_text(currentText.slice(0, -1));
+      return true;
+    }
+
+    const unicode = event.get_key_unicode();
+    if (!unicode || unicode.length !== 1) {
+      return false;
+    }
+
+    const codePoint = unicode.charCodeAt(0);
+    if (codePoint < 32 || codePoint === 127) {
+      return false;
+    }
+
+    global.stage.set_key_focus(this.searchEntry);
+    this.searchEntry.set_text(this.searchEntry.get_text() + unicode);
+    return true;
   }
 
   _addEntry(entry, selectEntry, updateClipboard, insertIndex) {
@@ -1136,6 +1191,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     );
     IGNORE_PASSWORD_MIMES = this.settings.get_boolean(
       SettingsFields.IGNORE_PASSWORD_MIMES,
+    );
+    ENABLE_TYPEAHEAD_SEARCH = this.settings.get_boolean(
+      SettingsFields.ENABLE_TYPEAHEAD_SEARCH,
     );
   }
 
