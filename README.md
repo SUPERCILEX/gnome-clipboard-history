@@ -19,7 +19,10 @@ new features, and
 ![Tutorial screenshot](tutorial-screenshot.png)
 
 - Open the panel from anywhere with <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd>.
-- Modify shortcuts in settings or delete them by hitting backspace while editing a shortcut.
+- Modify shortcuts in settings by clicking a shortcut and pressing the new keys. Esc cancels.
+  Backspace disables.
+- Previous entry / Next entry cycle the clipboard without opening the panel. Cycling stops at the
+  ends of the history unless `Wrap around when cycling history` is enabled.
 - Use the `Only save favorites to disk` feature to wipe your non-favorited items on shutdown.
 - Use `Private mode` to temporarily stop processing copied items.
 - Use keyboard shortcuts while the panel is open:

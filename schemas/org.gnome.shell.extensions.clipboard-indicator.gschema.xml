@@ -106,6 +106,14 @@
       </description>
     </key>
 
+    <key name="wrap-history-cycle" type="b">
+      <default>false</default>
+      <summary>Wrap around when cycling history</summary>
+      <description>
+        If true, Previous/Next entry shortcuts wrap from the newest item to the oldest and the other way around.
+        If false, cycling stops at the ends of the history.
+      </description>
+    </key>
     <key name="enable-keybindings" type="b">
       <default>true</default>
       <summary>Enable keyboard shortcuts</summary>

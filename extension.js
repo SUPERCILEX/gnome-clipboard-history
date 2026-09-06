@@ -59,6 +59,7 @@ let DISABLE_DOWN_ARROW;
 let STRIP_TEXT;
 let PASTE_ON_SELECTION;
 let PROCESS_PRIMARY_SELECTION;
+let WRAP_HISTORY_CYCLE;
 
 class ClipboardIndicator extends PanelMenu.Button {
   _init() {
@@ -1096,6 +1097,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     PROCESS_PRIMARY_SELECTION = Prefs.Settings.get_boolean(
       Prefs.Fields.PROCESS_PRIMARY_SELECTION,
     );
+    WRAP_HISTORY_CYCLE = Prefs.Settings.get_boolean(
+      Prefs.Fields.WRAP_HISTORY_CYCLE,
+    );
   }
 
   _onSettingsChange() {
@@ -1229,15 +1233,25 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _previousEntry() {
-    this._selectNextPrevEntry(
-      this.currentlySelectedEntry.nextCyclic() || this.entries.head,
-    );
+    const current = this.currentlySelectedEntry;
+    if (!current) {
+      return;
+    }
+    const entry = WRAP_HISTORY_CYCLE
+      ? current.nextCyclic() || this.entries.head
+      : current.next;
+    this._selectNextPrevEntry(entry);
   }
 
   _nextEntry() {
-    this._selectNextPrevEntry(
-      this.currentlySelectedEntry.prevCyclic() || this.entries.last(),
-    );
+    const current = this.currentlySelectedEntry;
+    if (!current) {
+      return;
+    }
+    const entry = WRAP_HISTORY_CYCLE
+      ? current.prevCyclic() || this.entries.last()
+      : current.prev;
+    this._selectNextPrevEntry(entry);
   }
 
   _selectNextPrevEntry(entry) {
