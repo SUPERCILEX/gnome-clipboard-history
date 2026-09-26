@@ -180,7 +180,6 @@ class ClipboardIndicator extends PanelMenu.Button {
     const actionsSection = new PopupMenu.PopupMenuSection();
     const actionsBox = new St.BoxLayout({
       style_class: 'ci-history-actions-section',
-      vertical: false,
     });
 
     actionsSection.actor.add_child(actionsBox);
