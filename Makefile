@@ -26,4 +26,4 @@ install: all
 		install -D "$(file)" $(INSTALLPATH)$(file);)
 
 bundle: all
-	zip -r bundle.zip $(MODULES) locale/*/*/*.mo
+	zip -r bundle.zip $(MODULES) locale/*/*/*.mo -x schemas/gschemas.compiled
