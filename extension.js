@@ -100,11 +100,11 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._disconnectSelectionListener();
 
     if (this._searchFocusHackCallbackId) {
-      GLib.Source.source_remove(this._searchFocusHackCallbackId);
+      GLib.Source.remove(this._searchFocusHackCallbackId);
       this._searchFocusHackCallbackId = undefined;
     }
     if (this._pasteHackCallbackId) {
-      GLib.Source.source_remove(this._pasteHackCallbackId);
+      GLib.Source.remove(this._pasteHackCallbackId);
       this._pasteHackCallbackId = undefined;
     }
 
