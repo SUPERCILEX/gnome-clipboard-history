@@ -27,7 +27,8 @@ const VirtualKeyboard = (() => {
   let VirtualKeyboard;
   return () => {
     if (!VirtualKeyboard) {
-      VirtualKeyboard = Clutter.get_default_backend()
+      VirtualKeyboard = global.stage.context
+        .get_backend()
         .get_default_seat()
         .create_virtual_device(Clutter.InputDeviceType.KEYBOARD_DEVICE);
     }
