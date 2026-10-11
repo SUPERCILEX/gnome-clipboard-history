@@ -33,8 +33,9 @@ const ConfirmDialog = GObject.registerClass(
       let main_box = new St.BoxLayout({});
       this.contentLayout.add_child(main_box);
 
-      let message_box = new St.BoxLayout({});
-      message_box.set_vertical(true);
+      let message_box = new St.BoxLayout({
+        orientation: Clutter.Orientation.VERTICAL,
+      });
       main_box.add_child(message_box);
 
       let subject_label = new St.Label({
