@@ -74,6 +74,22 @@
       </description>
     </key>
 
+    <key name="confirm-remove-favorite" type="b">
+      <default>true</default>
+      <summary>Show confirmation dialog on removal of favorite entry</summary>
+      <description>
+        If true, a confirmation dialog is shown when attempting to remove a favorite entry.
+      </description>
+    </key>
+
+    <key name="confirm-remove-non-favorite" type="b">
+      <default>true</default>
+      <summary>Show confirmation dialog on removal of non-favorite entry</summary>
+      <description>
+        If true, a confirmation dialog is shown when attempting to remove a non-favorite entry.
+      </description>
+    </key>
+
     <key name="strip-text" type="b">
       <default>false</default>
       <summary>Remove whitespace around copied plaintext items</summary>
