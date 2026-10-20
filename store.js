@@ -20,6 +20,7 @@ const OLD_REGISTRY_FILE = GLib.build_filenamev([
  *   on the order in which these add ops are discovered.
  */
 let DATABASE_FILE;
+let IMAGES_DIR;
 const BYTE_ORDER = Gio.DataStreamByteOrder.LITTLE_ENDIAN;
 
 // Don't use zero b/c DataInputStream uses 0 as its error value
@@ -28,6 +29,7 @@ const OP_TYPE_DELETE_TEXT = 2;
 const OP_TYPE_FAVORITE_ITEM = 3;
 const OP_TYPE_UNFAVORITE_ITEM = 4;
 const OP_TYPE_MOVE_ITEM_TO_END = 5;
+const OP_TYPE_SAVE_IMAGE = 6;
 
 const MAX_WASTED_OPS = 500;
 let uselessOpCount;
@@ -40,6 +42,7 @@ export function init(uuid) {
   EXTENSION_UUID = uuid;
   CACHE_DIR = GLib.build_filenamev([GLib.get_user_cache_dir(), EXTENSION_UUID]);
   DATABASE_FILE = GLib.build_filenamev([CACHE_DIR, 'database.log']);
+  IMAGES_DIR = GLib.build_filenamev([CACHE_DIR, 'images']);
 
   if (GLib.mkdir_with_parents(CACHE_DIR, 0o775) !== 0) {
     console.log(
@@ -48,6 +51,7 @@ export function init(uuid) {
       CACHE_DIR,
     );
   }
+  GLib.mkdir_with_parents(IMAGES_DIR, 0o775);
 }
 
 export function destroy() {
@@ -142,24 +146,51 @@ function _consumeStream(stream, state, callback) {
       uselessOpCount += 2;
       parseAvailableAware(4, () => {
         const id = stream.read_uint32(null);
-        (state.entries.findById(id) || state.favorites.findById(id)).detach();
+        const entry =
+          state.entries.findById(id) || state.favorites.findById(id);
+        if (entry) {
+          entry.detach();
+        } else {
+          console.log(
+            EXTENSION_UUID,
+            'DELETE op references unknown id:',
+            id,
+            '(skipping)',
+          );
+        }
       });
     } else if (opType === OP_TYPE_FAVORITE_ITEM) {
       parseAvailableAware(4, () => {
         const id = stream.read_uint32(null);
         const entry = state.entries.findById(id);
-
-        entry.favorite = true;
-        state.favorites.append(entry);
+        if (entry) {
+          entry.favorite = true;
+          state.favorites.append(entry);
+        } else {
+          console.log(
+            EXTENSION_UUID,
+            'FAVORITE op references unknown id:',
+            id,
+            '(skipping)',
+          );
+        }
       });
     } else if (opType === OP_TYPE_UNFAVORITE_ITEM) {
       uselessOpCount += 2;
       parseAvailableAware(4, () => {
         const id = stream.read_uint32(null);
         const entry = state.favorites.findById(id);
-
-        entry.favorite = false;
-        state.entries.append(entry);
+        if (entry) {
+          entry.favorite = false;
+          state.entries.append(entry);
+        } else {
+          console.log(
+            EXTENSION_UUID,
+            'UNFAVORITE op references unknown id:',
+            id,
+            '(skipping)',
+          );
+        }
       });
     } else if (opType === OP_TYPE_MOVE_ITEM_TO_END) {
       uselessOpCount++;
@@ -167,13 +198,58 @@ function _consumeStream(stream, state, callback) {
         const id = stream.read_uint32(null);
         const entry =
           state.entries.findById(id) || state.favorites.findById(id);
-
-        if (entry.favorite) {
-          state.favorites.append(entry);
+        if (entry) {
+          if (entry.favorite) {
+            state.favorites.append(entry);
+          } else {
+            state.entries.append(entry);
+          }
         } else {
-          state.entries.append(entry);
+          console.log(
+            EXTENSION_UUID,
+            'MOVE op references unknown id:',
+            id,
+            '(skipping)',
+          );
         }
       });
+    } else if (opType === OP_TYPE_SAVE_IMAGE) {
+      stream.read_upto_async(
+        /*stop_chars=*/ '\0',
+        /*stop_chars_len=*/ 1,
+        0,
+        null,
+        (src, res) => {
+          const [imageFileName] = src.read_upto_finish(res);
+          src.read_byte(null);
+
+          const node = new DS.LLNode();
+          node.diskId = node.id = state.nextId++;
+          node.type = DS.TYPE_IMAGE;
+          node.imageFileName = imageFileName || '';
+          node.imagePath = GLib.build_filenamev([
+            IMAGES_DIR,
+            imageFileName || '',
+          ]);
+          node.imageHash = imageFileName
+            ? imageFileName.replace(/\.[^/.]+$/, '')
+            : '';
+          node.favorite = false;
+
+          try {
+            const fileInfo = Gio.File.new_for_path(node.imagePath).query_info(
+              'standard::size',
+              Gio.FileQueryInfoFlags.NONE,
+              null,
+            );
+            node.imageSize = fileInfo.get_size();
+          } catch (_) {}
+
+          state.entries.append(node);
+
+          loop();
+        },
+      );
     } else {
       console.log(EXTENSION_UUID, 'Unknown op type, aborting load.', opType);
       finish();
@@ -346,6 +422,8 @@ export function resetDatabase(currentStateBuilder) {
 
             if (entry.type === DS.TYPE_TEXT) {
               _storeTextOp(entry.text)(dataStream);
+            } else if (entry.type === DS.TYPE_IMAGE) {
+              _storeImageOp(entry.imageFileName)(dataStream);
             } else {
               throw new TypeError('Unknown type: ' + entry.type);
             }
@@ -372,6 +450,19 @@ function _storeTextOp(text) {
   return (dataStream) => {
     dataStream.put_byte(OP_TYPE_SAVE_TEXT, null);
     dataStream.put_string(text, null);
+    dataStream.put_byte(0, null); // NUL terminator
+    return true;
+  };
+}
+
+export function storeImageEntry(imageFileName) {
+  _appendBytesToLog(_storeImageOp(imageFileName), -5);
+}
+
+function _storeImageOp(imageFileName) {
+  return (dataStream) => {
+    dataStream.put_byte(OP_TYPE_SAVE_IMAGE, null);
+    dataStream.put_string(imageFileName, null);
     dataStream.put_byte(0, null); // NUL terminator
     return true;
   };

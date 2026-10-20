@@ -1,6 +1,7 @@
 import Clutter from 'gi://Clutter';
 import GObject from 'gi://GObject';
 import GLib from 'gi://GLib';
+import Gio from 'gi://Gio';
 import Meta from 'gi://Meta';
 import Shell from 'gi://Shell';
 import St from 'gi://St';
@@ -19,7 +20,8 @@ import { ensureActorVisibleInScrollView } from 'resource:///org/gnome/shell/misc
 
 import * as Store from './store.js';
 import * as DS from './dataStructures.js';
-import { openConfirmDialog } from './confirmDialog.js';
+import { openConfirmDialog, destroyConfirmDialog } from './confirmDialog.js';
+import { ImagePreview } from './imagePreview.js';
 import SettingsFields from './settingsFields.js';
 
 const Clipboard = St.Clipboard.get_default();
@@ -69,7 +71,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     super._init(0, extension.indicatorName, false);
 
     this.extension = extension;
+    this.uuid = extension.uuid;
     this.settings = extension.getSettings();
+    this.currentPage = 1;
 
     this._shortcutsBindingIds = [];
 
@@ -91,6 +95,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     this.add_child(hbox);
 
     this._fetchSettings();
+    this._imagePreview = new ImagePreview();
     this._buildMenu();
     this._updateTopbarLayout();
   }
@@ -99,6 +104,16 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._disconnectSettings();
     this._unbindShortcuts();
     this._disconnectSelectionListener();
+
+    if (this._notifSource) {
+      this._notifSource.destroy();
+      this._notifSource = undefined;
+    }
+
+    if (this._imagePreview) {
+      this._imagePreview.destroy();
+      this._imagePreview = null;
+    }
 
     if (this._searchFocusHackCallbackId) {
       GLib.Source.remove(this._searchFocusHackCallbackId);
@@ -135,6 +150,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       if (open) {
         this._setMenuWidth();
         this.searchEntry.set_text('');
+        this._updatePaginationButtonsState();
         this._searchFocusHackCallbackId = GLib.timeout_add(
           GLib.PRIORITY_DEFAULT,
           1,
@@ -144,8 +160,25 @@ class ClipboardIndicator extends PanelMenu.Button {
             return false;
           },
         );
+      } else {
+        this._imagePreview?.hideImmediate();
       }
     });
+
+    const connectScrollListener = (scrollView) => {
+      const vAdj =
+        scrollView.vadjustment ??
+        (scrollView.get_vadjustment ? scrollView.get_vadjustment() : null) ??
+        scrollView.vscroll?.adjustment;
+      if (vAdj?.connect) {
+        vAdj.connect('notify::value', () => {
+          this._imagePreview?.onScroll(scrollView);
+        });
+      }
+      scrollView.connect('scroll-event', () => {
+        this._imagePreview?.onScroll(scrollView);
+      });
+    };
 
     // Create menu sections for items
     // Favorites
@@ -157,6 +190,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       overlay_scrollbars: true,
     });
     favoritesScrollView.add_child(this.favoritesSection.actor);
+    connectScrollListener(favoritesScrollView);
 
     this.scrollViewFavoritesMenuSection.actor.add_child(favoritesScrollView);
     this.menu.addMenuItem(this.scrollViewFavoritesMenuSection);
@@ -171,6 +205,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       overlay_scrollbars: true,
     });
     this.historyScrollView.add_child(this.historySection.actor);
+    connectScrollListener(this.historyScrollView);
 
     this.scrollViewMenuSection.actor.add_child(this.historyScrollView);
 
@@ -186,18 +221,25 @@ class ClipboardIndicator extends PanelMenu.Button {
     actionsSection.actor.add_child(actionsBox);
     this.menu.addMenuItem(actionsSection);
 
-    const prevPage = new PopupMenu.PopupBaseMenuItem();
-    prevPage.add_child(
+    this.prevPage = new PopupMenu.PopupBaseMenuItem();
+    this.prevPage.add_child(
       new St.Icon({
         icon_name: 'go-previous-symbolic',
         style_class: 'popup-menu-icon',
       }),
     );
-    prevPage.connect('activate', this._navigatePrevPage.bind(this));
-    actionsBox.add_child(prevPage);
+    this.prevPage.connect('activate', this._navigatePrevPage.bind(this));
+    actionsBox.add_child(this.prevPage);
 
-    const nextPage = new PopupMenu.PopupBaseMenuItem();
-    nextPage.add_child(
+    this.pageLabel = new St.Label({
+      text: '1/1',
+      style_class: 'ci-page-label',
+      y_align: Clutter.ActorAlign.CENTER,
+    });
+    actionsBox.add_child(this.pageLabel);
+
+    this.nextPage = new PopupMenu.PopupBaseMenuItem();
+    this.nextPage.add_child(
       new St.Icon({
         icon_name: 'go-next-symbolic',
         style_class: 'popup-menu-icon',
@@ -290,6 +332,7 @@ class ClipboardIndicator extends PanelMenu.Button {
         clearMenuItem.connect('activate', this._removeAll.bind(this));
 
         this._setupSelectionChangeListener();
+        this._cleanOrphanedImages();
       },
     );
   }
@@ -440,6 +483,22 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._handleMenuItemKeyEvent(event, menuItem),
     );
 
+    const actor = menuItem.actor || menuItem;
+    actor.connect('notify::hover', () => {
+      if (actor.hover) {
+        if (menuItem.entry?.type === DS.TYPE_IMAGE) {
+          this._imagePreview?.show(menuItem.entry, menuItem, this.menu.actor);
+        } else {
+          this._imagePreview?.hideImmediate();
+        }
+      } else {
+        this._imagePreview?.scheduleHide();
+      }
+    });
+    menuItem.connect('key-focus-out', () => {
+      this._imagePreview?.scheduleHide();
+    });
+
     this._setEntryLabel(menuItem);
 
     // Favorite button
@@ -486,14 +545,25 @@ class ClipboardIndicator extends PanelMenu.Button {
     });
 
     menuItem.connect('destroy', () => {
-      delete menuItem.entry.menuItem;
-      if (!menuItem.entry.favorite) {
-        this.activeHistoryMenuItems--;
+      if (menuItem._imageIcon) {
+        menuItem._imageIcon.destroy();
+        menuItem._imageIcon = null;
+      }
+      if (menuItem.entry) {
+        delete menuItem.entry.menuItem;
+        if (!menuItem.entry.favorite) {
+          this.activeHistoryMenuItems--;
+        }
       }
     });
     menuItem.connect('key-focus-in', () => {
       if (!menuItem.entry.favorite) {
         ensureActorVisibleInScrollView(this.historyScrollView, menuItem);
+      }
+      if (menuItem.entry?.type === DS.TYPE_IMAGE) {
+        this._imagePreview?.show(menuItem.entry, menuItem, this.menu.actor);
+      } else {
+        this._imagePreview?.hideImmediate();
       }
     });
 
@@ -524,26 +594,65 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _updateButtonText(entry) {
-    if (
-      !(TOPBAR_DISPLAY_MODE === 1 || TOPBAR_DISPLAY_MODE === 2) ||
-      (entry && entry.type !== DS.TYPE_TEXT)
-    ) {
+    if (!(TOPBAR_DISPLAY_MODE === 1 || TOPBAR_DISPLAY_MODE === 2)) {
       return;
     }
 
     if (PRIVATE_MODE) {
       this._buttonText.set_text('…');
     } else if (entry) {
-      this._buttonText.set_text(this._truncated(entry.text, MAX_TOPBAR_LENGTH));
+      if (entry.type === DS.TYPE_TEXT) {
+        this._buttonText.set_text(
+          this._truncated(entry.text, MAX_TOPBAR_LENGTH),
+        );
+      } else if (entry.type === DS.TYPE_IMAGE) {
+        this._buttonText.set_text(_('[Image]'));
+      }
     } else {
       this._buttonText.set_text('');
     }
   }
 
   _setEntryLabel(menuItem) {
+    if (menuItem._imageIcon) {
+      menuItem._imageIcon.destroy();
+      menuItem._imageIcon = null;
+    }
+    const actor = menuItem.actor || menuItem;
+    const children = actor.get_children ? actor.get_children() : [];
+    for (const child of children) {
+      if (
+        child !== menuItem.label &&
+        child.has_style_class_name &&
+        child.has_style_class_name('clipboard-image-thumbnail')
+      ) {
+        child.destroy();
+      }
+    }
+
     const entry = menuItem.entry;
     if (entry.type === DS.TYPE_TEXT) {
       menuItem.label.set_text(this._truncated(entry.text, MAX_VISIBLE_CHARS));
+    } else if (entry.type === DS.TYPE_IMAGE) {
+      this._imagePreview?.ensureMetadata(entry);
+      const dimText =
+        entry.imageWidth && entry.imageHeight
+          ? ` ${entry.imageWidth}×${entry.imageHeight}`
+          : '';
+      menuItem.label.set_text(`${_('[Image]')}${dimText}`);
+      if (
+        entry.imagePath &&
+        GLib.file_test(entry.imagePath, GLib.FileTest.EXISTS)
+      ) {
+        const file = Gio.File.new_for_path(entry.imagePath);
+        const icon = new St.Icon({
+          gicon: Gio.FileIcon.new(file),
+          icon_size: 40,
+          style_class: 'clipboard-image-thumbnail',
+        });
+        actor.insert_child_at_index(icon, 1);
+        menuItem._imageIcon = icon;
+      }
     } else {
       throw new TypeError('Unknown type: ' + entry.type);
     }
@@ -553,10 +662,9 @@ class ClipboardIndicator extends PanelMenu.Button {
     const entry = menuItem.entry;
     const wasSelected = this.currentlySelectedEntry?.id === entry.id;
 
-    // Move to front (end of list)
-    (entry.favorite ? this.entries : this.favoriteEntries).append(entry);
-    this._removeEntry(entry);
     entry.favorite = !entry.favorite;
+    (entry.favorite ? this.favoriteEntries : this.entries).append(entry);
+    this._removeEntry(entry);
     this._addEntry(entry, wasSelected, false, 0);
     this._maybeRestoreMenuPages();
     global.stage.set_key_focus(entry.menuItem);
@@ -574,7 +682,11 @@ class ClipboardIndicator extends PanelMenu.Button {
     } else {
       entry.diskId = this.nextDiskId++;
 
-      Store.storeTextEntry(entry.text);
+      if (entry.type === DS.TYPE_TEXT) {
+        Store.storeTextEntry(entry.text);
+      } else if (entry.type === DS.TYPE_IMAGE) {
+        Store.storeImageEntry(entry.imageFileName);
+      }
       Store.updateFavoriteStatus(entry.diskId, true);
     }
   }
@@ -605,23 +717,90 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _clearHistory() {
+    this._imagePreview?.hideImmediate();
     if (this.currentlySelectedEntry && !this.currentlySelectedEntry.favorite) {
       this._resetSelectedMenuItem(true);
     }
 
     // Favorites aren't touched when clearing history
+    for (const entry of this.entries) {
+      if (entry.type === DS.TYPE_IMAGE && entry.imagePath) {
+        try {
+          Gio.File.new_for_path(entry.imagePath).delete_async(0, null, null);
+        } catch (e) {}
+      }
+    }
+
     this.entries = new DS.LinkedList();
     this.historySection.removeAll();
 
     Store.resetDatabase(this._currentStateBuilder.bind(this));
+    this._cleanOrphanedImages();
+  }
+
+  _cleanOrphanedImages() {
+    try {
+      const activeFiles = new Set();
+      if (this.entries) {
+        for (const entry of this.entries) {
+          if (entry.type === DS.TYPE_IMAGE && entry.imageFileName) {
+            activeFiles.add(entry.imageFileName);
+          }
+        }
+      }
+      if (this.favoriteEntries) {
+        for (const entry of this.favoriteEntries) {
+          if (entry.type === DS.TYPE_IMAGE && entry.imageFileName) {
+            activeFiles.add(entry.imageFileName);
+          }
+        }
+      }
+
+      const imagesDir = GLib.build_filenamev([
+        GLib.get_user_cache_dir(),
+        this.uuid,
+        'images',
+      ]);
+      const dir = Gio.File.new_for_path(imagesDir);
+      if (!dir.query_exists(null)) {
+        return;
+      }
+
+      dir.enumerate_children_async(
+        'standard::name',
+        Gio.FileQueryInfoFlags.NONE,
+        GLib.PRIORITY_LOW,
+        null,
+        (d, res) => {
+          try {
+            const enumerator = d.enumerate_children_finish(res);
+            let fileInfo;
+            while ((fileInfo = enumerator.next_file(null)) !== null) {
+              const name = fileInfo.get_name();
+              if (!activeFiles.has(name)) {
+                d.get_child(name).delete_async(0, null, null);
+              }
+            }
+          } catch (_) {}
+        },
+      );
+    } catch (_) {}
   }
 
   _removeEntry(entry, fullyDelete, humanGenerated) {
+    if (this._imagePreview?._currentEntry?.id === entry.id) {
+      this._imagePreview?.hideImmediate();
+    }
     if (fullyDelete) {
       entry.detach();
 
       if (entry.diskId) {
         Store.deleteTextEntry(entry.diskId, entry.favorite);
+      }
+      if (entry.type === DS.TYPE_IMAGE && entry.imagePath) {
+        try {
+          Gio.File.new_for_path(entry.imagePath).delete_async(0, null, null);
+        } catch (e) {}
       }
     }
 
@@ -658,6 +837,8 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (updateClipboard !== false) {
       if (entry.type === DS.TYPE_TEXT) {
         this._setClipboardText(entry.text);
+      } else if (entry.type === DS.TYPE_IMAGE) {
+        this._setClipboardImage(entry);
       } else {
         throw new TypeError('Unknown type: ' + entry.type);
       }
@@ -668,13 +849,53 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
   }
 
-  _setClipboardText(text) {
+  _setClipboardImage(entry) {
+    if (
+      !entry.imagePath ||
+      !GLib.file_test(entry.imagePath, GLib.FileTest.EXISTS)
+    ) {
+      return;
+    }
     if (this._debouncing !== undefined) {
       this._debouncing++;
     }
+    try {
+      const file = Gio.File.new_for_path(entry.imagePath);
+      file.load_contents_async(null, (src, res) => {
+        try {
+          const [, contents] = src.load_contents_finish(res);
+          const bytes = GLib.Bytes.new(contents);
+          const mimeType =
+            entry.imageFileName &&
+            (entry.imageFileName.endsWith('.jpg') ||
+              entry.imageFileName.endsWith('.jpeg'))
+              ? 'image/jpeg'
+              : 'image/png';
+          Clipboard.set_content(St.ClipboardType.CLIPBOARD, mimeType, bytes);
+        } catch (e) {
+          if (this._debouncing > 0) {
+            this._debouncing--;
+          }
+          console.error(this.uuid, 'Error setting image to clipboard:', e);
+        }
+      });
+    } catch (e) {
+      if (this._debouncing > 0) {
+        this._debouncing--;
+      }
+      console.error(this.uuid, 'Failed to set clipboard image:', e);
+    }
+  }
+
+  _setClipboardText(text) {
+    if (this._debouncing !== undefined) {
+      this._debouncing += PROCESS_PRIMARY_SELECTION ? 2 : 1;
+    }
 
     Clipboard.set_text(St.ClipboardType.CLIPBOARD, text);
-    Clipboard.set_text(St.ClipboardType.PRIMARY, text);
+    if (PROCESS_PRIMARY_SELECTION) {
+      Clipboard.set_text(St.ClipboardType.PRIMARY, text);
+    }
   }
 
   _triggerPasteHack() {
@@ -761,14 +982,56 @@ class ClipboardIndicator extends PanelMenu.Button {
    * Also note that the use of `last` and `next` is correct. Menu items are ordered from latest to
    * oldest whereas `entries` is ordered from oldest to latest.
    */
+  _updatePaginationButtonsState() {
+    const total = this.entries ? this.entries.length : 0;
+    const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if (!this.currentPage || this.currentPage > totalPages) {
+      this.currentPage = totalPages;
+    }
+    if (this.currentPage < 1) {
+      this.currentPage = 1;
+    }
+
+    if (this.pageLabel) {
+      this.pageLabel.set_text(`${this.currentPage}/${totalPages}`);
+    }
+
+    if (this.prevPage) {
+      const hasPrev = this.currentPage > 1;
+      this.prevPage.reactive = hasPrev;
+      if (hasPrev) {
+        this.prevPage.remove_style_pseudo_class('disabled');
+      } else {
+        this.prevPage.add_style_pseudo_class('disabled');
+      }
+    }
+
+    if (this.nextPage) {
+      const hasNext = this.currentPage < totalPages;
+      this.nextPage.reactive = hasNext;
+      if (hasNext) {
+        this.nextPage.remove_style_pseudo_class('disabled');
+      } else {
+        this.nextPage.add_style_pseudo_class('disabled');
+      }
+    }
+  }
+
   _navigatePrevPage() {
+    this._imagePreview?.hideImmediate();
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+
     if (this.searchEntryFront) {
       this.populateSearchResults(this.searchEntry.get_text(), false);
+      this._updatePaginationButtonsState();
       return;
     }
 
     const items = this.historySection._getMenuItems();
     if (items.length === 0) {
+      this._updatePaginationButtonsState();
       return;
     }
 
@@ -780,16 +1043,26 @@ class ClipboardIndicator extends PanelMenu.Button {
     ) {
       this._rewriteMenuItem(items[i--], entry);
     }
+    this._updatePaginationButtonsState();
   }
 
   _navigateNextPage() {
+    this._imagePreview?.hideImmediate();
+    const total = this.entries ? this.entries.length : 0;
+    const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+    }
+
     if (this.searchEntryFront) {
       this.populateSearchResults(this.searchEntry.get_text(), true);
+      this._updatePaginationButtonsState();
       return;
     }
 
     const items = this.historySection._getMenuItems();
     if (items.length === 0) {
+      this._updatePaginationButtonsState();
       return;
     }
 
@@ -801,11 +1074,16 @@ class ClipboardIndicator extends PanelMenu.Button {
     ) {
       this._rewriteMenuItem(items[i++], entry);
     }
+    this._updatePaginationButtonsState();
   }
 
   _rewriteMenuItem(item, entry) {
     if (item.entry.id === this.currentlySelectedEntry?.id) {
       item.setOrnament(PopupMenu.Ornament.NONE);
+    }
+
+    if (item.entry && item.entry !== entry) {
+      delete item.entry.menuItem;
     }
 
     item.entry = entry;
@@ -818,6 +1096,7 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _onSearchTextChanged() {
+    this._imagePreview?.hideImmediate();
     const query = this.searchEntry.get_text();
 
     if (!query) {
@@ -835,7 +1114,10 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   populateSearchResults(query, forward) {
-    if (!this.searchEntryFront) {
+    if (
+      !this.searchEntryFront &&
+      (!this.favoriteEntries || this.favoriteEntries.length === 0)
+    ) {
       return;
     }
 
@@ -851,15 +1133,59 @@ class ClipboardIndicator extends PanelMenu.Button {
     try {
       searchExp = new RegExp(query, 'i');
     } catch {}
-    const start = forward ? this.searchEntryFront : this.searchEntryBack;
-    let entry = start;
 
-    while (this.activeHistoryMenuItems < PAGE_SIZE) {
+    const matchesQuery = (entry) => {
       if (entry.type === DS.TYPE_TEXT) {
         let match = entry.text.toLowerCase().indexOf(query);
         if (searchExp && match < 0) {
           match = entry.text.search(searchExp);
         }
+        return match;
+      } else if (entry.type === DS.TYPE_IMAGE) {
+        this._imagePreview?.ensureMetadata(entry);
+        const queryLower = query.toLowerCase();
+        const dimStr =
+          entry.imageWidth && entry.imageHeight
+            ? `${entry.imageWidth}x${entry.imageHeight}`
+            : '';
+        if (
+          queryLower.includes('image') ||
+          queryLower.includes('img') ||
+          (dimStr && dimStr.includes(queryLower)) ||
+          (entry.imageFileName &&
+            entry.imageFileName.toLowerCase().includes(queryLower))
+        ) {
+          return 0;
+        }
+        return -1;
+      }
+      return -1;
+    };
+
+    if (this.favoriteEntries) {
+      for (let fav = this.favoriteEntries.last(); fav; fav = fav.prev) {
+        const match = matchesQuery(fav);
+        if (match >= 0) {
+          this._addEntry(fav, fav === this.currentlySelectedEntry, false);
+          if (fav.type === DS.TYPE_TEXT && fav.menuItem?.label) {
+            fav.menuItem.label.set_text(
+              this._truncated(
+                fav.text,
+                match - 40,
+                match + MAX_VISIBLE_CHARS - 40,
+              ),
+            );
+          }
+        }
+      }
+    }
+
+    const start = forward ? this.searchEntryFront : this.searchEntryBack;
+    let entry = start;
+
+    if (entry) {
+      while (this.activeHistoryMenuItems < PAGE_SIZE) {
+        const match = matchesQuery(entry);
         if (match >= 0) {
           this._addEntry(
             entry,
@@ -867,30 +1193,30 @@ class ClipboardIndicator extends PanelMenu.Button {
             false,
             forward ? undefined : 0,
           );
-          entry.menuItem.label.set_text(
-            this._truncated(
-              entry.text,
-              match - 40,
-              match + MAX_VISIBLE_CHARS - 40,
-            ),
-          );
+          if (entry.type === DS.TYPE_TEXT && entry.menuItem?.label) {
+            entry.menuItem.label.set_text(
+              this._truncated(
+                entry.text,
+                match - 40,
+                match + MAX_VISIBLE_CHARS - 40,
+              ),
+            );
+          }
         }
+
+        entry = forward ? entry.prevCyclic() : entry.nextCyclic();
+        if (entry === start) {
+          break;
+        }
+      }
+
+      if (forward) {
+        this.searchEntryBack = this.searchEntryFront.nextCyclic();
+        this.searchEntryFront = entry;
       } else {
-        throw new TypeError('Unknown type: ' + entry.type);
+        this.searchEntryFront = this.searchEntryBack.prevCyclic();
+        this.searchEntryBack = entry;
       }
-
-      entry = forward ? entry.prevCyclic() : entry.nextCyclic();
-      if (entry === start) {
-        break;
-      }
-    }
-
-    if (forward) {
-      this.searchEntryBack = this.searchEntryFront.nextCyclic();
-      this.searchEntryFront = entry;
-    } else {
-      this.searchEntryFront = this.searchEntryBack.prevCyclic();
-      this.searchEntryBack = entry;
     }
   }
 
@@ -899,33 +1225,182 @@ class ClipboardIndicator extends PanelMenu.Button {
       return true;
     }
 
-    if (
-      IGNORE_PASSWORD_MIMES &&
-      Clipboard.get_mimetypes(kind).includes(
-        // Note that we should check for the value "secret" but there don't appear to be any other
-        // values so it's not worth the trouble right now.
+    if (IGNORE_PASSWORD_MIMES) {
+      const mimetypes = Clipboard.get_mimetypes(kind) || [];
+      const passwordMimes = [
         'x-kde-passwordManagerHint',
-      )
-    ) {
-      console.log(this.uuid, 'Ignoring password entry.');
-      return true;
+        'text/x-moz-concealed-entry',
+        'application/x-secret',
+        'application/x-keepassxc-selection',
+        'application/x-gnome-secrets',
+      ];
+      if (passwordMimes.some((mime) => mimetypes.includes(mime))) {
+        console.log(this.uuid, 'Ignoring password entry.');
+        return true;
+      }
     }
 
     return false;
   }
 
   _queryClipboard() {
-    if (this._shouldAbortClipboardQuery(St.Clipboard.CLIPBOARD)) {
+    if (this._shouldAbortClipboardQuery(St.ClipboardType.CLIPBOARD)) {
       return;
     }
 
+    try {
+      const mimetypes =
+        Clipboard.get_mimetypes(St.ClipboardType.CLIPBOARD) || [];
+      const hasPng = mimetypes.includes('image/png');
+      const hasJpeg = mimetypes.includes('image/jpeg');
+
+      if (hasPng || hasJpeg) {
+        const mime = hasPng ? 'image/png' : 'image/jpeg';
+        Clipboard.get_content(
+          St.ClipboardType.CLIPBOARD,
+          mime,
+          (clip, bytes) => {
+            if (bytes && bytes.get_size() > 0) {
+              this._processImageContent(bytes, mime, true);
+            } else {
+              this._queryClipboardText();
+            }
+          },
+        );
+        return;
+      }
+    } catch (e) {
+      console.log(this.uuid, 'Failed to query image content:', e);
+    }
+
+    this._queryClipboardText();
+  }
+
+  _queryClipboardText() {
     Clipboard.get_text(St.ClipboardType.CLIPBOARD, (_, text) => {
       this._processClipboardContent(text, true);
     });
   }
 
+  _processImageContent(bytes, mimeType, selectEntry) {
+    if (this._debouncing > 0) {
+      this._debouncing--;
+      return;
+    }
+
+    const len = bytes.get_size();
+    const checksum = GLib.compute_checksum_for_bytes(
+      GLib.ChecksumType.SHA256,
+      bytes,
+    );
+    const hash = 'img_' + len + '_' + checksum.substring(0, 16);
+    const ext = mimeType === 'image/jpeg' ? '.jpg' : '.png';
+    const fileName = hash + ext;
+    const imagesDir = GLib.build_filenamev([
+      GLib.get_user_cache_dir(),
+      this.uuid,
+      'images',
+    ]);
+    GLib.mkdir_with_parents(imagesDir, 0o775);
+    const filePath = GLib.build_filenamev([imagesDir, fileName]);
+
+    let entry =
+      this.entries.findImageItem(hash) ||
+      this.favoriteEntries.findImageItem(hash);
+
+    if (entry) {
+      const isFirst =
+        entry === this.entries.last() || entry === this.favoriteEntries.last();
+      if (!isFirst) {
+        this._moveEntryFirst(entry);
+      }
+      if (selectEntry && (!isFirst || entry !== this.currentlySelectedEntry)) {
+        this._selectEntry(entry, false);
+      }
+    } else {
+      const file = Gio.File.new_for_path(filePath);
+      file.replace_contents_bytes_async(
+        bytes,
+        null,
+        false,
+        Gio.FileCreateFlags.REPLACE_DESTINATION,
+        null,
+        (f, res) => {
+          try {
+            f.replace_contents_finish(res);
+            this._imagePreview?.ensureMetadata(entry);
+          } catch (e) {
+            console.error(this.uuid, 'Failed to save image file:', e);
+          }
+        },
+      );
+
+      entry = new DS.LLNode();
+      entry.id = this.nextId++;
+      entry.diskId = CACHE_ONLY_FAVORITES ? undefined : this.nextDiskId++;
+      entry.type = DS.TYPE_IMAGE;
+      entry.imageFileName = fileName;
+      entry.imagePath = filePath;
+      entry.imageHash = hash;
+      entry.imageSize = len;
+      entry.favorite = false;
+
+      // Extract PNG dimensions immediately from header if available
+      if (mimeType === 'image/png' && len >= 24) {
+        try {
+          const header = bytes.new_sub(0, 24).toArray();
+          if (
+            header[0] === 0x89 &&
+            header[1] === 0x50 &&
+            header[2] === 0x4e &&
+            header[3] === 0x47
+          ) {
+            entry.imageWidth =
+              ((header[16] << 24) |
+                (header[17] << 16) |
+                (header[18] << 8) |
+                header[19]) >>>
+              0;
+            entry.imageHeight =
+              ((header[20] << 24) |
+                (header[21] << 16) |
+                (header[22] << 8) |
+                header[23]) >>>
+              0;
+            entry.imageFormat = 'PNG';
+          }
+        } catch (_) {}
+      }
+
+      this.entries.append(entry);
+      this._addEntry(entry, selectEntry, false, 0);
+
+      if (!CACHE_ONLY_FAVORITES) {
+        Store.storeImageEntry(fileName);
+      }
+      this._pruneOldestEntries();
+    }
+
+    if (NOTIFY_ON_COPY) {
+      this._imagePreview?.ensureMetadata(entry);
+      const dimInfo =
+        entry.imageWidth && entry.imageHeight
+          ? `${entry.imageWidth} × ${entry.imageHeight}`
+          : null;
+      this._showNotification(
+        _('Copied image to clipboard'),
+        dimInfo,
+        (notif) => {
+          notif.addAction(_('Cancel'), () =>
+            this._deleteEntryAndRestoreLatest(this.currentlySelectedEntry),
+          );
+        },
+      );
+    }
+  }
+
   _queryPrimaryClipboard() {
-    if (this._shouldAbortClipboardQuery(St.Clipboard.PRIMARY)) {
+    if (this._shouldAbortClipboardQuery(St.ClipboardType.PRIMARY)) {
       return;
     }
 
@@ -934,6 +1409,7 @@ class ClipboardIndicator extends PanelMenu.Button {
       text = this._processClipboardContent(text, false);
       if (
         last &&
+        last.type === DS.TYPE_TEXT &&
         text &&
         text.length !== last.text.length &&
         (text.endsWith(last.text) ||
@@ -1212,7 +1688,11 @@ class ClipboardIndicator extends PanelMenu.Button {
       } else {
         for (const entry of this.entries) {
           entry.diskId = this.nextDiskId++;
-          Store.storeTextEntry(entry.text);
+          if (entry.type === DS.TYPE_TEXT) {
+            Store.storeTextEntry(entry.text);
+          } else if (entry.type === DS.TYPE_IMAGE) {
+            Store.storeImageEntry(entry.imageFileName);
+          }
         }
       }
     }
@@ -1323,17 +1803,29 @@ class ClipboardIndicator extends PanelMenu.Button {
   }
 
   _openSettings() {
-    this.extension.openPreferences();
+    try {
+      this.extension.openPreferences().catch?.(console.error);
+    } catch (e) {
+      console.error(e);
+    }
     this.menu.close();
   }
 
   _previousEntry() {
+    if (!this.currentlySelectedEntry) {
+      this._selectNextPrevEntry(this.entries.head);
+      return;
+    }
     this._selectNextPrevEntry(
       this.currentlySelectedEntry.nextCyclic() || this.entries.head,
     );
   }
 
   _nextEntry() {
+    if (!this.currentlySelectedEntry) {
+      this._selectNextPrevEntry(this.entries.last());
+      return;
+    }
     this._selectNextPrevEntry(
       this.currentlySelectedEntry.prevCyclic() || this.entries.last(),
     );
@@ -1347,6 +1839,13 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._selectEntry(entry, true);
     if (entry.type === DS.TYPE_TEXT) {
       this._showNotification(_('Copied'), entry.text);
+    } else if (entry.type === DS.TYPE_IMAGE) {
+      this._imagePreview?.ensureMetadata(entry);
+      const dimInfo =
+        entry.imageWidth && entry.imageHeight
+          ? ` (${entry.imageWidth} × ${entry.imageHeight})`
+          : '';
+      this._showNotification(_('Copied'), _('Image') + dimInfo);
     }
   }
 
@@ -1402,6 +1901,7 @@ export default class ClipboardHistoryExtension extends Extension {
   }
 
   disable() {
+    destroyConfirmDialog();
     this.clipboardIndicator.destroy();
     this.clipboardIndicator = undefined;
 

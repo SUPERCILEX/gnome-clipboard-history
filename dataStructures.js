@@ -2,6 +2,7 @@
 // https://github.com/wooorm/linked-list/blob/d2390fe1cab9f780cfd34fa31c8fa8ede4ad674d/index.js
 
 export const TYPE_TEXT = 'text';
+export const TYPE_IMAGE = 'image';
 
 // Creates a new `Iterator` for looping over the `List`.
 class Iterator {
@@ -186,9 +187,14 @@ export class LLNode {
       return;
     }
 
+    let bytesCount = 0;
     if (this.type === TYPE_TEXT) {
-      this.list.bytes += this.text.length;
+      bytesCount = this.text ? this.text.length : 0;
+    } else if (this.type === TYPE_IMAGE && this.imageSize) {
+      bytesCount = this.imageSize;
     }
+    this._indexedBytes = bytesCount;
+    this.list.bytes += bytesCount;
 
     let entries = this.list.invertedIndex[hash];
     if (!entries) {
@@ -205,15 +211,21 @@ export class LLNode {
       return;
     }
 
-    if (this.type === TYPE_TEXT) {
-      this.list.bytes -= this.text.length;
+    if (this._indexedBytes) {
+      this.list.bytes = Math.max(0, this.list.bytes - this._indexedBytes);
+      this._indexedBytes = 0;
     }
 
     const entries = this.list.invertedIndex[hash];
-    if (entries.length === 1) {
-      delete this.list.invertedIndex[hash];
-    } else {
-      entries.splice(entries.indexOf(this.id), 1);
+    if (entries) {
+      if (entries.length === 1) {
+        delete this.list.invertedIndex[hash];
+      } else {
+        const idx = entries.indexOf(this.id);
+        if (idx !== -1) {
+          entries.splice(idx, 1);
+        }
+      }
     }
     delete this.list.idsToItems[this.id];
   }
@@ -221,6 +233,8 @@ export class LLNode {
   _hash() {
     if (this.type === TYPE_TEXT) {
       return _hashText(this.text);
+    } else if (this.type === TYPE_IMAGE) {
+      return this.imageHash || this.imageFileName;
     } else {
       return null;
     }
@@ -349,6 +363,25 @@ export class LinkedList {
     for (let i = entries.length - 1; i >= 0; i--) {
       const item = this.idsToItems[entries[i]];
       if (item.type === TYPE_TEXT && item.text === text) {
+        return item;
+      }
+    }
+    return null;
+  }
+
+  findImageItem(hash) {
+    const entries = this.invertedIndex[hash];
+    if (!entries) {
+      return null;
+    }
+
+    for (let i = entries.length - 1; i >= 0; i--) {
+      const item = this.idsToItems[entries[i]];
+      if (
+        item &&
+        item.type === TYPE_IMAGE &&
+        (item.imageHash === hash || item.imageFileName === hash)
+      ) {
         return item;
       }
     }

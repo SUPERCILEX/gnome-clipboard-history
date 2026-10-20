@@ -32,3 +32,90 @@
 .ci-history-search-entry {
   width: 5em;
 }
+
+.clipboard-image-thumbnail {
+  border-radius: 6px;
+  margin-right: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ci-page-label {
+  font-size: 0.85em;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 0 10px;
+}
+
+.ci-timestamp {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8em;
+  font-weight: normal;
+  padding-left: 12px;
+}
+
+.popup-menu-item.disabled,
+.popup-menu-icon.disabled,
+StButton.disabled {
+  opacity: 0.35;
+}
+
+/* Floating Image Preview Popup */
+.ci-image-preview-popup {
+  background-color: rgba(28, 28, 36, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65);
+  padding: 14px 16px;
+}
+
+.ci-preview-header {
+  padding-bottom: 10px;
+  spacing: 8px;
+}
+
+.ci-preview-header-icon {
+  color: #78aeed;
+  margin-right: 6px;
+}
+
+.ci-preview-title {
+  font-size: 0.95em;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.ci-preview-badge {
+  font-size: 0.78em;
+  font-weight: 700;
+  background-color: rgba(53, 132, 228, 0.22);
+  color: #78aeed;
+  border: 1px solid rgba(53, 132, 228, 0.35);
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+
+.ci-preview-image-box {
+  background-color: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.ci-preview-large-image {
+  border-radius: 8px;
+}
+
+.ci-preview-meta-row {
+  spacing: 8px;
+}
+
+.ci-preview-meta-pill {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 0.85em;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
