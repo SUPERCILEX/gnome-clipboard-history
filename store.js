@@ -52,10 +52,6 @@ export function init(uuid) {
   }
 }
 
-/**
- * Older versions stored the database in the cache dir, which users (rightfully) expect to be safe
- * to delete. Move it into the data dir.
- */
 function _migrateFromCacheDir() {
   GLib.mkdir_with_parents(GLib.get_user_data_dir(), 0o775);
 
