@@ -73,6 +73,15 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this._shortcutsBindingIds = [];
 
+    // Async callbacks (history load, clipboard reads) may still fire after we're destroyed, e.g.
+    // when the extension is quickly disabled and re-enabled on screen lock/unlock. Touching our
+    // disposed actors from those callbacks crashes gnome-shell, so they must check this flag. Use
+    // the signal rather than destroy() since the shell may destroy us from C (e.g. on shutdown).
+    this._destroyed = false;
+    this.connect('destroy', () => {
+      this._destroyed = true;
+    });
+
     const hbox = new St.BoxLayout({
       style_class: 'panel-status-menu-box clipboard-indicator-hbox',
     });
@@ -257,6 +266,10 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     Store.buildClipboardStateFromLog(
       (entries, favoriteEntries, nextId, nextDiskId) => {
+        if (this._destroyed) {
+          return;
+        }
+
         /**
          * This field stores the number of items in the historySection to avoid calling _getMenuItems
          * since that method is slow.
@@ -927,6 +940,10 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     Clipboard.get_text(St.ClipboardType.CLIPBOARD, (_, text) => {
+      if (this._destroyed) {
+        return;
+      }
+
       this._processClipboardContent(text, true);
     });
   }
@@ -937,6 +954,10 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     Clipboard.get_text(St.ClipboardType.PRIMARY, (_, text) => {
+      if (this._destroyed) {
+        return;
+      }
+
       const last = this.entries.last();
       text = this._processClipboardContent(text, false);
       if (
