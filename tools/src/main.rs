@@ -74,7 +74,7 @@ fn main() -> error_stack::Result<(), io::Error> {
 }
 
 fn gen_entries(n: usize) -> error_stack::Result<(), io::Error> {
-    let mut file = dirs::cache_dir()
+    let mut file = dirs::data_dir()
         .ok_or_else(|| io::Error::from(io::ErrorKind::NotFound))
         .attach_printable("Failed to retrieve home dir")?;
     file.push("clipboard-history@alexsaveau.dev/database.log");
@@ -173,7 +173,7 @@ fn dump(database: Option<PathBuf>, verbose: bool) -> error_stack::Result<(), io:
     {
         let database = database
             .or_else(|| {
-                dirs::cache_dir().map(|mut f| {
+                dirs::data_dir().map(|mut f| {
                     f.push("clipboard-history@alexsaveau.dev/database.log");
                     f
                 })

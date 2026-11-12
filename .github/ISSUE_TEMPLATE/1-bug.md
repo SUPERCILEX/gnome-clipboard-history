@@ -37,7 +37,7 @@ journalctl -n 1000000 | grep -B 10 -A 10 'clipboard-history'
 
 If the issue could be database corruption, run this command to encrypt your clipboard history:
 ```sh
-curl -L alexsaveau.dev/gpg -o supercilex.key && gpg --output database.enc --encrypt --recipient-file supercilex.key ~/.cache/clipboard-history@alexsaveau.dev/database.log && rm supercilex.key
+curl -L alexsaveau.dev/gpg -o supercilex.key && gpg --output database.enc --encrypt --recipient-file supercilex.key ~/.local/share/clipboard-history@alexsaveau.dev/database.log && rm supercilex.key
 ```
 Upload database.enc to send me your encrypted clipboard history.
 -->
