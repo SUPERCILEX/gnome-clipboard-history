@@ -133,6 +133,13 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this.menu.connect('open-state-changed', (self, open) => {
       if (open) {
+        // GNOME Shell displays IBus candidates just above the keyboard layer.
+        const { keyboardBox } = Main.layoutManager;
+        const parent = this.menu.actor.get_parent();
+        if (parent && parent === keyboardBox?.get_parent()) {
+          parent.set_child_below_sibling(this.menu.actor, keyboardBox);
+        }
+
         this._setMenuWidth();
         this.searchEntry.set_text('');
         this._searchFocusHackCallbackId = GLib.timeout_add(
