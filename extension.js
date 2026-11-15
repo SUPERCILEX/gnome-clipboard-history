@@ -73,15 +73,6 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this._shortcutsBindingIds = [];
 
-    // Async callbacks (history load, clipboard reads) may still fire after we're destroyed, e.g.
-    // when the extension is quickly disabled and re-enabled on screen lock/unlock. Touching our
-    // disposed actors from those callbacks crashes gnome-shell, so they must check this flag. Use
-    // the signal rather than destroy() since the shell may destroy us from C (e.g. on shutdown).
-    this._destroyed = false;
-    this.connect('destroy', () => {
-      this._destroyed = true;
-    });
-
     const hbox = new St.BoxLayout({
       style_class: 'panel-status-menu-box clipboard-indicator-hbox',
     });
@@ -108,6 +99,33 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._disconnectSettings();
     this._unbindShortcuts();
     this._disconnectSelectionListener();
+
+    if (this._menuOpenStateChangedId) {
+      this.menu.disconnect(this._menuOpenStateChangedId);
+      this._menuOpenStateChangedId = undefined;
+    }
+
+    if (this._privateModeToggledId) {
+      this.privateModeMenuItem.disconnect(this._privateModeToggledId);
+      this._privateModeToggledId = undefined;
+    }
+
+    if (this._menuKeyPressEventId) {
+      this.menu.actor.disconnect(this._menuKeyPressEventId);
+      this._menuKeyPressEventId = undefined;
+    }
+
+    if (this._notifSource && this._notifSourceDestroyId) {
+      this._notifSource.disconnect(this._notifSourceDestroyId);
+      this._notifSourceDestroyId = undefined;
+    }
+    this._notifSource?.destroy();
+    this._notifSource = undefined;
+
+    if (this._searchTextChangedId && this.searchEntry) {
+      this.searchEntry.get_clutter_text().disconnect(this._searchTextChangedId);
+      this._searchTextChangedId = undefined;
+    }
 
     if (this._searchFocusHackCallbackId) {
       GLib.Source.remove(this._searchFocusHackCallbackId);
@@ -140,28 +158,31 @@ class ClipboardIndicator extends PanelMenu.Button {
     entryItem.add_child(this.searchEntry);
     this.menu.addMenuItem(entryItem);
 
-    this.menu.connect('open-state-changed', (self, open) => {
-      if (open) {
-        // GNOME Shell displays IBus candidates just above the keyboard layer.
-        const { keyboardBox } = Main.layoutManager;
-        const parent = this.menu.actor.get_parent();
-        if (parent && parent === keyboardBox?.get_parent()) {
-          parent.set_child_below_sibling(this.menu.actor, keyboardBox);
-        }
+    this._menuOpenStateChangedId = this.menu.connect(
+      'open-state-changed',
+      (self, open) => {
+        if (open) {
+          // GNOME Shell displays IBus candidates just above the keyboard layer.
+          const { keyboardBox } = Main.layoutManager;
+          const parent = this.menu.actor.get_parent();
+          if (parent && parent === keyboardBox?.get_parent()) {
+            parent.set_child_below_sibling(this.menu.actor, keyboardBox);
+          }
 
-        this._setMenuWidth();
-        this.searchEntry.set_text('');
-        this._searchFocusHackCallbackId = GLib.timeout_add(
-          GLib.PRIORITY_DEFAULT,
-          1,
-          () => {
-            global.stage.set_key_focus(this.searchEntry);
-            this._searchFocusHackCallbackId = undefined;
-            return false;
-          },
-        );
-      }
-    });
+          this._setMenuWidth();
+          this.searchEntry.set_text('');
+          this._searchFocusHackCallbackId = GLib.timeout_add(
+            GLib.PRIORITY_DEFAULT,
+            1,
+            () => {
+              global.stage.set_key_focus(this.searchEntry);
+              this._searchFocusHackCallbackId = undefined;
+              return false;
+            },
+          );
+        }
+      },
+    );
 
     // Create menu sections for items
     // Favorites
@@ -229,12 +250,15 @@ class ClipboardIndicator extends PanelMenu.Button {
       PRIVATE_MODE,
       { reactive: true },
     );
-    this.privateModeMenuItem.connect('toggled', () => {
-      this.settings.set_boolean(
-        SettingsFields.PRIVATE_MODE,
-        this.privateModeMenuItem.state,
-      );
-    });
+    this._privateModeToggledId = this.privateModeMenuItem.connect(
+      'toggled',
+      () => {
+        this.settings.set_boolean(
+          SettingsFields.PRIVATE_MODE,
+          this.privateModeMenuItem.state,
+        );
+      },
+    );
     actionsBox.add_child(this.privateModeMenuItem);
     this._updatePrivateModeState();
 
@@ -260,13 +284,14 @@ class ClipboardIndicator extends PanelMenu.Button {
     if (ENABLE_KEYBINDING) {
       this._bindShortcuts();
     }
-    this.menu.actor.connect('key-press-event', (_, event) =>
-      this._handleGlobalKeyEvent(event),
+    this._menuKeyPressEventId = this.menu.actor.connect(
+      'key-press-event',
+      (_, event) => this._handleGlobalKeyEvent(event),
     );
 
     Store.buildClipboardStateFromLog(
       (entries, favoriteEntries, nextId, nextDiskId) => {
-        if (this._destroyed) {
+        if (!this.settings) {
           return;
         }
 
@@ -304,7 +329,7 @@ class ClipboardIndicator extends PanelMenu.Button {
           this._onSettingsChange.bind(this),
         );
 
-        this.searchEntry
+        this._searchTextChangedId = this.searchEntry
           .get_clutter_text()
           .connect('text-changed', this._onSearchTextChanged.bind(this));
         clearMenuItem.connect('activate', this._removeAll.bind(this));
@@ -940,7 +965,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     Clipboard.get_text(St.ClipboardType.CLIPBOARD, (_, text) => {
-      if (this._destroyed) {
+      if (!this.settings) {
         return;
       }
 
@@ -954,7 +979,7 @@ class ClipboardIndicator extends PanelMenu.Button {
     }
 
     Clipboard.get_text(St.ClipboardType.PRIMARY, (_, text) => {
-      if (this._destroyed) {
+      if (!this.settings) {
         return;
       }
 
@@ -1122,8 +1147,9 @@ class ClipboardIndicator extends PanelMenu.Button {
       title: this.extension.indicatorName,
       iconName: INDICATOR_ICON,
     });
-    this._notifSource.connect('destroy', () => {
+    this._notifSourceDestroyId = this._notifSource.connect('destroy', () => {
       this._notifSource = undefined;
+      this._notifSourceDestroyId = undefined;
     });
     Main.messageTray.add(this._notifSource);
   }
