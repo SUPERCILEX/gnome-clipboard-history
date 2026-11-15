@@ -1,6 +1,6 @@
-# German translation for gnome-shell-extension-clipboard-indicator.
+# German translation for gnome-shell-extension-clipboard-history.
 # Copyright (C) 2014-2015, Yotam Bar-On
-# This file is distributed under the same license as the gnome-shell-extension-clipboard-indicator package.
+# This file is distributed under the same license as the gnome-shell-extension-clipboard-history package.
 # Jens Lody <openweather@jenslody.de>, 2015.
 # Onno Giesmann <nutzer3105@gmail.com, 2019-2022.
 # Philipp Kiemle <philipp.kiemle@gmail.com>, 2022.

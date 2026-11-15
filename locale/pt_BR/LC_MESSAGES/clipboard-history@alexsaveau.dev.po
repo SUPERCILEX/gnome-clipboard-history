@@ -1,4 +1,4 @@
-# Brazilian Portuguese translation for gnome-shell-extension-clipboard-indicator.
+# Brazilian Portuguese translation for gnome-shell-extension-clipboard-history.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Diego R Lima <contact@diegoribeiro.net>, 2017.

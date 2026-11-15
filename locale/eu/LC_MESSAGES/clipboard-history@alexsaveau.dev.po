@@ -1,10 +1,10 @@
-# Basque translation for gnome-shell-extension-clipboard-indicator.
+# Basque translation for gnome-shell-extension-clipboard-history.
 # This file is distributed under the same license as the Dash to Dock package.
 # Ibai Oihanguren Sala <ibai@oihanguren.com>, 2020.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-shell-extension-clipboard-indicator\n"
+"Project-Id-Version: gnome-shell-extension-clipboard-history\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
 "PO-Revision-Date: 2020-10-05 23:34+0200\n"

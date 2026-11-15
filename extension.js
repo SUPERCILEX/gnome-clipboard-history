@@ -74,11 +74,11 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._shortcutsBindingIds = [];
 
     const hbox = new St.BoxLayout({
-      style_class: 'panel-status-menu-box clipboard-indicator-hbox',
+      style_class: 'panel-status-menu-box clipboard-history-hbox',
     });
     this.icon = new St.Icon({
       icon_name: INDICATOR_ICON,
-      style_class: 'system-status-icon clipboard-indicator-icon',
+      style_class: 'system-status-icon clipboard-history-icon',
     });
     hbox.add_child(this.icon);
     this._buttonText = new St.Label({

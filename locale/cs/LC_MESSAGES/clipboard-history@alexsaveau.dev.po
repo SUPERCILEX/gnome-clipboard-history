@@ -1,6 +1,6 @@
-# Czech translation for gnome-shell-extension-clipboard-indicator.
+# Czech translation for gnome-shell-extension-clipboard-history.
 # Copyright (C) 2014-2017, Yotam Bar-On
-# This file is distributed under the same license as the gnome-shell-extension-clipboard-indicator package.
+# This file is distributed under the same license as the gnome-shell-extension-clipboard-history package.
 # Daniel Rusek <mail@asciiwolf.com>, 2017.
 #
 msgid ""

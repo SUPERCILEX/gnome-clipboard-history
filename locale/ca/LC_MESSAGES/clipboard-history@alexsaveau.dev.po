@@ -1,11 +1,11 @@
-# Catalan translation for gnome-shell-extension-clipboard-indicator.
+# Catalan translation for gnome-shell-extension-clipboard-history.
 # Copyright (C) 2018 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the gnome-shell-extension-clipboard-indicator package.
+# This file is distributed under the same license as the gnome-shell-extension-clipboard-history package.
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2018.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-shell-extension-clipboard-indicator\n"
+"Project-Id-Version: gnome-shell-extension-clipboard-history\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-23 12:15-0800\n"
 "PO-Revision-Date: 2018-03-10 10:10-0600\n"
