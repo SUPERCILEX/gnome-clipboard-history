@@ -70,6 +70,11 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this.extension = extension;
     this.settings = extension.getSettings();
+    // Async callbacks check this to detect that we were destroyed. Use the signal, not destroy(),
+    // since the shell may also destroy us from C (e.g. on shutdown).
+    this.connect('destroy', () => {
+      this.settings = null;
+    });
 
     this._shortcutsBindingIds = [];
 
