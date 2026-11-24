@@ -120,6 +120,11 @@ class ClipboardIndicator extends PanelMenu.Button {
       this._menuKeyPressEventId = undefined;
     }
 
+    if (this._menuCapturedEventId) {
+      this.menu.actor.disconnect(this._menuCapturedEventId);
+      this._menuCapturedEventId = undefined;
+    }
+
     if (this._notifSource && this._notifSourceDestroyId) {
       this._notifSource.disconnect(this._notifSourceDestroyId);
       this._notifSourceDestroyId = undefined;
@@ -194,13 +199,15 @@ class ClipboardIndicator extends PanelMenu.Button {
     this.favoritesSection = new PopupMenu.PopupMenuSection();
 
     this.scrollViewFavoritesMenuSection = new PopupMenu.PopupMenuSection();
-    const favoritesScrollView = new St.ScrollView({
+    this.favoritesScrollView = new St.ScrollView({
       style_class: 'ci-history-menu-section',
       overlay_scrollbars: true,
     });
-    favoritesScrollView.add_child(this.favoritesSection.actor);
+    this.favoritesScrollView.add_child(this.favoritesSection.actor);
 
-    this.scrollViewFavoritesMenuSection.actor.add_child(favoritesScrollView);
+    this.scrollViewFavoritesMenuSection.actor.add_child(
+      this.favoritesScrollView,
+    );
     this.menu.addMenuItem(this.scrollViewFavoritesMenuSection);
     this.menu.addMenuItem(new PopupMenu.PopupSeparatorMenuItem());
 
@@ -292,6 +299,11 @@ class ClipboardIndicator extends PanelMenu.Button {
     this._menuKeyPressEventId = this.menu.actor.connect(
       'key-press-event',
       (_, event) => this._handleGlobalKeyEvent(event),
+    );
+    // Handle these shortcuts before the focused search entry can consume them.
+    this._menuCapturedEventId = this.menu.actor.connect(
+      'captured-event',
+      (_, event) => this._handleRowNavigationKeyEvent(event),
     );
 
     Store.buildClipboardStateFromLog(
@@ -392,6 +404,42 @@ class ClipboardIndicator extends PanelMenu.Button {
 
     this._openSettings();
     return true;
+  }
+
+  _handleRowNavigationKeyEvent(event) {
+    if (!this.menu.isOpen || event.type() !== Clutter.EventType.KEY_PRESS) {
+      return Clutter.EVENT_PROPAGATE;
+    }
+
+    const { CONTROL_MASK, LOCK_MASK, MOD2_MASK, MODIFIER_MASK } =
+      Clutter.ModifierType;
+    const modifiers =
+      event.get_state() & MODIFIER_MASK & ~(LOCK_MASK | MOD2_MASK);
+    if (modifiers !== CONTROL_MASK) {
+      return Clutter.EVENT_PROPAGATE;
+    }
+
+    const key = event.get_key_symbol();
+    const down = key === Clutter.KEY_j || key === Clutter.KEY_J;
+    if (!down && key !== Clutter.KEY_k && key !== Clutter.KEY_K) {
+      return Clutter.EVENT_PROPAGATE;
+    }
+
+    const rows = [
+      ...this.favoritesSection._getMenuItems(),
+      ...this.historySection._getMenuItems(),
+    ].filter(({ actor }) => actor.mapped && actor.can_focus);
+    if (!rows.length) {
+      return Clutter.EVENT_PROPAGATE;
+    }
+
+    const focus = global.stage.get_key_focus();
+    const index = focus
+      ? rows.findIndex(({ actor }) => actor.contains(focus))
+      : -1;
+    const next = down ? index + 1 : (index === -1 ? rows.length : index) - 1;
+    rows[next]?.actor.grab_key_focus();
+    return Clutter.EVENT_STOP;
   }
 
   _handleNavigationKeyEvent(event) {
@@ -542,9 +590,10 @@ class ClipboardIndicator extends PanelMenu.Button {
       }
     });
     menuItem.connect('key-focus-in', () => {
-      if (!menuItem.entry.favorite) {
-        ensureActorVisibleInScrollView(this.historyScrollView, menuItem);
-      }
+      const scrollView = menuItem.entry.favorite
+        ? this.favoritesScrollView
+        : this.historyScrollView;
+      ensureActorVisibleInScrollView(scrollView, menuItem.actor);
     });
 
     if (entry.favorite) {
